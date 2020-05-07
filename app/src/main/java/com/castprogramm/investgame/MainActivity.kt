@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
+
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -60,6 +61,8 @@ class MainActivity : AppCompatActivity() {
         handler.post(testing)
     handler.post(testing)
     txt.text = new.msg
+        handler.post(testing)
+        txt.text = new.msg
     broker.fill()
 
     ActivityIntent()
