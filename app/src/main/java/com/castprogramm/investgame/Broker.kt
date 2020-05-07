@@ -5,7 +5,7 @@ class Broker {
     var myStock: MutableList<Stock>? = null
     fun fill(){ //закупаем акции
         for (i in 0..(2..5).random()){
-            myStock?.add(Stock("крутыши", (0..3).random().toDouble()))
+           // myStock?.add(Stock("крутыши", (0..3).random().toDouble()))
         }
     }
 }

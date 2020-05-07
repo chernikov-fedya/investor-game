@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
         graph.viewport.setScalableY(true)
         namestock.setText(temp.name)
 
-        graph.addSeries(functiom)
         var wow = Test(value)
         testing.objectsToUpdate.add(wow)
         handler.post(testing)
@@ -70,12 +69,12 @@ class MainActivity : AppCompatActivity() {
         val handler = android.os.Handler()
         handler.postDelayed({ if (new.eventType == "повышение"){
             for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
-                broker.myStock!![i].cost = broker.myStock!![i].cost.plus(52.23)
+                broker.myStock!![i].cost = broker.myStock!![i].cost?.plus(52.23)
             }
         }
         else{
             for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
-                broker.myStock!![i].cost = broker.myStock!![i].cost.minus(34.32)
+                broker.myStock!![i].cost = broker.myStock!![i].cost?.minus(34.32)
             }
         }
         }, 2000)
