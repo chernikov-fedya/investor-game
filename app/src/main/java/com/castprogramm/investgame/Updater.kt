@@ -15,6 +15,7 @@ class Updater : Thread(){
         var nowTime = System.currentTimeMillis()
         if ( timePoint - nowTime > UPDATE_TIME){
             objectsToUpdate.forEach { it.update() }
+            timePoint = nowTime
         }
     }
 }
