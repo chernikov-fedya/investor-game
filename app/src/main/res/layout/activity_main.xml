@@ -7,11 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<com.jjoe64.graphview.GraphView
-    android:layout_width="match_parent"
-    android:layout_height="200dip"
-    android:id="@+id/graph"
-    tools:ignore="MissingConstraints" />
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:id="@+id/graph"
+        tools:ignore="MissingConstraints" />
     <TextView
         android:id="@+id/value"
         android:layout_width="wrap_content"
@@ -25,16 +25,15 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/naw_view"
+        android:background="#fff"
         app:menu="@menu/navigation_menu"
-        android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent
-        android:attr/windowBackground"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
-        <androidx.viewpager.widget.ViewPager
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout >
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
