@@ -21,6 +21,8 @@ class Test(var text : TextView) : Up{
 class MainActivity : AppCompatActivity() {
     var handler = Handler()
     var testing = Updater(handler)
+    var new = News()
+    var broker = Broker()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +48,19 @@ class MainActivity : AppCompatActivity() {
         var wow = Test(value)
         testing.objectsToUpdate.add(wow)
     handler.post(testing)
-
+    txt.text = new.msg
+    broker.fill()
+    if (new.eventType == "повышение"){
+        for (i in 0..(broker.myStock!!.size-1)){
+            broker.myStock!![i].price = broker.myStock!![i].price?.plus(3.32)
+        }
     }
+      else{
+        for (i in 0..(broker.myStock!!.size-1)){
+            broker.myStock!![i].price = broker.myStock!![i].price?.minus(3.32)
+        }
+    }
+    }
+
+
 }
