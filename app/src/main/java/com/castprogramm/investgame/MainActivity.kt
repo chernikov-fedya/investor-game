@@ -33,27 +33,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var X = 0
-        var Y = 0
-        var point : DataPoint
-        var graph = findViewById<View>(R.id.graph) as GraphView
+        var graph = findViewById<View>(R.id.graph) as CostView
         var temp = Stock()
         testing.objectsToUpdate.add(temp)
         handler.post(testing)
         temp.name = "Акции Fitness-Project"
-        var newtest : LiveData<MutableList<DataPoint>> = temp.costsofStock
-        var plotPoints = arrayOf<DataPoint>()
-        for (i in 0..2){
-            temp.update()
-            TimeUnit.SECONDS.sleep(2)
-        }
-        newtest.observe(this, androidx.lifecycle.Observer { t ->
+        graph.addStock(temp, this)
 
-            var functiom = LineGraphSeries<DataPoint>(Array(t.size, { t[it]}))
-            graph.addSeries(functiom)
-        })
-        graph.viewport.setScalable(true)
-        graph.viewport.setScalableY(true)
         namestock.setText(temp.name)
 
         var wow = Test(value)
