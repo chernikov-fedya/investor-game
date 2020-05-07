@@ -50,17 +50,22 @@ class MainActivity : AppCompatActivity() {
     handler.post(testing)
     txt.text = new.msg
     broker.fill()
-    if (new.eventType == "повышение"){
-        for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
-            broker.myStock!![i].cost = broker.myStock!![i].cost?.plus(3.32.toDouble())
-        }
-    }
-      else{
-        for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
-            broker.myStock!![i].cost = broker.myStock!![i].cost?.minus(3.32)
-        }
-    }
+
+    ActivityIntent()
     }
 
-
+    fun ActivityIntent(){
+        val handler = android.os.Handler()
+        handler.postDelayed({ if (new.eventType == "повышение"){
+            for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
+                broker.myStock!![i].cost = broker.myStock!![i].cost.plus(52.23)
+            }
+        }
+        else{
+            for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
+                broker.myStock!![i].cost = broker.myStock!![i].cost.minus(34.32)
+            }
+        }
+        }, 2000)
+    }
 }

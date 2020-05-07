@@ -1,6 +1,11 @@
 package com.castprogramm.investgame
 
-class News {
+class News: Up {
+    override fun update() {
+
+    }
+
+
     lateinit var country: String
     var countryM: Array<String> = arrayOf("Россия", "Пендосия", "Украина")
     lateinit var eventType: String
