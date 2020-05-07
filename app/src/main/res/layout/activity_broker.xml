@@ -46,7 +46,6 @@
             android:layout_below="@id/name"
             android:layout_gravity="clip_vertical|right"
             android:layout_marginLeft="0dp"
-            android:layout_marginTop="1dp"
             android:layout_toRightOf="@id/photo"
             android:layout_marginTop="8dp"
             android:paddingStart="16dp"

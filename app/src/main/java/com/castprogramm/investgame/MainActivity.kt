@@ -7,11 +7,10 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.View
 import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.series.LineGraphSeries
-import kotlinx.android.synthetic.main.activity_main.*
-import androidx.viewpager.widget.ViewPager
 import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.LineGraphSeries
 
+import kotlinx.android.synthetic.main.activity_main.*
 
 class Test(var text : TextView) : Up{
     var test = 0;
@@ -49,8 +48,8 @@ class MainActivity : AppCompatActivity() {
         graph.addSeries(functiom)
         var wow = Test(value)
         testing.objectsToUpdate.add(wow)
-    handler.post(testing)
-    txt.text = new.msg
+        handler.post(testing)
+        txt.text = new.msg
     broker.fill()
 
     ActivityIntent()
