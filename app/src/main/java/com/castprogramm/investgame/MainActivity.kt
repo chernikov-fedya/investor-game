@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         var Y = 0
         var point : DataPoint
         var graph = findViewById<View>(R.id.graph) as GraphView
-        var test = Stock()
+        //var test = Stock()
         var plotPoints = arrayOfNulls<DataPoint>(3)
         for (i in 0..2){
             X = i
