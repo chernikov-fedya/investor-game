@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         var X = 0
         var Y = 0
         var point : DataPoint
-        var exampleSeries = findViewById<View>(R.id.graph) as GraphView
+        var graph = findViewById<View>(R.id.graph) as GraphView
         var test = Stock()
         var plotPoints = arrayOfNulls<DataPoint>(3)
         for (i in 0..2){
