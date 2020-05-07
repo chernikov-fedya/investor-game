@@ -51,13 +51,13 @@ class MainActivity : AppCompatActivity() {
     txt.text = new.msg
     broker.fill()
     if (new.eventType == "повышение"){
-        for (i in 0..(broker.myStock!!.size-1)){
-            broker.myStock!![i].price = broker.myStock!![i].price?.plus(3.32)
+        for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
+            broker.myStock!![i].cost = broker.myStock!![i].cost?.plus(3.32.toDouble())
         }
     }
       else{
-        for (i in 0..(broker.myStock!!.size-1)){
-            broker.myStock!![i].price = broker.myStock!![i].price?.minus(3.32)
+        for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
+            broker.myStock!![i].cost = broker.myStock!![i].cost?.minus(3.32)
         }
     }
     }

@@ -1,9 +1,9 @@
 package com.castprogramm.investgame
 
 class News {
-    var country: String? = null
+    lateinit var country: String
     var countryM: Array<String> = arrayOf("Россия", "Пендосия", "Украина")
-    var eventType: String? = null
+    lateinit var eventType: String
     var eventTypeM: Array<String> = arrayOf("повышение", "понижение")
     var msg: String = ""
     init {

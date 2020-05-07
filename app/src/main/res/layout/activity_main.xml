@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txt"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
         app:layout_constraintTop_toBottomOf="@id/graph" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
