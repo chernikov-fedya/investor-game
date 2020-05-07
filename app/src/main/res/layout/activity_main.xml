@@ -6,11 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<com.jjoe64.graphview.GraphView
-    android:layout_width="match_parent"
-    android:layout_height="200dip"
-    android:id="@+id/graph"
-    tools:ignore="MissingConstraints" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/graph"
+        android:id="@+id/namestock"/>
+    <com.jjoe64.graphview.GraphView
+        app:layout_constraintTop_toBottomOf="@id/namestock"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/graph"
+        tools:ignore="MissingConstraints" />
     <TextView
         android:id="@+id/value"
         android:layout_width="wrap_content"
