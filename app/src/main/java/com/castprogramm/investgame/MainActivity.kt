@@ -7,9 +7,11 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.View
 import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import kotlinx.android.synthetic.main.activity_main.*
+import androidx.viewpager.widget.ViewPager
+import com.jjoe64.graphview.series.DataPoint
+
 
 class Test(var text : TextView) : Up{
     var test = 0;
