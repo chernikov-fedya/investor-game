@@ -24,18 +24,27 @@ class Test(var text : TextView) : Up{
 class MainActivity : AppCompatActivity() {
     var handler = Handler()
     var testing = Updater(handler)
-    var new = News()
+    //var new = News()
     var broker = Broker()
     var stock = Stock().apply {
         name = "Акции Fitness-Project"
     }
+    var mstck: MutableList<Stock> = mutableListOf(Stock().apply {
+        name = "СЫР"; cost = 1352.5}, Stock().apply { name = "Nokia"
+        cost = 240.2}, Stock().apply { name = "MOMO"
+        cost = 1400.24}, Stock().apply { name = "KinderMorgan"
+        cost = 1050.0})
+    var stckgroup: StockGroup =  StockGroup().apply { name = "Техника"; grouplist = mutableListOf(mstck[0], mstck[1], mstck[2])  }
 
+    var ss: Country  = Country().apply { arrayStockGroup.add(stckgroup)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         testing.objectsToUpdate.add(stock)
+        testing.objectsToUpdate.add(ss)
         handler.post(testing)
+
     }
         fun runProfile(item: MenuItem) {
             val fm = supportFragmentManager

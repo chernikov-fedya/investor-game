@@ -20,8 +20,8 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 open class Stock: Up {
-    var name: String? = null
-    var cost: Double? = null
+    var name: String = ""
+    var cost: Double = 0.0
     var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData()
     var costs : MutableList<DataPoint> = mutableListOf()
 
