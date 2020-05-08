@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-
         android:icon="@drawable/chart"
+        android:onClick="runStock"
         android:title="@string/chart"/>
     <item
 
         android:icon="@drawable/web"
         android:title="@string/news"/>
     <item
-
+        android:onClick="runProfile"
         android:icon="@drawable/person"
         android:title="@string/profile"/>
 </menu>

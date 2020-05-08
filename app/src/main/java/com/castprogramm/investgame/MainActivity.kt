@@ -3,17 +3,13 @@ package com.castprogramm.investgame
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.MenuItem
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.View
-import androidx.lifecycle.LiveData
-import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-import java.util.concurrent.TimeUnit
 import androidx.viewpager.widget.ViewPager
 
 
@@ -29,43 +25,71 @@ class MainActivity : AppCompatActivity() {
     var testing = Updater(handler)
     var new = News()
     var broker = Broker()
+    var stock = Stock().apply {
+        name = "Акции Fitness-Project"
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var graph = findViewById<View>(R.id.graph) as CostView
-        var temp = Stock()
-        testing.objectsToUpdate.add(temp)
+        testing.objectsToUpdate.add(stock)
         handler.post(testing)
-        temp.name = "Акции Fitness-Project"
-        graph.addStock(temp, this)
+    }
+        fun runProfile(item: MenuItem) {
+            val fm = supportFragmentManager
+            val ft = fm.beginTransaction()
+            var f = BrokerFragment.newInstance(mutableListOf(stock))
+            ft.replace(R.id.frame_menu, f)
+            ft.commit()
+        }
 
-        namestock.setText(temp.name)
-
-        var wow = Test(value)
-        testing.objectsToUpdate.add(wow)
-        handler.post(testing)
-    handler.post(testing)
-    txt.text = new.msg
-        handler.post(testing)
-        txt.text = new.msg
-    broker.fill()
-
-    ActivityIntent()
+        fun runStock(item: MenuItem) {
+            val fm = supportFragmentManager
+            val ft = fm.beginTransaction()
+            var f = StockFragment.instfragment(stock)
+            ft.replace(R.id.frame_menu, f)
+            ft.commit()
     }
 
-    fun ActivityIntent(){
-        val handler = android.os.Handler()
-        handler.postDelayed({ if (new.eventType == "повышение"){
-            for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
-                broker.myStock!![i].cost = broker.myStock!![i].cost?.plus(52.23)
-            }
-        }
-        else{
-            for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
-                broker.myStock!![i].cost = broker.myStock!![i].cost?.minus(34.32)
-            }
-        }
-        }, 2000)
+
+
+
+
+
+
+//        var graph = findViewById<View>(R.id.graph) as CostView
+//        var temp = Stock()
+
+//        temp.name = "Акции Fitness-Project"
+//        graph.addStock(temp)
+
+        //namestock.setText(temp.name)
+
+//        var wow = Test(value)
+//        testing.objectsToUpdate.add(wow)
+//        handler.post(testing)
+//    handler.post(testing)
+//    txt.text = new.msg
+//        handler.post(testing)
+//        txt.text = new.msg
+   // broker.fill()
+
+    //ActivityIntent()
     }
-}
+
+//    fun ActivityIntent(){
+//        val handler = android.os.Handler()
+//        handler.postDelayed({ if (new.eventType == "повышение"){
+//            for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
+//                broker.myStock!![i].cost = broker.myStock!![i].cost?.plus(52.23)
+//            }
+//        }
+//        else{
+//            for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
+//                broker.myStock!![i].cost = broker.myStock!![i].cost?.minus(34.32)
+//            }
+//        }
+//        }, 2000)
+//    }
+

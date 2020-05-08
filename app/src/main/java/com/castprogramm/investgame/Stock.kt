@@ -27,7 +27,7 @@ open class Stock: Up {
 
 
     override fun update() {
-        costs.add(DataPoint(Date() , (100..1000).random().toDouble()))
+        costs.add(DataPoint(Date().seconds.toDouble() , (100..1000).random().toDouble()))
         costsofStock.value = costs
     }
 }
