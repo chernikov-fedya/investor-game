@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     var testing = Updater(handler)
     //var new = News()
     var broker = Broker()
+    var news = Enterprise()
+    var industry = Industry()
 
     var stock = Stock().apply {
         name = "Акции Fitness-Project"
@@ -41,6 +43,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        testing.objectsToUpdate.add(news)
+        testing.objectsToUpdate.add(industry)
         testing.objectsToUpdate.plusAssign(Stoks.stocks)
         testing.objectsToUpdate.add(stock)
         testing.objectsToUpdate.add(ss)
@@ -64,7 +68,11 @@ class MainActivity : AppCompatActivity() {
             ft.commit()
     }
         fun runNews(item: MenuItem){
-
+            val fm = supportFragmentManager
+            val ft = fm.beginTransaction()
+            var f = NewsFragment.newInstance(mutableListOf(news.msg, industry.msg, ss.msg))
+            ft.replace(R.id.frame_menu, f)
+            ft.commit()
         }
 
 

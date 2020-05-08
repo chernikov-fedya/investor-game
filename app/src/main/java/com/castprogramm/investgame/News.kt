@@ -1,15 +1,24 @@
 package com.castprogramm.investgame
 
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.RecyclerView
 
 abstract class News: Up {
     var name: String? = null
     var eventType: String? = null
     var msg: String = ""
+    var arrmsg: MutableList<String> = mutableListOf()
     override fun update() {
         for (i in 0..arrayStockGroup.size-1){
             arrayStockGroup[i].changePrice(makeEvent())
         }
+    arrmsg.add(msg)
     }
     open fun sadmessage(){
 
@@ -100,5 +109,28 @@ class Enterprise: News(){
         events = mutableListOf("кризис", "прикол")
         allcountries = mutableListOf("GDFdfdgf", "gfd", "fdgfgdf", "dfgfd")
         name = allcountries[(0..allcountries.size-1).random()]
+    }
+}
+class NewsAdapter(): RecyclerView.Adapter<NewsAdapter.Companion.NewsViewHolder>(){
+    var msgs : MutableList<String> = mutableListOf()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+        var eee = LayoutInflater.from(parent.context).inflate(R.layout.recycle_msg, parent, false)
+        return NewsViewHolder(
+            eee
+        )
+    }
+
+    override fun getItemCount(): Int = msgs.size
+
+    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) = holder.bind(msgs[position])
+
+    companion object{
+        class NewsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+            var name: TextView = itemView.findViewById(R.id.name_msg)
+            fun bind(string: String){
+                name.setText(string)
+            }
+        }
     }
 }
