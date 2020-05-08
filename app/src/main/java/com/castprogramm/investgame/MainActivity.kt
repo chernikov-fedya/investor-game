@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             val ft = fm.beginTransaction()
             var f = BrokerFragment.newInstance(Stoks.stocks)
             ft.replace(R.id.frame_menu, f)
+            ft.addToBackStack(null)
             ft.commit()
         }
 
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity() {
             val ft = fm.beginTransaction()
             var f = AllStockFragment.newInstance(Stoks.stocks)
             ft.replace(R.id.frame_menu, f)
+            ft.addToBackStack(null)
             ft.commit()
     }
         fun runNews(item: MenuItem){
@@ -72,6 +74,7 @@ class MainActivity : AppCompatActivity() {
             val ft = fm.beginTransaction()
             var f = NewsFragment.newInstance(mutableListOf(news.msg, industry.msg, ss.msg))
             ft.replace(R.id.frame_menu, f)
+            ft.addToBackStack(null)
             ft.commit()
         }
 
