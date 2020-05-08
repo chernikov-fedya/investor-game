@@ -7,25 +7,25 @@ import android.view.MenuItem
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.View
+import android.widget.AdapterView
+import android.widget.FrameLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomappbar.BottomAppBar
+import kotlinx.android.synthetic.main.fragment_all_stock.*
+import androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior as Behavior1
 
 
-class Test(var text : TextView) : Up{
-    var test = 0;
-    override fun update() {
-        test ++
-        text.setText(test.toString())
-    }
-}
 class MainActivity : AppCompatActivity() {
     var handler = Handler()
     var testing = Updater(handler)
     //var new = News()
     var broker = Broker()
+
     var stock = Stock().apply {
         name = "Акции Fitness-Project"
     }
@@ -41,15 +41,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        testing.objectsToUpdate.plusAssign(Stoks.stocks)
         testing.objectsToUpdate.add(stock)
         testing.objectsToUpdate.add(ss)
         handler.post(testing)
+        StockAdapter.activity = supportFragmentManager
 
     }
         fun runProfile(item: MenuItem) {
             val fm = supportFragmentManager
             val ft = fm.beginTransaction()
-            var f = BrokerFragment.newInstance(mutableListOf(stock))
+            var f = BrokerFragment.newInstance(Stoks.stocks)
             ft.replace(R.id.frame_menu, f)
             ft.commit()
         }
@@ -57,10 +59,13 @@ class MainActivity : AppCompatActivity() {
         fun runStock(item: MenuItem) {
             val fm = supportFragmentManager
             val ft = fm.beginTransaction()
-            var f = StockFragment.instfragment(stock)
+            var f = AllStockFragment.newInstance(Stoks.stocks)
             ft.replace(R.id.frame_menu, f)
             ft.commit()
     }
+        fun runNews(item: MenuItem){
+
+        }
 
 
 
