@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.appbar.AppBarLayout
 
 
 class Test(var text : TextView) : Up{
@@ -77,19 +78,4 @@ class MainActivity : AppCompatActivity() {
 
     //ActivityIntent()
     }
-
-//    fun ActivityIntent(){
-//        val handler = android.os.Handler()
-//        handler.postDelayed({ if (new.eventType == "повышение"){
-//            for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
-//                broker.myStock!![i].cost = broker.myStock!![i].cost?.plus(52.23)
-//            }
-//        }
-//        else{
-//            for (i in 0..(broker.myStock?.size?.minus(1) ?: -1)){
-//                broker.myStock!![i].cost = broker.myStock!![i].cost?.minus(34.32)
-//            }
-//        }
-//        }, 2000)
-//    }
 
