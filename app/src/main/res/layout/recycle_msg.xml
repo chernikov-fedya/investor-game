@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/cardinal"
+        app:cardCornerRadius="40dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name_msg"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Stock"
+                android:gravity="center"/>
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
