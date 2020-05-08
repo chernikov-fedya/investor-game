@@ -42,11 +42,8 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:background="#fff"
+        android:layout_gravity="bottom"
         app:menu="@menu/navigation_menu" />
 
-    <!--    <androidx.viewpager.widget.ViewPager-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
 </com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout>

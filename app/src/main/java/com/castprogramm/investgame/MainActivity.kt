@@ -6,6 +6,7 @@ import android.os.Handler
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.View
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.LiveData
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.appbar.AppBarLayout
 
 
 class Test(var text : TextView) : Up{
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         var X = 0
         var Y = 0
         var point : DataPoint
