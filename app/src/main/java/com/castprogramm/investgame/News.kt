@@ -27,6 +27,7 @@ abstract class News: Up {
         "История кэшберри: все владельцы акций в $name прочувствовали $eventType на себе",
         "Этот день вы точно запомните! Алексей упал в обморок, когда открыл биржу..."
     )*/
+
     override fun update() {
         for (i in 0..arrayStockGroup.size-1){
             arrayStockGroup[i].changePrice(makeEvent())

@@ -21,7 +21,7 @@ class Stock: Up {
     var quantity: Int = 1  //Поменять для корректного отображения прибыли
     var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData()
     var costs : MutableList<DataPoint> = mutableListOf()
-    var company : Companies? = null
+    var companies: Companies? = null
     override fun update() {
         costs.add(DataPoint(costs.size.toDouble(), cost))
         costsofStock.value = costs
@@ -52,7 +52,7 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolde
             var quantity: TextView = itemView.findViewById(R.id.quantity_st)
             var cardView : CardView = itemView.findViewById(R.id.cardinal)
             fun bind(stock: Stock){
-                name.setText(stock.name)
+                name.setText(stock.companies?.name)
                 cost.setText(stock.cost.toString())
                 quantity.setText(stock.quantity.toString())
                 cardView.setOnClickListener {

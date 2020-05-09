@@ -23,7 +23,7 @@ class AllStockFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var ret = inflater.inflate(R.layout.fragment_all_stock, container, false)
-        var recycler : RecyclerView = ret.findViewById(R.id.aleksey)
+        var recycler : RecyclerView = ret.findViewById(R.id.newaleksey)
         recycler.adapter = StockAdapter().apply {
             stocks = recStocks
         }

@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_all_stock.*
 import kotlinx.android.synthetic.main.fragment_all_stock.view.*
-import kotlinx.android.synthetic.main.fragment_all_stock.view.swipeRefreshLayout
+import kotlinx.android.synthetic.main.fragment_news.*
+import kotlinx.android.synthetic.main.fragment_news.view.*
+import kotlinx.android.synthetic.main.fragment_news.view.swipeRefreshLayout
 
 class NewsFragment: Fragment() {
     companion object{
@@ -27,7 +29,7 @@ class NewsFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var ret = inflater.inflate(R.layout.fragment_all_stock, container, false)
+        var ret = inflater.inflate(R.layout.fragment_news, container, false)
         ret.swipeRefreshLayout.setOnRefreshListener {
             // Initialize a new Runnable
             runnable = Runnable {
@@ -40,7 +42,7 @@ class NewsFragment: Fragment() {
                 swipeRefreshLayout.isRefreshing = false
             }
             handler.postDelayed(
-                runnable, 3000.toLong()
+                runnable, 1000.toLong()
             )
         }
         var recycler : RecyclerView = ret.findViewById(R.id.aleksey)
