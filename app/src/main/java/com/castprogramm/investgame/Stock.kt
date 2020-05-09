@@ -31,6 +31,7 @@ import java.time.LocalDate
 open class Stock: Up {
     var name: String = ""
     var cost: Double = 0.0
+    var quantity: Int = 0  //Поменять для корректного отображения прибыли
     var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData()
     var costs : MutableList<DataPoint> = mutableListOf()
 
@@ -75,7 +76,7 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolde
             fun bind(stock: Stock){
                 name.setText(stock.name)
                 cost.setText(stock.cost.toString())
-                quantity.setText(stock.toString())
+                quantity.setText(stock.quantity.toString())
                 cardView.setOnClickListener {
                     val fm = activity
                     val ft = fm?.beginTransaction()
