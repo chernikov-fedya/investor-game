@@ -41,12 +41,12 @@ abstract class News: Up {
                 sadmessage()
                 TypeEvent.CRYSIS
             }
-            in 5..15 ->  { eventType = "обвал"
+            in 5..20 ->  { eventType = "обвал"
                 sadmessage()
                 TypeEvent.OBVAL
             }
-            in 15..85 ->  TypeEvent.NOTHING
-            in 85..90 ->  {eventType = "подъем"
+            in 30..70 ->  TypeEvent.NOTHING
+            in 70..90 ->  {eventType = "подъем"
                 funnymessage()
                 TypeEvent.PODEM
             }
