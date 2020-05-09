@@ -95,11 +95,11 @@ class Country(): News() {
     }
 
     init {
-        msg = "В стране $name произошло $eventType цен"
+        allcountries = mutableListOf("Россия", "Пендосия", "Украина")
         events = mutableListOf("повышение", "понижение")
         eventType = events[(0..events.size-1).random()]
-        allcountries = mutableListOf("Россия", "Пендосия", "Украина")
         name = allcountries[(0..allcountries.size-1).random()]
+        msg = "В стране $name произошло $eventType цен"
     }
 
 }
@@ -116,10 +116,10 @@ class Industry: News(){
 
     init {
         events = mutableListOf("прорыв", "упадок")
-        eventType = events[(0..events.size-1).random()]
-        msg = "В отрасли $name произошел $eventType"
         allcountries = mutableListOf("Россия", "Пендосия", "Украина")
+        eventType = events[(0..events.size-1).random()]
         name = allcountries[(0..(allcountries.size-1)).random()]
+        msg = "В отрасли $name произошел $eventType"
     }
 }
 class Enterprise: News(){
@@ -135,11 +135,10 @@ class Enterprise: News(){
 
     init {
         events = mutableListOf("кризис", "прикол")
-        eventType = events[(0..events.size-1).random()]
-        msg = "В компании $name произошел $eventType"
-        events = mutableListOf("кризис", "прикол")
         allcountries = mutableListOf("GDFdfdgf", "gfd", "fdgfgdf", "dfgfd")
         name = allcountries[(0..allcountries.size-1).random()]
+        eventType = events[(0..events.size-1).random()]
+        msg = "В компании $name произошел $eventType"
     }
 }
 class NewsAdapter(): RecyclerView.Adapter<NewsAdapter.Companion.NewsViewHolder>(){
