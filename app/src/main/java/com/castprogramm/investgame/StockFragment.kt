@@ -30,7 +30,7 @@ class StockFragment : Fragment() {
         var bsold : Button = view.findViewById(R.id.sold)
         var bbuy : Button = view.findViewById(R.id.buy)
         bsold.setOnClickListener { v->
-            if (stockMarket.sold(Broker, stock) == Error.EMPTYBAG){
+            if (stockMarket.sold(stock) == Error.EMPTYBAG){
                 var texr = Error.EMPTYBAG.s
                 var toast = Toast.makeText(this.activity, texr, Toast.LENGTH_LONG)
                 toast.setGravity(Gravity.CENTER, 0, 0)
@@ -44,7 +44,7 @@ class StockFragment : Fragment() {
             }
         }
         bbuy.setOnClickListener { v->
-            when(stockMarket.buy(Broker, stock)){
+            when(stockMarket.buy(stock)){
                 Error.EMPTYMARKET -> {
                     var text = Error.EMPTYMARKET.s
                     var toast = Toast.makeText(this.activity, text, Toast.LENGTH_LONG)
