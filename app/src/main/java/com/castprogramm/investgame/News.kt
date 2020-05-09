@@ -5,20 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class News: Up {
     var name: String? = null
     var eventType: String? = null
     var msg: String = ""
-    var arrmsg: MutableList<String> = mutableListOf()
+    var msgs1: Array<String> = arrayOf(
+        "Хорошие новости! В $name произошло $eventType. Акционерам" +
+                " салам, остальным соболезнуем",
+        "Брокеры в шоке! Зафиксирован небывалый $eventType цен в $name ",
+        "Сегодня случилось хорошее событие: акции в $name поддались $eventType"
+    )
+    var msgs2: Array<String> = arrayOf(
+        "Каждый акционер отправляется на помойку. Небывалый $eventType в $name заставил" +
+                "владельцев задуматься о поиске новой работы.",
+        "История кэшберри: все владельцы акций в $name прочувствовали $eventType на себе",
+        "Этот день вы точно запомните! Алексей упал в обморок, когда открыл биржу..."
+    )
     override fun update() {
         for (i in 0..arrayStockGroup.size-1){
             arrayStockGroup[i].changePrice(makeEvent())
         }
-    arrmsg.add(msg)
     }
     open fun sadmessage(){
 
@@ -27,18 +35,25 @@ abstract class News: Up {
 
     }
     fun makeEvent():TypeEvent =
-         when ((0..100).random()) {
+        when ((0..100).random()) {
             in 1..5 ->  {sadmessage()
+                eventType = "кризис"
                 TypeEvent.CRYSIS
-                }
+            }
             in 5..15 ->  {sadmessage()
-                TypeEvent.OBVAL}
+                eventType = "обвал"
+                TypeEvent.OBVAL
+            }
             in 15..85 ->  TypeEvent.NOTHING
             in 85..90 ->  {funnymessage()
-                TypeEvent.PODEM}
+                eventType = "подъем"
+                TypeEvent.PODEM
+            }
             in 90..100 ->  {funnymessage()
-                TypeEvent.INCREASE}
-             else -> TypeEvent.NOTHING
+                eventType = "рост"
+                TypeEvent.INCREASE
+            }
+            else -> TypeEvent.NOTHING
         }
 
     var events: MutableList<String> = mutableListOf()
@@ -70,37 +85,53 @@ enum class TypeEvent(){
 class Country(): News() {
 
     override fun sadmessage() {
-        msg = "Все очень грустно "
+        msg = msgs1[(0..msgs1.size-1).random()]
         Log.d("debug", msg)
     }
 
     override fun funnymessage() {
-     msg = "Произошло позитивное событие"
+        msg = msgs2[(0..msgs2.size-1).random()]
         Log.d("debug", msg)
     }
 
     init {
-         msg = "В стране произошло $eventType цен"
-         events = mutableListOf("повышение", "понижение")
+        msg = "В стране $name произошло $eventType цен"
+        events = mutableListOf("повышение", "понижение")
         eventType = events[(0..events.size-1).random()]
-         allcountries = mutableListOf("Россия", "Пендосия", "Украина")
-         name = allcountries[(0..allcountries.size-1).random()]
-     }
+        allcountries = mutableListOf("Россия", "Пендосия", "Украина")
+        name = allcountries[(0..allcountries.size-1).random()]
+    }
 
 }
 class Industry: News(){
+    override fun sadmessage() {
+        msg = msgs1[(0..msgs1.size-1).random()]
+        Log.d("debug", msg)
+    }
 
+    override fun funnymessage() {
+        msg = msgs2[(0..msgs2.size-1).random()]
+        Log.d("debug", msg)
+    }
 
     init {
         events = mutableListOf("прорыв", "упадок")
         eventType = events[(0..events.size-1).random()]
         msg = "В отрасли $name произошел $eventType"
-        allcountries = mutableListOf("")
+        allcountries = mutableListOf("Россия", "Пендосия", "Украина")
         name = allcountries[(0..(allcountries.size-1)).random()]
     }
 }
 class Enterprise: News(){
+    override fun sadmessage() {
+        msg = msgs1[(0..msgs1.size-1).random()]
+        Log.d("debug", msg)
+    }
 
+    override fun funnymessage() {
+        msg = msgs2[(0..msgs2.size-1).random()]
+        Log.d("debug", msg)
+    }
 
     init {
         events = mutableListOf("кризис", "прикол")
