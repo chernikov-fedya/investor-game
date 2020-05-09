@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.butProfile -> {
                         val fm = supportFragmentManager
                         val ft = fm.beginTransaction()
-                        var f = BrokerFragment.newInstance(Stoks.allStoks, Broker.name, Broker.wallet)
+                        var f = BrokerFragment.newInstance(Broker.myStock, Broker.name, Broker.wallet)
                         ft.replace(R.id.frame_menu, f)
                         ft.commit()
                     }
