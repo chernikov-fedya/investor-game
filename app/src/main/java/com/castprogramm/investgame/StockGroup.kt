@@ -14,7 +14,7 @@ class StockGroup {
         }
 
         for (i in 0..grouplist.size-1){
-        grouplist[i].cost = grouplist[i].cost?.times(a)
+        grouplist[i].cost = grouplist[i].cost.times(a)
 
     }
     }
