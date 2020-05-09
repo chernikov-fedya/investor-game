@@ -12,21 +12,49 @@ import com.castprogramm.investgame.EnumClasses.Industries
 import com.castprogramm.investgame.Stoks.newsarray
 
 abstract class News: Up {
+    companion object{
+        // функция для фасовки всех акций и прикрепления к апдейтеру
+        fun fillNews(updater: Updater){
+            // создание групп стран
+            var countries : Array<StockGroup> = arrayOf(
+                StockGroup().apply { name = Countries.China.name },
+                StockGroup().apply { name = Countries.GreatBritan.name},
+                StockGroup().apply { name = Countries.Russia.name},
+                StockGroup().apply { name = Countries.USA.name},
+                StockGroup().apply { name = Countries.Germany.name}
+            )
+            // создание групп отраслей
+            var industries : Array<StockGroup> = arrayOf(
+                StockGroup().apply { name = Industries.BankingIndustry.name },
+                StockGroup().apply { name = Industries.FoodIndustry.name},
+                StockGroup().apply { name = Industries.OilIndustry.name},
+                StockGroup().apply { name = Industries.Software.name}
+            )
+            // создание группы на кажду акцию
+            var companies = Array<StockGroup>(Stoks.allStoks.size) {
+                StockGroup().apply{
+                    name = Stoks.allStoks[it].name
+                    grouplist.add(Stoks.allStoks[it])
+                }
+            }
+                // распределение всех акций по группам выше
+            for (i in Stoks.allStoks){
+                countries.find {i.companies?.country?.name == it.name}?.grouplist?.add(i)
+                industries.find {i.companies?.industry?.name == it.name}?.grouplist?.add(i)
+            }
+                // созданием объектов - новоснтных лент для каждого типа
+            var newMakers = arrayOf(
+                Country().apply { arrayStockGroup = countries.toMutableList()},
+                Industry().apply { arrayStockGroup = industries.toMutableList()},
+                Enterprise().apply { arrayStockGroup = companies.toMutableList()}
+            )
+            // прикрепление новостных лент к апдейтеру
+            updater.objectsToUpdate.addAll(newMakers)
+        }
+    }
     var name: String? = null
     var eventType: String? = null
     var msg: String = ""
-    /*var msgs1: Array<String> = arrayOf(
-        "Хорошие новости! В $name произошло $eventType. Акционерам" +
-                " салам, остальным соболезнуем",
-        "Брокеры в шоке! Зафиксирован небывалый $eventType цен в $name ",
-        "Сегодня случилось хорошее событие: акции в $name поддались $eventType"
-    )
-    var msgs2: Array<String> = arrayOf(
-        "Каждый акционер отправляется на помойку. Небывалый $eventType в $name заставил" +
-                "владельцев задуматься о поиске новой работы.",
-        "История кэшберри: все владельцы акций в $name прочувствовали $eventType на себе",
-        "Этот день вы точно запомните! Алексей упал в обморок, когда открыл биржу..."
-    )*/
 
     override fun update() {
         for (i in 0..arrayStockGroup.size-1){
@@ -67,18 +95,6 @@ abstract class News: Up {
     init {
 
     }
-
-/* lateinit var country: String
- var countryM: Array<String> = arrayOf("Россия", "Пендосия", "Украина")
- lateinit var eventType: String
- var eventTypeM: Array<String> = arrayOf("повышение", "понижение")
- var msg: ring = ""
-     init {
-     country = countryM[(0..countryM.size-1).random()]
-     eventType = eventTypeM[(0..eventTypeM.size-1).random()]
-     msg = "В стране $country произошло $eventType цен"
- }*/
-
 }
 enum class TypeEvent(){
     CRYSIS,
@@ -87,22 +103,18 @@ enum class TypeEvent(){
     PODEM,
     INCREASE
 }
-class Country(): News() {
-
+class Country: News() {
     init {
-        //allcountries = mutableListOf("Россия", "Пендосия", "Украина")
         events = mutableListOf("повышение", "понижение")
         eventType = TypeEvent.values()[(0..TypeEvent.values().size-1).random()].name
-        //name = allcountries[(0..allcountries.size-1).random()]
         name = Countries.values()[(0..Countries.values().size-1).random()].name
         msg = "В стране $name произошло $eventType цен"
     }
+
     override fun sadmessage(): String {
-       // msg = msgs1[(0..msgs1.size-1).random()]
         Log.d("debug", msg)
         events = mutableListOf("повышение", "понижение")
         eventType = "понижение"
-        //name = allcountries[(0..allcountries.size-1).random()]
         name = Countries.values()[(0..Countries.values().size-1).random()].s
         msg = "В стране $name произошло $eventType цен"
         newsarray.add(msg)
@@ -110,37 +122,27 @@ class Country(): News() {
     }
 
     override fun funnymessage(): String {
-        //msg = msgs2[(0..msgs2.size-1).random()]
         Log.d("debug", msg)
         events = mutableListOf("повышение", "понижение")
         eventType = "повышение"
-        //name = allcountries[(0..allcountries.size-1).random()]
         name = Countries.values()[(0..Countries.values().size-1).random()].s
         msg = "В стране $name произошло $eventType цен"
         newsarray.add(msg)
         return msg
     }
-
-
-
 }
 class Industry: News(){
     init {
     events = mutableListOf("прорыв", "упадок")
-    //allcountries = mutableListOf("Россия", "Пендосия", "Украина")
     eventType = events[(0..events.size-1).random()]
-    //name = allcountries[(0..(allcountries.size-1)).random()]
     name = Industries.values()[(0..Industries.values().size-1).random()].n
     msg = "В отрасли $name произошел $eventType"
 
 }
     override fun sadmessage(): String {
-       // msg = msgs1[(0..msgs1.size-1).random()]
         Log.d("debug", msg)
         events = mutableListOf("прорыв", "упадок")
-        //allcountries = mutableListOf("Россия", "Пендосия", "Украина")
         eventType = events[(0..events.size-1).random()]
-        //name = allcountries[(0..(allcountries.size-1)).random()]
         name = Industries.values()[(0..Industries.values().size-1).random()].n
         msg = "В отрасли $name произошел $eventType"
         newsarray.add(msg)
@@ -148,12 +150,9 @@ class Industry: News(){
     }
 
     override fun funnymessage(): String {
-        //msg = msgs2[(0..msgs2.size-1).random()]
         Log.d("debug", msg)
         events = mutableListOf("прорыв", "упадок")
-        //allcountries = mutableListOf("Россия", "Пендосия", "Украина")
         eventType = events[(0..events.size-1).random()]
-        //name = allcountries[(0..(allcountries.size-1)).random()]
         name = Industries.values()[(0..Industries.values().size-1).random()].n
         msg = "В отрасли $name произошел $eventType"
         newsarray.add(msg)
@@ -165,19 +164,14 @@ class Industry: News(){
 class Enterprise: News(){
     init {
     events = mutableListOf("кризис", "прикол")
-    //allcountries = mutableListOf("GDFdfdgf", "gfd", "fdgfgdf", "dfgfd")
-    //name = allcountries[(0..allcountries.size-1).random()]
     name = Companies.values()[(0..Companies.values().size-1).random()].n
     eventType = events[(0..events.size-1).random()]
     msg = "В компании $name произошел $eventType"
 
 }
     override fun sadmessage(): String {
-        //msg = msgs1[(0..msgs1.size-1).random()]
         Log.d("debug", msg)
         events = mutableListOf("кризис", "прикол")
-        //allcountries = mutableListOf("GDFdfdgf", "gfd", "fdgfgdf", "dfgfd")
-        //name = allcountries[(0..allcountries.size-1).random()]
         name = Companies.values()[(0..Companies.values().size-1).random()].n
         eventType = events[(0..events.size-1).random()]
         msg = "В компании $name произошел $eventType"
@@ -186,11 +180,8 @@ class Enterprise: News(){
     }
 
     override fun funnymessage(): String {
-        //msg = msgs2[(0..msgs2.size-1).random()]
         Log.d("debug", msg)
         events = mutableListOf("кризис", "прикол")
-        //allcountries = mutableListOf("GDFdfdgf", "gfd", "fdgfgdf", "dfgfd")
-        //name = allcountries[(0..allcountries.size-1).random()]
         name = Companies.values()[(0..Companies.values().size-1).random()].n
         eventType = events[(0..events.size-1).random()]
         msg = "В компании $name произошел $eventType"

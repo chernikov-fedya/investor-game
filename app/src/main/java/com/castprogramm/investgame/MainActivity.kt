@@ -19,27 +19,15 @@ class MainActivity : AppCompatActivity() {
         Stock().apply { name = "MOMO"; cost = 1400.24 },
         Stock().apply {name = "KinderMorgan"; cost = 1050.0})
 
-    // создание групп акций: по странам, отраслям, предприятим
-    var stckgroup: StockGroup = StockGroup().apply {
-        name = "Техника"; grouplist = mutableListOf(mstck[0], mstck[1], mstck[2])
-    }
-
-    //var new = News()
-    var news = Enterprise()
-    var industry = Industry()
-    var ss: Country = Country().apply { arrayStockGroup.add(stckgroup) }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-            testing.objectsToUpdate.add(news)
-            testing.objectsToUpdate.add(industry)
-            newsarray.add(news.sadmessage())
-
+            // добавление новостей к апдейтеру
+        News.fillNews(testing)
             testing.objectsToUpdate.plusAssign(mstck)
             testing.objectsToUpdate.plusAssign(Stoks.allStoks)
-            testing.objectsToUpdate.add(ss)
+
+        //testing.objectsToUpdate.add(ss)
             handler.post(testing)
 
 
