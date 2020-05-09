@@ -29,11 +29,11 @@ abstract class News: Up {
             arrayStockGroup[i].changePrice(makeEvent())
         }
     }
-    open fun sadmessage(){
-
+    open fun sadmessage(): String {
+        return null.toString()
     }
-    open fun funnymessage(){
-
+    open fun funnymessage(): String {
+        return null.toString()
     }
     fun makeEvent():TypeEvent =
         when ((0..100).random()) {
@@ -93,7 +93,7 @@ class Country(): News() {
         name = Countries.values()[(0..Countries.values().size-1).random()].name
         msg = "В стране $name произошло $eventType цен"
     }
-    override fun sadmessage() {
+    override fun sadmessage(): String {
        // msg = msgs1[(0..msgs1.size-1).random()]
         Log.d("debug", msg)
         events = mutableListOf("повышение", "понижение")
@@ -102,9 +102,10 @@ class Country(): News() {
         name = Countries.values()[(0..Countries.values().size-1).random()].s
         msg = "В стране $name произошло $eventType цен"
         newsarray.add(msg)
+        return msg
     }
 
-    override fun funnymessage() {
+    override fun funnymessage(): String {
         //msg = msgs2[(0..msgs2.size-1).random()]
         Log.d("debug", msg)
         events = mutableListOf("повышение", "понижение")
@@ -113,6 +114,7 @@ class Country(): News() {
         name = Countries.values()[(0..Countries.values().size-1).random()].s
         msg = "В стране $name произошло $eventType цен"
         newsarray.add(msg)
+        return msg
     }
 
 
@@ -128,7 +130,7 @@ class Industry: News(){
     msg = "В отрасли $name произошел $eventType"
 
 }
-    override fun sadmessage() {
+    override fun sadmessage(): String {
        // msg = msgs1[(0..msgs1.size-1).random()]
         Log.d("debug", msg)
         events = mutableListOf("прорыв", "упадок")
@@ -138,9 +140,10 @@ class Industry: News(){
         name = Industries.values()[(0..Industries.values().size-1).random()].n
         msg = "В отрасли $name произошел $eventType"
         newsarray.add(msg)
+        return msg
     }
 
-    override fun funnymessage() {
+    override fun funnymessage(): String {
         //msg = msgs2[(0..msgs2.size-1).random()]
         Log.d("debug", msg)
         events = mutableListOf("прорыв", "упадок")
@@ -150,6 +153,7 @@ class Industry: News(){
         name = Industries.values()[(0..Industries.values().size-1).random()].n
         msg = "В отрасли $name произошел $eventType"
         newsarray.add(msg)
+        return msg
     }
 
 
@@ -162,8 +166,9 @@ class Enterprise: News(){
     name = Companies.values()[(0..Companies.values().size-1).random()].n
     eventType = events[(0..events.size-1).random()]
     msg = "В компании $name произошел $eventType"
+
 }
-    override fun sadmessage() {
+    override fun sadmessage(): String {
         //msg = msgs1[(0..msgs1.size-1).random()]
         Log.d("debug", msg)
         events = mutableListOf("кризис", "прикол")
@@ -173,9 +178,10 @@ class Enterprise: News(){
         eventType = events[(0..events.size-1).random()]
         msg = "В компании $name произошел $eventType"
         newsarray.add(msg)
+        return msg
     }
 
-    override fun funnymessage() {
+    override fun funnymessage(): String {
         //msg = msgs2[(0..msgs2.size-1).random()]
         Log.d("debug", msg)
         events = mutableListOf("кризис", "прикол")
@@ -185,6 +191,7 @@ class Enterprise: News(){
         eventType = events[(0..events.size-1).random()]
         msg = "В компании $name произошел $eventType"
         newsarray.add(msg)
+        return msg
     }
 
 

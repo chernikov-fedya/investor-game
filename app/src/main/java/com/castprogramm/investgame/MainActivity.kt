@@ -56,8 +56,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
             testing.objectsToUpdate.add(news)
+            newsarray.add(news.sadmessage())
             testing.objectsToUpdate.add(industry)
             testing.objectsToUpdate.plusAssign(mstck)
             testing.objectsToUpdate.plusAssign(Stoks.allStoks)
