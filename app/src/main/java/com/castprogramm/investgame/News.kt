@@ -99,7 +99,7 @@ class Country(): News() {
         events = mutableListOf("повышение", "понижение")
         eventType = "понижение"
         //name = allcountries[(0..allcountries.size-1).random()]
-        name = Countries.values()[(0..Countries.values().size-1).random()].name
+        name = Countries.values()[(0..Countries.values().size-1).random()].s
         msg = "В стране $name произошло $eventType цен"
         newsarray.add(msg)
     }
@@ -110,7 +110,7 @@ class Country(): News() {
         events = mutableListOf("повышение", "понижение")
         eventType = "повышение"
         //name = allcountries[(0..allcountries.size-1).random()]
-        name = Countries.values()[(0..Countries.values().size-1).random()].name
+        name = Countries.values()[(0..Countries.values().size-1).random()].s
         msg = "В стране $name произошло $eventType цен"
         newsarray.add(msg)
     }
@@ -124,7 +124,7 @@ class Industry: News(){
     //allcountries = mutableListOf("Россия", "Пендосия", "Украина")
     eventType = events[(0..events.size-1).random()]
     //name = allcountries[(0..(allcountries.size-1)).random()]
-    name = Industries.values()[(0..Industries.values().size-1).random()].name
+    name = Industries.values()[(0..Industries.values().size-1).random()].n
     msg = "В отрасли $name произошел $eventType"
 
 }
@@ -135,7 +135,7 @@ class Industry: News(){
         //allcountries = mutableListOf("Россия", "Пендосия", "Украина")
         eventType = events[(0..events.size-1).random()]
         //name = allcountries[(0..(allcountries.size-1)).random()]
-        name = Industries.values()[(0..Industries.values().size-1).random()].name
+        name = Industries.values()[(0..Industries.values().size-1).random()].n
         msg = "В отрасли $name произошел $eventType"
         newsarray.add(msg)
     }
@@ -147,7 +147,7 @@ class Industry: News(){
         //allcountries = mutableListOf("Россия", "Пендосия", "Украина")
         eventType = events[(0..events.size-1).random()]
         //name = allcountries[(0..(allcountries.size-1)).random()]
-        name = Industries.values()[(0..Industries.values().size-1).random()].name
+        name = Industries.values()[(0..Industries.values().size-1).random()].n
         msg = "В отрасли $name произошел $eventType"
         newsarray.add(msg)
     }
@@ -159,7 +159,7 @@ class Enterprise: News(){
     events = mutableListOf("кризис", "прикол")
     //allcountries = mutableListOf("GDFdfdgf", "gfd", "fdgfgdf", "dfgfd")
     //name = allcountries[(0..allcountries.size-1).random()]
-    name = Companies.values()[(0..Companies.values().size-1).random()].name
+    name = Companies.values()[(0..Companies.values().size-1).random()].n
     eventType = events[(0..events.size-1).random()]
     msg = "В компании $name произошел $eventType"
 }
@@ -169,7 +169,7 @@ class Enterprise: News(){
         events = mutableListOf("кризис", "прикол")
         //allcountries = mutableListOf("GDFdfdgf", "gfd", "fdgfgdf", "dfgfd")
         //name = allcountries[(0..allcountries.size-1).random()]
-        name = Companies.values()[(0..Companies.values().size-1).random()].name
+        name = Companies.values()[(0..Companies.values().size-1).random()].n
         eventType = events[(0..events.size-1).random()]
         msg = "В компании $name произошел $eventType"
         newsarray.add(msg)
@@ -181,7 +181,7 @@ class Enterprise: News(){
         events = mutableListOf("кризис", "прикол")
         //allcountries = mutableListOf("GDFdfdgf", "gfd", "fdgfgdf", "dfgfd")
         //name = allcountries[(0..allcountries.size-1).random()]
-        name = Companies.values()[(0..Companies.values().size-1).random()].name
+        name = Companies.values()[(0..Companies.values().size-1).random()].n
         eventType = events[(0..events.size-1).random()]
         msg = "В компании $name произошел $eventType"
         newsarray.add(msg)
