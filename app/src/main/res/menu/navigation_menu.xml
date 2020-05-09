@@ -3,13 +3,16 @@
     <item
         android:onClick="runStock"
         android:icon="@drawable/chart"
+        android:checked="false"
         android:title="@string/chart"/>
     <item
         android:onClick="runNews"
+        android:checked="false"
         android:icon="@drawable/web"
         android:title="@string/news"/>
     <item
         android:onClick="runProfile"
+        android:checked="false"
         android:icon="@drawable/person"
         android:title="@string/profile"/>
 </menu>

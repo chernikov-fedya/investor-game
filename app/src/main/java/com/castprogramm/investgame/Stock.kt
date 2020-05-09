@@ -81,6 +81,7 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolde
                     val ft = fm?.beginTransaction()
                     var f = StockFragment.instfragment(stock)
                     ft?.replace(R.id.frame_menu, f)
+                    ft?.addToBackStack(null)
                     ft?.commit()
                 }
             }

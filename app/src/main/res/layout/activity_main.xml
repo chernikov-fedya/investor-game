@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
 <FrameLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -14,42 +15,13 @@
     android:fitsSystemWindows="true"
     app:layout_behavior=".ViewBelowAppBarBehavior"
     />
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="20dp"-->
-<!--        android:gravity="center"-->
-<!--        android:id="@+id/namestock"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/graph"-->
-<!--        tools:ignore="MissingConstraints" />-->
-
-<!--    <com.castprogramm.investgame.CostView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="200dp"-->
-<!--        android:id="@+id/graph"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/namestock"-->
-<!--        />-->
-<!--    <TextView-->
-<!--        android:id="@+id/value"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Hello World!"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/txt"-->
-<!--        tools:ignore="MissingConstraints"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/graph" />-->
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
+        android:id="@+id/bnv"
         android:layout_gravity="bottom"
+        app:itemIconTint="@drawable/selector"
         app:menu="@menu/navigation_menu" />
 
 </com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout>
