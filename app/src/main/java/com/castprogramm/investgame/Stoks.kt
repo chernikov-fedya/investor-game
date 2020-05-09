@@ -1,13 +1,9 @@
 package com.castprogramm.investgame
 
 object Stoks {
-    var stocks: MutableList<Stock> = mutableListOf(
-        Stock().apply { name = "Акции Fitness-Project" },
-        Stock().apply { name = "Акции Google"},
-        Stock().apply { name = "Акции Apple"},
-        Stock().apply { name = "Акции Samsung"},
-        Stock().apply { name = "Акции Xiaomi"},
-        Stock().apply { name = "Акции InvesterGame" },
-        Stock().apply { name = "Акции Huawei"},
-        Stock().apply { name = "Акции Mail.Ru"})
+    var allStoks: MutableList<Stock> = mutableListOf(
+        Stock().apply { name = "СЫР"; cost = 1352.5},
+        Stock().apply { name = "Nokia";cost = 240.2},
+        Stock().apply { name = "MOMO";cost = 1400.24},
+        Stock().apply { name = "KinderMorgan";cost = 1050.0})
 }

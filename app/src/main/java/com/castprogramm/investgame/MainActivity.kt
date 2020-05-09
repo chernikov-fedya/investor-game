@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener
 import kotlinx.android.synthetic.main.fragment_all_stock.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior as Behavior1
 
@@ -24,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     var handler = Handler()
     var testing = Updater(handler)
     //var new = News()
-    var broker = Broker()
     var news = Enterprise()
     var industry = Industry()
 
@@ -45,35 +46,40 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         testing.objectsToUpdate.add(news)
         testing.objectsToUpdate.add(industry)
-        testing.objectsToUpdate.plusAssign(Stoks.stocks)
+        testing.objectsToUpdate.plusAssign(mstck)
         testing.objectsToUpdate.add(stock)
         testing.objectsToUpdate.add(ss)
         handler.post(testing)
-        StockAdapter.activity = supportFragmentManager
-
+        StockAdapter.fragmentManager = supportFragmentManager
+        bnv.setOnNavigationItemSelectedListener(object : OnNavigationItemSelectedListener {
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                when(item.itemId){
+                    R.id.butProfile -> {
+                        val fm = supportFragmentManager
+                        val ft = fm.beginTransaction()
+                        var f = BrokerFragment.newInstance(Stoks.allStoks, Broker.name, Broker.wallet)
+                        ft.replace(R.id.frame_menu, f)
+                        ft.commit()
+                    }
+                    R.id.butStock ->{
+                        val fm = supportFragmentManager
+                        val ft = fm.beginTransaction()
+                        var f = AllStockFragment.newInstance(Stoks.allStoks)
+                        ft.replace(R.id.frame_menu, f)
+                        ft.commit()
+                    }
+                    R.id.butNews ->{
+                        val fm = supportFragmentManager
+                        val ft = fm.beginTransaction()
+                        var f = NewsFragment.newInstance(mutableListOf(news.msg, industry.msg, ss.msg))
+                        ft.replace(R.id.frame_menu, f)
+                        ft.commit()
+                    }
+                }
+                return true
+            }
+        })
     }
-        fun runProfile(item: MenuItem) {
-            val fm = supportFragmentManager
-            val ft = fm.beginTransaction()
-            var f = BrokerFragment.newInstance(Stoks.stocks)
-            ft.replace(R.id.frame_menu, f)
-            ft.commit()
-        }
-
-        fun runStock(item: MenuItem) {
-            val fm = supportFragmentManager
-            val ft = fm.beginTransaction()
-            var f = AllStockFragment.newInstance(Stoks.stocks)
-            ft.replace(R.id.frame_menu, f)
-            ft.commit()
-    }
-        fun runNews(item: MenuItem){
-            val fm = supportFragmentManager
-            val ft = fm.beginTransaction()
-            var f = NewsFragment.newInstance(mutableListOf(news.msg, industry.msg, ss.msg))
-            ft.replace(R.id.frame_menu, f)
-            ft.commit()
-        }
 
 
 

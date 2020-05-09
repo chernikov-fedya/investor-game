@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:onClick="runStock"
+        android:id="@+id/butStock"
         android:icon="@drawable/chart"
         android:checked="false"
         android:title="@string/chart"/>
     <item
-        android:onClick="runNews"
+        android:id="@+id/butNews"
         android:checked="false"
         android:icon="@drawable/web"
         android:title="@string/news"/>
     <item
-        android:onClick="runProfile"
+        android:id="@+id/butProfile"
         android:checked="false"
         android:icon="@drawable/person"
         android:title="@string/profile"/>

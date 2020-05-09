@@ -1,25 +1,14 @@
 package com.castprogramm.investgame
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.os.Build
-import android.os.Handler
-import android.provider.ContactsContract
-import android.system.Os.listen
-import android.util.ArrayMap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.RecyclerView
 import com.jjoe64.graphview.series.DataPoint
-import java.time.format.DateTimeFormatter
 import java.util.*
 import android.system.Os.listen
 import androidx.cardview.widget.CardView
@@ -35,10 +24,8 @@ open class Stock: Up {
     var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData()
     var costs : MutableList<DataPoint> = mutableListOf()
 
-
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun update() {
-        costs.add(DataPoint(costs.size.toDouble(), (100..1000).random().toDouble()))
+        costs.add(DataPoint(costs.size.toDouble(), cost))
         costsofStock.value = costs
     }
 }
@@ -67,7 +54,7 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolde
     }
 
     companion object{
-        var activity : FragmentManager? = null
+        var fragmentManager : FragmentManager? = null
         class StockVIewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
             var name: TextView = itemView.findViewById(R.id.name_st)
             var cost: TextView = itemView.findViewById(R.id.cost_st)
@@ -78,7 +65,7 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolde
                 cost.setText(stock.cost.toString())
                 quantity.setText(stock.quantity.toString())
                 cardView.setOnClickListener {
-                    val fm = activity
+                    val fm = fragmentManager
                     val ft = fm?.beginTransaction()
                     var f = StockFragment.instfragment(stock)
                     ft?.replace(R.id.frame_menu, f)
