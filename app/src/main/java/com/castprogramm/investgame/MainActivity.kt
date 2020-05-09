@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 
 import androidx.viewpager.widget.ViewPager
+import com.castprogramm.investgame.Stoks.newsarray
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         testing.objectsToUpdate.add(news)
         testing.objectsToUpdate.add(industry)
         testing.objectsToUpdate.plusAssign(mstck)
-        testing.objectsToUpdate.add(stock)
+        testing.objectsToUpdate.plusAssign(Stoks.allStoks)
         testing.objectsToUpdate.add(ss)
         handler.post(testing)
         StockAdapter.fragmentManager = supportFragmentManager
@@ -71,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.butNews ->{
                         val fm = supportFragmentManager
                         val ft = fm.beginTransaction()
-                        var f = NewsFragment.newInstance(mutableListOf(news.msg, industry.msg, ss.msg))
+                        var f = NewsFragment.newInstance(newsarray)
                         ft.replace(R.id.frame_menu, f)
                         ft.commit()
                     }
