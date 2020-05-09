@@ -6,4 +6,5 @@ object Stoks {
         Stock().apply { name = "Nokia";cost = 240.2},
         Stock().apply { name = "MOMO";cost = 1400.24},
         Stock().apply { name = "KinderMorgan";cost = 1050.0})
+    var newsarray: MutableList<String> = mutableListOf()
 }

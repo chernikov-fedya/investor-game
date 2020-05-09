@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.castprogramm.investgame.Stoks.newsarray
 
 abstract class News: Up {
     var name: String? = null
     var eventType: String? = null
     var msg: String = ""
-    var msgs1: Array<String> = arrayOf(
+    /*var msgs1: Array<String> = arrayOf(
         "Хорошие новости! В $name произошло $eventType. Акционерам" +
                 " салам, остальным соболезнуем",
         "Брокеры в шоке! Зафиксирован небывалый $eventType цен в $name ",
@@ -22,7 +23,7 @@ abstract class News: Up {
                 "владельцев задуматься о поиске новой работы.",
         "История кэшберри: все владельцы акций в $name прочувствовали $eventType на себе",
         "Этот день вы точно запомните! Алексей упал в обморок, когда открыл биржу..."
-    )
+    )*/
     override fun update() {
         for (i in 0..arrayStockGroup.size-1){
             arrayStockGroup[i].changePrice(makeEvent())
@@ -36,28 +37,28 @@ abstract class News: Up {
     }
     fun makeEvent():TypeEvent =
         when ((0..100).random()) {
-            in 1..5 ->  {sadmessage()
-                eventType = "кризис"
+            in 1..5 ->  {eventType = "кризис"
+                sadmessage()
                 TypeEvent.CRYSIS
             }
-            in 5..15 ->  {sadmessage()
-                eventType = "обвал"
+            in 5..15 ->  { eventType = "обвал"
+                sadmessage()
                 TypeEvent.OBVAL
             }
             in 15..85 ->  TypeEvent.NOTHING
-            in 85..90 ->  {funnymessage()
-                eventType = "подъем"
+            in 85..90 ->  {eventType = "подъем"
+                funnymessage()
                 TypeEvent.PODEM
             }
-            in 90..100 ->  {funnymessage()
-                eventType = "рост"
+            in 90..100 ->  {eventType = "рост"
+                funnymessage()
                 TypeEvent.INCREASE
             }
             else -> TypeEvent.NOTHING
         }
 
     var events: MutableList<String> = mutableListOf()
-    var allcountries: MutableList<String> = mutableListOf()
+   // var allcountries: MutableList<String> = mutableListOf()
     var arrayStockGroup: MutableList<StockGroup> = mutableListOf()
     init {
 
@@ -84,62 +85,109 @@ enum class TypeEvent(){
 }
 class Country(): News() {
 
+    init {
+        //allcountries = mutableListOf("Россия", "Пендосия", "Украина")
+        events = mutableListOf("повышение", "понижение")
+        eventType = TypeEvent.values()[(0..TypeEvent.values().size-1).random()].name
+        //name = allcountries[(0..allcountries.size-1).random()]
+        name = Countries.values()[(0..Countries.values().size-1).random()].name
+        msg = "В стране $name произошло $eventType цен"
+    }
     override fun sadmessage() {
-        msg = msgs1[(0..msgs1.size-1).random()]
+       // msg = msgs1[(0..msgs1.size-1).random()]
         Log.d("debug", msg)
+        events = mutableListOf("повышение", "понижение")
+        eventType = "понижение"
+        //name = allcountries[(0..allcountries.size-1).random()]
+        name = Countries.values()[(0..Countries.values().size-1).random()].name
+        msg = "В стране $name произошло $eventType цен"
+        newsarray.add(msg)
     }
 
     override fun funnymessage() {
-        msg = msgs2[(0..msgs2.size-1).random()]
+        //msg = msgs2[(0..msgs2.size-1).random()]
         Log.d("debug", msg)
+        events = mutableListOf("повышение", "понижение")
+        eventType = "повышение"
+        //name = allcountries[(0..allcountries.size-1).random()]
+        name = Countries.values()[(0..Countries.values().size-1).random()].name
+        msg = "В стране $name произошло $eventType цен"
+        newsarray.add(msg)
     }
 
-    init {
-        allcountries = mutableListOf("Россия", "Пендосия", "Украина")
-        events = mutableListOf("повышение", "понижение")
-        eventType = events[(0..events.size-1).random()]
-        name = allcountries[(0..allcountries.size-1).random()]
-        msg = "В стране $name произошло $eventType цен"
-    }
+
 
 }
 class Industry: News(){
+    init {
+    events = mutableListOf("прорыв", "упадок")
+    //allcountries = mutableListOf("Россия", "Пендосия", "Украина")
+    eventType = events[(0..events.size-1).random()]
+    //name = allcountries[(0..(allcountries.size-1)).random()]
+    name = Industries.values()[(0..Industries.values().size-1).random()].name
+    msg = "В отрасли $name произошел $eventType"
+
+}
     override fun sadmessage() {
-        msg = msgs1[(0..msgs1.size-1).random()]
+       // msg = msgs1[(0..msgs1.size-1).random()]
         Log.d("debug", msg)
+        events = mutableListOf("прорыв", "упадок")
+        //allcountries = mutableListOf("Россия", "Пендосия", "Украина")
+        eventType = events[(0..events.size-1).random()]
+        //name = allcountries[(0..(allcountries.size-1)).random()]
+        name = Industries.values()[(0..Industries.values().size-1).random()].name
+        msg = "В отрасли $name произошел $eventType"
+        newsarray.add(msg)
     }
 
     override fun funnymessage() {
-        msg = msgs2[(0..msgs2.size-1).random()]
+        //msg = msgs2[(0..msgs2.size-1).random()]
         Log.d("debug", msg)
+        events = mutableListOf("прорыв", "упадок")
+        //allcountries = mutableListOf("Россия", "Пендосия", "Украина")
+        eventType = events[(0..events.size-1).random()]
+        //name = allcountries[(0..(allcountries.size-1)).random()]
+        name = Industries.values()[(0..Industries.values().size-1).random()].name
+        msg = "В отрасли $name произошел $eventType"
+        newsarray.add(msg)
     }
 
-    init {
-        events = mutableListOf("прорыв", "упадок")
-        allcountries = mutableListOf("Россия", "Пендосия", "Украина")
-        eventType = events[(0..events.size-1).random()]
-        name = allcountries[(0..(allcountries.size-1)).random()]
-        msg = "В отрасли $name произошел $eventType"
-    }
+
 }
 class Enterprise: News(){
+    init {
+    events = mutableListOf("кризис", "прикол")
+    //allcountries = mutableListOf("GDFdfdgf", "gfd", "fdgfgdf", "dfgfd")
+    //name = allcountries[(0..allcountries.size-1).random()]
+    name = Companies.values()[(0..Companies.values().size-1).random()].name
+    eventType = events[(0..events.size-1).random()]
+    msg = "В компании $name произошел $eventType"
+}
     override fun sadmessage() {
-        msg = msgs1[(0..msgs1.size-1).random()]
+        //msg = msgs1[(0..msgs1.size-1).random()]
         Log.d("debug", msg)
+        events = mutableListOf("кризис", "прикол")
+        //allcountries = mutableListOf("GDFdfdgf", "gfd", "fdgfgdf", "dfgfd")
+        //name = allcountries[(0..allcountries.size-1).random()]
+        name = Companies.values()[(0..Companies.values().size-1).random()].name
+        eventType = events[(0..events.size-1).random()]
+        msg = "В компании $name произошел $eventType"
+        newsarray.add(msg)
     }
 
     override fun funnymessage() {
-        msg = msgs2[(0..msgs2.size-1).random()]
+        //msg = msgs2[(0..msgs2.size-1).random()]
         Log.d("debug", msg)
-    }
-
-    init {
         events = mutableListOf("кризис", "прикол")
-        allcountries = mutableListOf("GDFdfdgf", "gfd", "fdgfgdf", "dfgfd")
-        name = allcountries[(0..allcountries.size-1).random()]
+        //allcountries = mutableListOf("GDFdfdgf", "gfd", "fdgfgdf", "dfgfd")
+        //name = allcountries[(0..allcountries.size-1).random()]
+        name = Companies.values()[(0..Companies.values().size-1).random()].name
         eventType = events[(0..events.size-1).random()]
         msg = "В компании $name произошел $eventType"
+        newsarray.add(msg)
     }
+
+
 }
 class NewsAdapter(): RecyclerView.Adapter<NewsAdapter.Companion.NewsViewHolder>(){
     var msgs : MutableList<String> = mutableListOf()

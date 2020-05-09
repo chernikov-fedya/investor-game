@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     var testing = Updater(handler)
     //var new = News()
     var news = Enterprise()
+    var country = Country()
     var industry = Industry()
 
     var stock = Stock().apply {
@@ -38,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         cost = 1400.24}, Stock().apply { name = "KinderMorgan"
         cost = 1050.0})
     var stckgroup: StockGroup =  StockGroup().apply { name = "Техника"; grouplist = mutableListOf(mstck[0], mstck[1], mstck[2])  }
-
     var ss: Country  = Country().apply { arrayStockGroup.add(stckgroup)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
