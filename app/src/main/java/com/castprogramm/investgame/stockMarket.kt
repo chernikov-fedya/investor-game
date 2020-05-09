@@ -1,8 +1,8 @@
 package com.castprogramm.investgame
 
-import android.widget.Toast
+import com.castprogramm.investgame.EnumClasses.Error
 
-class stockMarket() {
+class stockMarket {
     var markStock = Stoks.allStoks
 
     fun sold(broker: Broker, stock: Stock, k: Int = 1): Error? {
@@ -22,7 +22,7 @@ class stockMarket() {
             return Error.NOMONEY
         else{
             broker.wallet = broker.wallet.minus(stock.cost * k)
-            broker.myStock.add(stock)
+            broker.myStock.find { it == stock }?.let { it.quantity.plus(1) } ?:{broker.myStock.add(stock)}()
             return null
         }
 

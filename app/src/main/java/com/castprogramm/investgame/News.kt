@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.castprogramm.investgame.EnumClasses.Companies
+import com.castprogramm.investgame.EnumClasses.Countries
+import com.castprogramm.investgame.EnumClasses.Industries
 import com.castprogramm.investgame.Stoks.newsarray
 
 abstract class News: Up {

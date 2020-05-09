@@ -1,4 +1,4 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.EnumClasses
 
 enum class Industries(var n : String) {
     OilIndustry("Нефтяная промышленность"),

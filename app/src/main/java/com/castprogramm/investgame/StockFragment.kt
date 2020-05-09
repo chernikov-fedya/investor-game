@@ -11,7 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_broker.*
+import com.castprogramm.investgame.EnumClasses.Error
 
 
 class StockFragment : Fragment() {

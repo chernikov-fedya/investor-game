@@ -1,5 +1,7 @@
 package com.castprogramm.investgame
 
+import com.castprogramm.investgame.EnumClasses.Companies
+
 object Stoks {
     var allStoks: MutableList<Stock> = mutableListOf(
         Stock().apply { name = "СЫР"; cost = 1352.5},

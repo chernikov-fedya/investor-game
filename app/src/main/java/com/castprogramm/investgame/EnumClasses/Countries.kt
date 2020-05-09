@@ -1,4 +1,4 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.EnumClasses
 
 enum class Countries(var s : String) {
     USA("США"),

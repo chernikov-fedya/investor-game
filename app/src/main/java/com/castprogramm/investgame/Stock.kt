@@ -11,17 +11,17 @@ import java.util.*
 
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentManager
+import com.castprogramm.investgame.EnumClasses.Companies
+
 
 
 class Stock: Up {
     var name: String = ""
     var cost: Double = 0.0
-    var quantity: Int = 0  //Поменять для корректного отображения прибыли
+    var quantity: Int = 1  //Поменять для корректного отображения прибыли
     var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData()
     var costs : MutableList<DataPoint> = mutableListOf()
-    var industries : Industries? = null
-    var country : Country? = null
-    var company : Company? = null
+    var company : Companies? = null
     override fun update() {
         costs.add(DataPoint(costs.size.toDouble(), cost))
         costsofStock.value = costs

@@ -1,4 +1,4 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.EnumClasses
 
 enum class Error(var s: String) {
     NOMONEY("не хватает денег"),
