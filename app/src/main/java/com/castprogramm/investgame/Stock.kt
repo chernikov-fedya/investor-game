@@ -1,38 +1,31 @@
 package com.castprogramm.investgame
 
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.jjoe64.graphview.series.DataPoint
 import java.util.*
-import android.system.Os.listen
+
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentManager
-import java.time.LocalDate
 
 
-
-open class Stock: Up {
+class Stock: Up {
     var name: String = ""
     var cost: Double = 0.0
     var quantity: Int = 0  //Поменять для корректного отображения прибыли
     var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData()
     var costs : MutableList<DataPoint> = mutableListOf()
-
+    var industries : Industries? = null
+    var country : Country? = null
+    var company : Company? = null
     override fun update() {
         costs.add(DataPoint(costs.size.toDouble(), cost))
         costsofStock.value = costs
     }
-}
-
-class StockPoint(cost : Double): Stock() {
-    var costss: Double = cost
-    var date = Date()
 }
 
 class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolder>(){
@@ -46,8 +39,6 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolde
     }
 
     override fun getItemCount(): Int = stocks.size
-
-
 
     override fun onBindViewHolder(holder: StockVIewHolder, position: Int) {
             holder.bind(stocks[position])
@@ -73,8 +64,6 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolde
                     ft?.commit()
                 }
             }
-
         }
-
     }
 }
