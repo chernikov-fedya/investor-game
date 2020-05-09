@@ -9,6 +9,7 @@ object Stoks {
     var newsarray: MutableList<String> = mutableListOf()
     var realAllStock: MutableList<Stock> = mutableListOf(
         Stock().apply { name = Companies.Apple.n; cost = Companies.Apple.cent},
-        Stock().apply { name = Companies.Intel.n; cost = Companies.Intel.cent }
+        Stock().apply { name = Companies.Intel.n; cost = Companies.Intel.cent},
+        Stock().apply { name = Companies.Twitter.n; cost = Companies.Twitter.cent}
     )
 }
