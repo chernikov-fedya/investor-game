@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.reset -> {
                 Broker.myStock.clear()
+                Stoks.newsarray.clear()
                 Broker.myStockCost = 0.0
                 Broker.wallet = 10000.0
                 Stoks.allStoks = mutableListOf(
