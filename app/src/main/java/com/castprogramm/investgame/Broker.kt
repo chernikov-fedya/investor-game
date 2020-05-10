@@ -1,8 +1,6 @@
 package com.castprogramm.investgame
 
 import kotlin.math.round
-import java.math.BigDecimal
-import java.math.RoundingMode
 
 object Broker: Up {
     var name = "Alexsey"
@@ -21,9 +19,6 @@ object Broker: Up {
         var expense = Expense()
         for (i in 0..myStock.size-1){
             myStockCost = (myStockCost + myStock[i].cost * myStock[i].quantity - expense.loss).round(2)
-
-
         }
-        
     }
 }

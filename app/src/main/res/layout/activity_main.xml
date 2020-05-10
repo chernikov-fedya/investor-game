@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,6 +15,7 @@
     android:fitsSystemWindows="true"
     android:paddingBottom="50dp"
     />
+
 <!--    <TextView-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="20dp"-->

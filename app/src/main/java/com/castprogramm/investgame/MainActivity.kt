@@ -3,6 +3,7 @@ package com.castprogramm.investgame
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import com.castprogramm.investgame.Stoks.newsarray
@@ -10,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavig
 
 
 class MainActivity : AppCompatActivity() {
+
     var handler = Handler()
     var testing = Updater(handler)
 
@@ -18,6 +20,22 @@ class MainActivity : AppCompatActivity() {
         Stock().apply {name = "Nokia"; cost = 240.2 },
         Stock().apply { name = "MOMO"; cost = 1400.24 },
         Stock().apply {name = "KinderMorgan"; cost = 1050.0})
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.reset -> {
+                Broker.myStock.clear()
+                Broker.myStockCost = 0.0
+                Broker.wallet = 10000.0
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
