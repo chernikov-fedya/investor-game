@@ -58,21 +58,20 @@ abstract class News: Up {
     abstract fun funnymessage(): String
 
     fun makeEvent():TypeEvent =
-        when ((0..100).random()) {
+        when ((0..1000).random()) {
             in 1..5 ->  {eventType = "кризис"
                 sadmessage()
                 TypeEvent.CRYSIS
             }
-            in 5..30 ->  { eventType = "обвал"
+            in 5..15 ->  { eventType = "обвал"
                 sadmessage()
                 TypeEvent.OBVAL
             }
-            in 30..70 ->  TypeEvent.NOTHING
-            in 70..90 ->  {eventType = "подъем"
+            in 945..995 ->  {eventType = "подъем"
                 funnymessage()
                 TypeEvent.PODEM
             }
-            in 90..100 ->  {eventType = "рост"
+            in 995..1000 ->  {eventType = "рост"
                 funnymessage()
                 TypeEvent.INCREASE
             }
