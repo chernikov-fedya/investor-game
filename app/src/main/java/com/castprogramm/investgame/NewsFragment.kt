@@ -44,7 +44,7 @@ class NewsFragment: Fragment() {
                 swipeRefreshLayout.isRefreshing = false
             }
             handler.postDelayed(
-                runnable, 1000.toLong()
+                runnable, 500.toLong()
             )
         }
         var recycler : RecyclerView = ret.findViewById(R.id.aleksey)
