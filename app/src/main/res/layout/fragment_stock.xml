@@ -6,20 +6,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/name_graph"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:gravity="center"
-        android:id="@+id/namestock"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/graphic"
-        tools:ignore="MissingConstraints" />
+        android:layout_height="40dp"
+        android:background="#FFF"
+        android:gravity="center_horizontal"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/namestock"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:layout_toRightOf="@+id/icon_graph"
+            android:gravity="center"
+            android:textSize="20sp"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/icon_graph"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/intel" />
+
+    </RelativeLayout>
 
     <com.castprogramm.investgame.CostView
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:id="@+id/graphic"
-        app:layout_constraintTop_toBottomOf="@id/namestock"
+        app:layout_constraintTop_toBottomOf="@id/name_graph"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -27,27 +48,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Введите количество акций:"
+        android:layout_marginStart="16dp"
         android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/graphic"
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Продать"
-        android:layout_marginTop="200dp"
-        app:layout_constraintTop_toBottomOf="@id/graphic"
-        android:gravity="left"
         android:id="@+id/sold"
-        tools:ignore="MissingConstraints" />
-    <Button
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text="Купить"
-        android:id="@+id/buy"
-        android:layout_marginTop="200dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/graphic"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
         android:gravity="center"
+        android:text="Продать"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quantity_stock"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/buy"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="Купить"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quantity_stock"
         tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:id="@+id/cardinal"
-        app:cardCornerRadius="40dp">
+        app:cardCornerRadius="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -22,6 +22,7 @@
             <ImageView
                 android:id="@+id/icon_comp"
                 android:layout_width="64dp"
+                android:layout_marginRight="8dp"
                 android:layout_height="64dp"/>
 
             <TextView
