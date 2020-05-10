@@ -23,8 +23,6 @@ class stockMarket {
     }
 
     fun buy(stock: Stock, k: Int): Error? {
-        if (markStock.size < k)
-            return Error.EMPTYMARKET
         if (Broker.wallet < stock.cost * k)
             return Error.NOMONEY
         else{
