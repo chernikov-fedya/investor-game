@@ -69,10 +69,6 @@ class MainActivity : AppCompatActivity() {
 
         //testing.objectsToUpdate.add(ss)
             handler.post(testing)
-
-
-
-
         StockAdapter.fragmentManager = supportFragmentManager
         BrokerAdapter.fragmentManager = supportFragmentManager
             bnv.setOnNavigationItemSelectedListener(object : OnNavigationItemSelectedListener {
