@@ -15,9 +15,8 @@ object Broker: Up {
     }
     override fun update() {
         myStockCost = 0.0
-        myStockCost = wallet
         var expense = Expense()
-        myStockCost = myStockCost - expense.loss
+        wallet = wallet - expense.loss
         for (i in 0..myStock.size-1){
             myStockCost = (myStockCost + myStock[i].cost * myStock[i].quantity).round(2)
         }
