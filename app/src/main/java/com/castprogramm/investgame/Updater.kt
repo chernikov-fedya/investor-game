@@ -3,10 +3,8 @@ package com.castprogramm.investgame
 import android.os.Handler
 
 // класс для обновления состояния всех объектов
-class Updater(var handler: Handler) : Runnable{
-    companion object{
-        val UPDATE_TIME : Long = 5000 // период обновления
-    }
+class Updater(var handler: Handler, var UPDATE_TIME : Long = 5000) : Runnable{
+
     var objectsToUpdate : MutableList<Up> = mutableListOf()
     var timePoint : Long // нужна для расчета врмени которое прошло с предыдущего обновления
     var runFlag = true
