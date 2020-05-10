@@ -14,7 +14,6 @@ class CostView(context: Context, atrr: AttributeSet): GraphView(context, atrr), 
     init {
         this.viewport.setScalable(true)
         this.viewport.setScalableY(true)
-        this.viewport.scrollToEnd()
     }
     fun addStock(temp: Stock, live:LifecycleOwner){
         var newtest : LiveData<MutableList<DataPoint>> = temp.costsofStock
@@ -22,7 +21,12 @@ class CostView(context: Context, atrr: AttributeSet): GraphView(context, atrr), 
             var functiom = LineGraphSeries<DataPoint>(Array(t.size, { t[it] }))
             this.addSeries(functiom)
             this.viewport.scrollToEnd()
-            this.viewport.computeScroll() })
+            this.viewport.computeScroll()
+            this.viewport.maxYAxisSize
+            this.viewport.maxXAxisSize
+            this.viewport.setMinimalViewport(0.0, this.viewport.getMaxX(true),0.0, this.viewport.getMaxY(true))
+
+        })
     }
 
     override fun update() {

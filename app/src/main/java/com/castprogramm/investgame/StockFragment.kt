@@ -82,7 +82,6 @@ class StockFragment : Fragment() {
         })
         costGraphic.viewport.isScalable = true
         costGraphic.viewport.isScrollable = true
-        costGraphic.gridLabelRenderer.verticalAxisTitle = "Цена"
         costGraphic.gridLabelRenderer.horizontalAxisTitle = "Время"
         a?.testing?.objectsToUpdate?.add(costGraphic)
         a?.handler?.post(a?.testing)

@@ -42,9 +42,9 @@ class BrokerFragment : Fragment() {
         var nameBro : TextView = ret.findViewById(R.id.name)
         var walletBro : TextView = ret.findViewById(R.id.wallet)
         var stockPriceBro: TextView = ret.findViewById(R.id.stockPrice)
-        nameBro.setText(name)
-        walletBro.setText(wallet.toString())
-        stockPriceBro.setText(stockPrice.toString())
+        nameBro.setText("Имя: " + name)
+        walletBro.setText("Наличные:  " + wallet.toString())
+        stockPriceBro.setText("Стоимость моих акций:  " + stockPrice.toString())
         var pi = LinearLayoutManager(ret.context)
         recycler.layoutManager = pi
         return ret
