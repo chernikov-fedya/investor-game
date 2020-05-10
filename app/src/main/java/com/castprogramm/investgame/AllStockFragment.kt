@@ -27,7 +27,7 @@ class AllStockFragment: Fragment() {
         recycler.adapter = StockAdapter().apply {
             stocks = recStocks
         }
-
+        recycler.itemAnimator
         var pi = LinearLayoutManager(ret.context)
         recycler.layoutManager = pi
         return ret

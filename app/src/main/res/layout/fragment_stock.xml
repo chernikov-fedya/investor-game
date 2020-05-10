@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:gravity="center"
-        android:text="sdfsdf"
         android:id="@+id/namestock"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/graphic"
@@ -22,6 +21,16 @@
         android:id="@+id/graphic"
         app:layout_constraintTop_toBottomOf="@id/namestock"
         tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/quantity_stock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Введите количество акций:"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/graphic"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

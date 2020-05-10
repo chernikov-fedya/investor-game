@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/cardinal"
+        android:id="@+id/cardinalb"
         app:cardCornerRadius="40dp">
 
         <RelativeLayout
@@ -20,28 +21,35 @@
             android:padding="14dp"
             android:orientation="vertical">
             <ImageView
-                android:id="@+id/icon_comp"
+                android:id="@+id/icon_compb"
                 android:layout_width="64dp"
                 android:layout_height="64dp"/>
 
             <TextView
-                android:id="@+id/name_st"
+                android:id="@+id/name_stb"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_toRightOf="@+id/icon_comp"
+                android:layout_toEndOf="@+id/icon_compb"
                 android:layout_marginTop="10dp"
-                android:text="Stock"
                 android:gravity="left"/>
 
             <TextView
-                android:id="@+id/cost_st"
-                android:layout_toRightOf="@+id/icon_comp"
+                android:id="@+id/cost_stb"
+                android:layout_toRightOf="@+id/icon_compb"
                 android:layout_marginBottom="10dp"
-                android:layout_below="@+id/name_st"
+                android:layout_below="@+id/name_stb"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:gravity="left"
-                android:text="Cost" />
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:id="@+id/quantity_stb"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp" />
+
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

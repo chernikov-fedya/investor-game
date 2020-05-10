@@ -6,13 +6,12 @@ class StockGroup {
     fun changePrice(typeEvent: TypeEvent){
         var a: Double = when(typeEvent){
             TypeEvent.CRYSIS -> 0.8
-            TypeEvent.OBVAL -> 0.87
+            TypeEvent.OBVAL -> 0.9
             TypeEvent.NOTHING -> 1.0
-            TypeEvent.PODEM -> 1.05
-            TypeEvent.INCREASE ->1.14
+            TypeEvent.PODEM -> 1.1
+            TypeEvent.INCREASE ->1.20
             else -> 1.0
         }
-
         for (i in 0..grouplist.size-1){
         grouplist[i].cost = grouplist[i].cost.times(a)
 

@@ -1,5 +1,7 @@
 package com.castprogramm.investgame
 
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +33,7 @@ class BrokerFragment : Fragment() {
     ): View? {
         var ret = inflater.inflate(R.layout.fragment_broker, container, false)
         var recycler : RecyclerView = ret.findViewById(R.id.rec)
-        recycler.adapter = StockAdapter().apply {
+        recycler.adapter = BrokerAdapter().apply {
             stocks = recStocks
         }
 

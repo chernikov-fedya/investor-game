@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -29,8 +30,13 @@ class StockFragment : Fragment() {
         var stockMarket = stockMarket()
         var bsold : Button = view.findViewById(R.id.sold)
         var bbuy : Button = view.findViewById(R.id.buy)
+        var k: EditText = view.findViewById(R.id.quantity_stock)
+
         bsold.setOnClickListener { v->
-            if (stockMarket.sold(stock) == Error.EMPTYBAG){
+            var cent = 1
+            if (k.text.isNotEmpty() )
+                cent = k.text.toString().toInt()
+            if (stockMarket.sold(stock, cent) == Error.EMPTYBAG){
                 var texr = Error.EMPTYBAG.s
                 var toast = Toast.makeText(this.activity, texr, Toast.LENGTH_LONG)
                 toast.setGravity(Gravity.CENTER, 0, 0)
@@ -44,7 +50,10 @@ class StockFragment : Fragment() {
             }
         }
         bbuy.setOnClickListener { v->
-            when(stockMarket.buy(stock)){
+            var cent = 1
+            if (k.text.isNotEmpty() )
+                cent = k.text.toString().toInt()
+            when(stockMarket.buy(stock, cent)){
                 Error.EMPTYMARKET -> {
                     var text = Error.EMPTYMARKET.s
                     var toast = Toast.makeText(this.activity, text, Toast.LENGTH_LONG)
@@ -75,7 +84,7 @@ class StockFragment : Fragment() {
         a?.handler?.post(a?.testing)
         costGraphic.addStock(stock, this)
         var name : TextView = view.findViewById(R.id.namestock)
-        name.setText(stock.name)
+        name.setText(stock.companies?.n)
         return view
     }
     companion object{

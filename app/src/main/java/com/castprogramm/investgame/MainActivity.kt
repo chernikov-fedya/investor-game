@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
 
         StockAdapter.fragmentManager = supportFragmentManager
+        BrokerAdapter.fragmentManager = supportFragmentManager
             bnv.setOnNavigationItemSelectedListener(object : OnNavigationItemSelectedListener {
                 override fun onNavigationItemSelected(item: MenuItem): Boolean {
                     when (item.itemId) {
