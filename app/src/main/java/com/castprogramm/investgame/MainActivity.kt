@@ -22,13 +22,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-            // добавление новостей к апдейтеру
+
+        testing.objectsToUpdate.add(Broker)
+        // добавление новостей к апдейтеру
         News.fillNews(testing)
             testing.objectsToUpdate.plusAssign(mstck)
             testing.objectsToUpdate.plusAssign(Stoks.allStoks)
 
         //testing.objectsToUpdate.add(ss)
             handler.post(testing)
+
+
 
 
         StockAdapter.fragmentManager = supportFragmentManager
@@ -42,7 +46,8 @@ class MainActivity : AppCompatActivity() {
                             var f = BrokerFragment.newInstance(
                                 Broker.myStock,
                                 Broker.name,
-                                Broker.wallet
+                                Broker.wallet,
+                                Broker.myStockCost
                             )
                             ft.replace(R.id.frame_menu, f)
                             ft.commit()

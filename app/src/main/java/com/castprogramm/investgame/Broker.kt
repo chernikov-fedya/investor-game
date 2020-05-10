@@ -1,12 +1,16 @@
 package com.castprogramm.investgame
 
-object Broker {
+object Broker: Up {
     var name = "Alexsey"
     var myStock = mutableListOf<Stock>()
-    var wallet: Double = 10000.0 // сколько есть денег у брокера
-    fun fill(){ //закупаем акции
-        for (i in 0..(2..5).random()){
-           // myStock?.add(Stock("крутыши", (0..3).random().toDouble()))
+    var wallet: Double = 10000.0// сколько есть денег у брокера
+    var myStockCost: Double = 0.0
+
+    override fun update() {
+        myStockCost = 0.0
+        myStockCost = wallet
+        for (i in 0..myStock.size-1){
+            myStockCost = myStockCost + myStock[i].cost * myStock[i].quantity
         }
     }
 }
