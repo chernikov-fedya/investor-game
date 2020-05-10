@@ -36,9 +36,6 @@
 
     </RelativeLayout>
 
-
-
-
     <com.castprogramm.investgame.CostView
         android:layout_width="wrap_content"
         android:layout_height="200dp"
@@ -50,32 +47,34 @@
         android:id="@+id/quantity_stock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:hint="Введите количество акций:"
+        android:layout_marginStart="16dp"
         android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/graphic"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/sold"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="20dp"
         android:layout_marginStart="16dp"
-        android:gravity="left"
+        android:gravity="center"
         android:text="Продать"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/graphic"
+        app:layout_constraintTop_toBottomOf="@id/quantity_stock"
         tools:ignore="MissingConstraints" />
+
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Купить"
         android:id="@+id/buy"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="200dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/graphic"
         android:gravity="center"
+        android:text="Купить"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quantity_stock"
         tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
