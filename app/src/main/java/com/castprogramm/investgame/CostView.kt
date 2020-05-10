@@ -20,7 +20,9 @@ class CostView(context: Context, atrr: AttributeSet): GraphView(context, atrr), 
         var newtest : LiveData<MutableList<DataPoint>> = temp.costsofStock
         newtest.observe(live, androidx.lifecycle.Observer { t ->
             var functiom = LineGraphSeries<DataPoint>(Array(t.size, { t[it] }))
-            this.addSeries(functiom) })
+            this.addSeries(functiom)
+            this.viewport.scrollToEnd()
+            this.viewport.computeScroll() })
     }
 
     override fun update() {

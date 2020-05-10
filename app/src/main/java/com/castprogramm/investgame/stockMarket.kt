@@ -6,12 +6,13 @@ class stockMarket {
     var markStock = Stoks.allStoks
 
     fun sold(stock: Stock, k: Int): Error? {
-        if (Broker.myStock.size < k)
+        if (Broker.myStock.find { it == stock } == null)
+            return Error.NOSTOCK
+        if (Broker.myStock.find { it == stock }?.quantity!! < k)
             return Error.EMPTYBAG
         else{
             Broker.wallet = Broker.wallet.plus(stock.cost * k)
-            Broker.myStockCost = Broker.myStockCost - stock.cost
-            Broker.myStock.remove(stock)
+            Broker.myStock.find { it == stock }!!.quantity -= k
             return null
         }
     }

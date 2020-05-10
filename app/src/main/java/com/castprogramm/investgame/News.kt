@@ -63,7 +63,7 @@ abstract class News: Up {
                 sadmessage()
                 TypeEvent.CRYSIS
             }
-            in 5..20 ->  { eventType = "обвал"
+            in 5..30 ->  { eventType = "обвал"
                 sadmessage()
                 TypeEvent.OBVAL
             }

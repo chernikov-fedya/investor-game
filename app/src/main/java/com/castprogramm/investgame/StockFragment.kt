@@ -6,13 +6,12 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import com.castprogramm.investgame.EnumClasses.Error
+import com.jjoe64.graphview.series.DataPoint
 
 
 class StockFragment : Fragment() {
@@ -31,7 +30,9 @@ class StockFragment : Fragment() {
         var bsold : Button = view.findViewById(R.id.sold)
         var bbuy : Button = view.findViewById(R.id.buy)
         var k: EditText = view.findViewById(R.id.quantity_stock)
-
+        var image: ImageView = view.findViewById(R.id.icon_graph)
+        var pr :TextView = view.findViewById(R.id.prquant)
+        image.setImageResource(stock.companies?.r!!)
         bsold.setOnClickListener { v->
             var cent = 1
             if (k.text.isNotEmpty() )
@@ -75,7 +76,10 @@ class StockFragment : Fragment() {
                 }
             }
         }
-
+        var newtest1 : LiveData<MutableList<DataPoint>> = stock.costsofStock
+        newtest1.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            pr.setText("Цена акции: "+ it.last().y.toString())
+        })
         costGraphic.viewport.isScalable = true
         costGraphic.viewport.isScrollable = true
         costGraphic.gridLabelRenderer.verticalAxisTitle = "Цена"
