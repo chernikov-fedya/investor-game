@@ -12,8 +12,13 @@ class stockMarket {
             return Error.EMPTYBAG
         else{
             Broker.wallet = Broker.wallet.plus(stock.cost * k)
-            Broker.myStock.find { it == stock }!!.quantity -= k
+            if (Broker.myStock.find { it == stock }!!.quantity == k)
+                Broker.myStock.remove(stock)
+
+            else
+                Broker.myStock.find { it == stock }!!.quantity -= k
             return null
+
         }
     }
 
