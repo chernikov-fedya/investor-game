@@ -10,6 +10,7 @@ class stockMarket {
             return Error.EMPTYBAG
         else{
             Broker.wallet = Broker.wallet.plus(stock.cost * k)
+            Broker.myStockCost = Broker.myStockCost - stock.cost
             Broker.myStock.remove(stock)
             return null
         }
