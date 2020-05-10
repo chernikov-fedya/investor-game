@@ -19,17 +19,25 @@
             android:layout_height="wrap_content"
             android:padding="14dp"
             android:orientation="vertical">
+            <ImageView
+                android:id="@+id/icon_comp"
+                android:layout_width="64dp"
+                android:src="@drawable/intel"
+                android:layout_marginRight="8dp"
+                android:layout_height="64dp"/>
 
             <TextView
                 android:id="@+id/name_st"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
+                android:layout_toRightOf="@+id/icon_comp"
                 android:layout_marginTop="10dp"
                 android:text="Stock"
                 android:gravity="left"/>
 
             <TextView
                 android:id="@+id/cost_st"
+                android:layout_toRightOf="@+id/icon_comp"
                 android:layout_marginBottom="10dp"
                 android:layout_below="@+id/name_st"
                 android:layout_width="wrap_content"
@@ -41,6 +49,7 @@
                 android:id="@+id/quantity_st"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:layout_toRightOf="@+id/icon_comp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
                 android:text="100" />
