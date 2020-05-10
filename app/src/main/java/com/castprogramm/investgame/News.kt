@@ -16,20 +16,13 @@ abstract class News: Up {
         // функция для фасовки всех акций и прикрепления к апдейтеру
         fun fillNews(updater: Updater){
             // создание групп стран
-            var countries : Array<StockGroup> = arrayOf(
-                StockGroup().apply { name = Countries.China.name },
-                StockGroup().apply { name = Countries.GreatBritan.name},
-                StockGroup().apply { name = Countries.Russia.name},
-                StockGroup().apply { name = Countries.USA.name},
-                StockGroup().apply { name = Countries.Germany.name}
-            )
+            var countries : Array<StockGroup> = Array(Countries.values().size)
+                {StockGroup().apply { name =  Countries.values()[it].name }}
+
             // создание групп отраслей
-            var industries : Array<StockGroup> = arrayOf(
-                StockGroup().apply { name = Industries.BankingIndustry.name },
-                StockGroup().apply { name = Industries.FoodIndustry.name},
-                StockGroup().apply { name = Industries.OilIndustry.name},
-                StockGroup().apply { name = Industries.Software.name}
-            )
+            var industries : Array<StockGroup> = Array(Industries.values().size)
+            {StockGroup().apply { name =  Industries.values()[it].name }}
+
             // создание группы на кажду акцию
             var companies = Array<StockGroup>(Stoks.allStoks.size) {
                 StockGroup().apply{
@@ -61,12 +54,9 @@ abstract class News: Up {
             arrayStockGroup[i].changePrice(makeEvent())
         }
     }
-    open fun sadmessage(): String {
-        return null.toString()
-    }
-    open fun funnymessage(): String {
-        return null.toString()
-    }
+    abstract fun sadmessage(): String
+    abstract fun funnymessage(): String
+
     fun makeEvent():TypeEvent =
         when ((0..100).random()) {
             in 1..5 ->  {eventType = "кризис"
@@ -90,11 +80,7 @@ abstract class News: Up {
         }
 
     var events: MutableList<String> = mutableListOf()
-   // var allcountries: MutableList<String> = mutableListOf()
     var arrayStockGroup: MutableList<StockGroup> = mutableListOf()
-    init {
-
-    }
 }
 enum class TypeEvent(){
     CRYSIS,
