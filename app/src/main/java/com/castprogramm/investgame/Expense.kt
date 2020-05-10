@@ -15,16 +15,16 @@ class Expense{
 
     fun makeLossEvent(): LossEvent=
         when ((0..100).random()) {
-            in 1..5 ->  {
+            in 1..15 ->  {
                 loss = 20.0
                 LossEvent.Illness
             }
-            in 5..20 ->  {
+            in 15..70 ->  {
                 loss = 40.0
                 LossEvent.Food
             }
-            in 30..70 ->  LossEvent.Nothing
-            in 70..90 ->  {
+            in 70..71 ->  LossEvent.Nothing
+            in 72..90 ->  {
                 loss = 20.0
                 LossEvent.Transport
             }
