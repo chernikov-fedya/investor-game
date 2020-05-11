@@ -8,11 +8,10 @@ import com.castprogramm.investgame.Up
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
-
-class CostView(context: Context, atrr: AttributeSet): GraphView(context, atrr),
-    Up {
+// Класс отрисовки графика, наследуемый от GraphView, с адапртацией под класс Stock
+class CostView(context: Context, atrr: AttributeSet): GraphView(context, atrr), Up {
     init {
-        this.viewport.setScalable(true)
+        this.viewport.isScalable = true // Добавление возмозможности настройки масштаба
         this.viewport.setScalableY(true)
     }
     fun addStock(temp: Stock, live:LifecycleOwner){

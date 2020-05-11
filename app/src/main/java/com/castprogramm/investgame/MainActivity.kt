@@ -15,8 +15,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.castprogramm.investgame.EnumClasses.Companies
-
-import com.castprogramm.investgame.Stoks.newsarray
+import com.castprogramm.investgame.broker.Broker
+import com.castprogramm.investgame.broker.BrokerFragment
+import com.castprogramm.investgame.news.News
+import com.castprogramm.investgame.news.NewsFragment
+import com.castprogramm.investgame.stock.*
+import com.castprogramm.investgame.stock.Stoks.newsarray
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
