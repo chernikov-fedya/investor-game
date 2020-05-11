@@ -3,6 +3,7 @@ package com.castprogramm.investgame
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
@@ -21,8 +22,10 @@ import kotlinx.android.synthetic.main.fragment_stock.*
 
 class StockFragment : Fragment() {
     var stock: Stock = Stock()
-
+    var x1: Int = 0
+    var x2: Int = 0
     var a = activity as MainActivity?
+    @SuppressLint("WrongConstant")
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,46 +44,54 @@ class StockFragment : Fragment() {
         imageCountry.setImageResource(stock.companies?.country?.n!!)
         image.setImageResource(stock.companies?.r!!)
         bsold.setOnClickListener { v->
-            var cent = 1
-            if (k.text.isNotEmpty() )
-                cent = k.text.toString().toInt()
-            if (stockMarket.sold(stock, cent) == Error.EMPTYBAG){
-                var texr = Error.EMPTYBAG.s
-                var toast = Toast.makeText(this.activity, texr, Toast.LENGTH_LONG)
-                toast.setGravity(Gravity.CENTER, 0, 0)
-                toast.show()
-            }
-            else{
-                var text = "Yes"
-                var toast =Toast.makeText(this.activity, text, Toast.LENGTH_LONG)
-                toast.setGravity(Gravity.CENTER, 0, 0)
-                toast.show()
-            }
+            x1 = x1 + 1
+                var cent = 1
+                if (k.text.isNotEmpty() )
+                    cent = k.text.toString().toInt()
+                if (stockMarket.sold(stock, cent) == Error.EMPTYBAG){
+                    var texr = Error.EMPTYBAG.s
+                    var toast = Toast.makeText(this.activity, texr, 1000)
+                    toast.setGravity(Gravity.CENTER, 0, 0)
+                    toast.show()
+                }
+                else{
+                    if (x1<2){
+                        var text = "Продано"
+                        var toast =Toast.makeText(this.activity, text, 1000)
+                        toast.setGravity(Gravity.CENTER, 0, 0)
+                        toast.show()
+                        quantity_stock.setText("")
+                    }
+                }
+
         }
         bbuy.setOnClickListener { v->
+            x2 = x2 + 1
             var cent = 1
             if (k.text.isNotEmpty() )
                 cent = k.text.toString().toInt()
             when(stockMarket.buy(stock, cent)){
                 Error.EMPTYMARKET -> {
                     var text = Error.EMPTYMARKET.s
-                    var toast = Toast.makeText(this.activity, text, Toast.LENGTH_LONG)
+                    var toast = Toast.makeText(this.activity, text, 1000)
                     toast.setGravity(Gravity.CENTER, 0, 0)
                     toast.show()
                 }
 
                 Error.NOMONEY -> {
                     var text = Error.NOMONEY.s
-                    var toast = Toast.makeText(this.activity, text, Toast.LENGTH_LONG)
+                    var toast = Toast.makeText(this.activity, text, 1000)
                     toast.setGravity(Gravity.CENTER, 0, 0)
                     toast.show()
                 }
                 else ->{
-                    var text = "Yes"
-                    var toast =Toast.makeText(this.activity, text, Toast.LENGTH_LONG)
-                    toast.setGravity(Gravity.CENTER, 0, 0)
-                    toast.show()
-                    quantity_stock.setText("")
+                    if (x2<2){
+                        var text = "Куплено"
+                        var toast =Toast.makeText(this.activity, text, 1000)
+                        toast.setGravity(Gravity.CENTER, 0, 0)
+                        toast.show()
+                        quantity_stock.setText("")
+                    }
                 }
             }
         }

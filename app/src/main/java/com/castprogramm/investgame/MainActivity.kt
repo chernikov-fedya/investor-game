@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        var x1: Int = 0
+        var x2: Int = 0
 
         // обовление класса брокер
         testing.objectsToUpdate.add(Broker)
