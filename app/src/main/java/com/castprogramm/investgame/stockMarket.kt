@@ -31,6 +31,5 @@ class stockMarket {
             Broker.myStock.find {it == stock}?.let{it.quantity += k } ?:{Broker.myStock.add(stock.apply { quantity += k })}()
             return null
         }
-
     }
 }
