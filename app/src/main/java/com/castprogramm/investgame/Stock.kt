@@ -12,6 +12,7 @@ import java.util.*
 
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LiveData
 import com.castprogramm.investgame.EnumClasses.Companies
 
 
@@ -46,6 +47,7 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolde
 
     companion object{
         var fragmentManager : FragmentManager? = null
+        var fragment: AllStockFragment? = null
         class StockVIewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
             var name: TextView = itemView.findViewById(R.id.name_st)
             var cost: TextView = itemView.findViewById(R.id.cost_st)
@@ -53,8 +55,11 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolde
             var image: ImageView = itemView.findViewById(R.id.icon_comp)
             fun bind(stock: Stock){
                 name.setText(stock.companies?.name)
-                cost.setText(stock.cost.toString())
                 image.setImageResource(stock.companies?.r!!)
+                var newtest1 : LiveData<MutableList<DataPoint>> = stock.costsofStock
+                newtest1.observe(fragment!!, androidx.lifecycle.Observer {
+                    cost.setText(it.last().y.toString())
+                })
                 cardView.setOnClickListener {
                     val fm = fragmentManager
                     val ft = fm?.beginTransaction()
