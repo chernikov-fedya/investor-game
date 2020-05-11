@@ -1,14 +1,21 @@
 package com.castprogramm.investgame
 
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.login_dialog.view.*
 import kotlin.math.min
 
 class BrokerFragment : Fragment() {
@@ -59,6 +66,26 @@ class BrokerFragment : Fragment() {
         stockPriceBro.setText("Стоимость моих акций:  " + stockPrice.toString())
         var pi = LinearLayoutManager(ret.context)
         recycler.layoutManager = pi
+        // Устанавливаем имя
+        var adf = ret.findViewById<TextView>(R.id.name)
+        adf.setOnClickListener{
+            val mDialogView = LayoutInflater.from(ret.context).inflate(R.layout.login_dialog, null)
+            val mBuilder = AlertDialog.Builder(ret.context)
+                .setView(mDialogView)
+                .setTitle("Авторизация")
+            val  mAlertDialog = mBuilder.show()
+            mDialogView.dialogLoginBtn.setOnClickListener {
+                mAlertDialog.dismiss()
+                val username = mDialogView.dialogNameEt.text.toString()
+                // Запоминаем имя 3 ебаными способами, потому что по 1 не работает
+                name = username
+                Broker.name = username
+                nameBro.text = username
+            }
+            mDialogView.dialogCancelBtn.setOnClickListener {
+                mAlertDialog.dismiss()
+            }
+        }
         return ret
     }
 }

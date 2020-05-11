@@ -4,13 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import kotlin.math.round
 
 object Broker: Up {
-    var name = "Alexsey"
+    var name = "Нажмите, чтобы ввести"
     var myStock = mutableListOf<Stock>()
+    var wallet: Double = 10000.0// сколько есть денег у брокера
     var myStockCost: Double = 0.0
     var thisWallet : MutableLiveData<Double> = MutableLiveData()
-    var wallet : Double = 10000.0// сколько есть денег у брокера
     var thisLess : MutableLiveData<Double> = MutableLiveData()
     var less : Double = 0.0
+
     fun Double.round(decimals: Int): Double {
         var multiplier = 1.0
         repeat(decimals) { multiplier *= 10 }

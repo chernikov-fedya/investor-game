@@ -80,19 +80,19 @@
 
     </RelativeLayout>
 
-        <ScrollView
+    <ScrollView
+        android:id="@+id/scrollrec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/info"
+        app:layout_constraintTop_toBottomOf="@id/info"
+        tools:ignore="MissingConstraints,NotSibling">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/scrollrec"
-            android:layout_alignEnd="@id/info"
-            app:layout_constraintTop_toBottomOf="@id/info"
-            tools:ignore="MissingConstraints,NotSibling">
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rec"
-                />
-        </ScrollView>
+            android:layout_height="wrap_content" />
+    </ScrollView>
 
 
 
