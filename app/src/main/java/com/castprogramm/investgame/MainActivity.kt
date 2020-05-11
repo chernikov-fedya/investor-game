@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
                         R.id.butStock -> {
                             val fm = supportFragmentManager
                             val ft = fm.beginTransaction()
-                            var f = AllStockFragment.newInstance(Stoks.allStoks)
+                            var f = AllStockFragment()
                             StockAdapter.fragment = f
                             ft.replace(R.id.frame_menu, f)
                             ft.commit()

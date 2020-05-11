@@ -9,14 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class AllStockFragment: Fragment() {
-    companion object{
-        fun newInstance(excer: MutableList<Stock>): AllStockFragment {
-            var temp = AllStockFragment()
-            temp.recStocks = excer
-            return temp
-        }
-    }
-    var recStocks: MutableList<Stock> =  mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,10 +17,8 @@ class AllStockFragment: Fragment() {
         var ret = inflater.inflate(R.layout.fragment_all_stock, container, false)
         var recycler : RecyclerView = ret.findViewById(R.id.newaleksey)
 
-        recycler.adapter = StockAdapter().apply {
-            stocks = recStocks
-            setHasStableIds(true)
-        }
+        recycler.adapter = StockAdapter()
+
         var pi = LinearLayoutManager(ret.context)
         recycler.layoutManager = pi
         return ret
