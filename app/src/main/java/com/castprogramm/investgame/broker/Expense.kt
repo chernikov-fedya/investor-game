@@ -12,7 +12,7 @@ class Expense{
 
     var loss: Double = 0.0
 
-    fun makeLossEvent(): LossEvent=  // получаем случайное событие типа расход
+    fun makeLossEvent(): LossEvent=  // получаем случайное событие типа расход и задаем расход
         when ((0..100).random()) {
             in 1..15 ->  {
                 loss = 20.0
@@ -40,22 +40,4 @@ class Expense{
 }
 
 
-/*fun notForseeExpense(): Double{
-    var evantBad: Array<String> = arrayOf("животное", "семья", "болезнь")
-    when (this.expense){
-        expense.eventBad["животное"] -> expense = 40.0
-        expense.eventBad["семья"] -> expense = 20.0
-        expense.eventBad["болезнь"] -> expense = 20.0
-    }
-
-}
-fun everyDayExpense(): Double{
-    var event: Array<String> = arrayOf("питание", "транспорт")
-    when (this.expense){
-        expense.event["питание"] -> capital = capital - 40
-        expense.event["транспорт"] -> capital = capital - 20
-
-    }
-}
-} */
 
