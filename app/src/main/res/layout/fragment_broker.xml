@@ -64,10 +64,22 @@
             android:layout_toRightOf="@id/photo"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="stockPrice"
+            android:text="StockPrice"
             android:textColor="#000"
             app:layout_constraintHorizontal_bias="0.0" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@id/photo"
+            android:layout_below="@id/stockPrice"
+            android:text="Minus"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="#000"
+            android:id="@+id/printminus" />
+
     </RelativeLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,18 +87,11 @@
             android:layout_alignEnd="@id/info"
             app:layout_constraintTop_toBottomOf="@id/info"
             tools:ignore="MissingConstraints,NotSibling">
-
-
-
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/rec"
                 />
-
-
-
-
         </ScrollView>
 
 
