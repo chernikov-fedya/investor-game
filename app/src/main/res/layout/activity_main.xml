@@ -28,7 +28,7 @@
 <!--        app:layout_constraintBottom_toTopOf="@id/graph"-->
 <!--        tools:ignore="MissingConstraints" />-->
 
-<!--    <com.castprogramm.investgame.CostView-->
+<!--    <com.castprogramm.investgame.stock.CostView-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="200dp"-->
 <!--        android:id="@+id/graph"-->

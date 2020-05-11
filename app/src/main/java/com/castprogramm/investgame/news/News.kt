@@ -1,4 +1,4 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.news
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.EnumClasses.Countries
 import com.castprogramm.investgame.EnumClasses.Industries
-import com.castprogramm.investgame.Stoks.newsarray
+import com.castprogramm.investgame.R
+import com.castprogramm.investgame.Up
+import com.castprogramm.investgame.Updater
+import com.castprogramm.investgame.stock.Stoks.newsarray
+import com.castprogramm.investgame.stock.StockGroup
+import com.castprogramm.investgame.stock.Stoks
 
 abstract class News: Up {
     companion object{
@@ -17,11 +22,15 @@ abstract class News: Up {
         fun fillNews(updater: Updater){
             // создание групп стран
             var countries : Array<StockGroup> = Array(Countries.values().size)
-                {StockGroup().apply { name =  Countries.values()[it].name }}
+                {
+                    StockGroup()
+                        .apply { name =  Countries.values()[it].name }}
 
             // создание групп отраслей
             var industries : Array<StockGroup> = Array(Industries.values().size)
-            {StockGroup().apply { name =  Industries.values()[it].name }}
+            {
+                StockGroup()
+                    .apply { name =  Industries.values()[it].name }}
 
             // создание группы на кажду акцию
             var companies = Array<StockGroup>(Stoks.allStoks.size) {
@@ -37,9 +46,12 @@ abstract class News: Up {
             }
                 // созданием объектов - новоснтных лент для каждого типа
             var newMakers = arrayOf(
-                Country().apply { arrayStockGroup = countries.toMutableList()},
-                Industry().apply { arrayStockGroup = industries.toMutableList()},
-                Enterprise().apply { arrayStockGroup = companies.toMutableList()}
+                Country()
+                    .apply { arrayStockGroup = countries.toMutableList()},
+                Industry()
+                    .apply { arrayStockGroup = industries.toMutableList()},
+                Enterprise()
+                    .apply { arrayStockGroup = companies.toMutableList()}
             )
             // прикрепление новостных лент к апдейтеру
             updater.objectsToUpdate.addAll(newMakers)
@@ -57,7 +69,7 @@ abstract class News: Up {
     abstract fun sadmessage()
     abstract fun funnymessage()
 
-    fun makeEvent():TypeEvent =
+    fun makeEvent(): TypeEvent =
         when ((0..1000).random()) {
             in 1..5 ->  {eventType = "кризис"
                 sadmessage()
