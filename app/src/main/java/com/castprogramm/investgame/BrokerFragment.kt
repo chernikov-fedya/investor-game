@@ -1,15 +1,15 @@
 package com.castprogramm.investgame
 
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.min
 
 class BrokerFragment : Fragment() {
 
@@ -45,10 +45,18 @@ class BrokerFragment : Fragment() {
         var walletBro : TextView = ret.findViewById(R.id.wallet)
         var stockPriceBro: TextView = ret.findViewById(R.id.stockPrice)
         var minus : TextView = ret.findViewById(R.id.printminus)
-        nameBro.setText("Имя: " + name)
+        var newwallet: MutableLiveData<Double> = Broker.thisWallet
+        var newles : MutableLiveData<Double> = Broker.thisLess
         walletBro.setText("Наличные:  " + wallet.toString())
-        stockPriceBro.setText("Стоимость моих акций:  " + stockPrice.toString())
         minus.setText("Текущий расход: " + expenditure.toString())
+        newwallet.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            walletBro.setText("Наличные:  " + it.toString())
+        })
+        newles.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            minus.setText("Текущий расход: " + it.toString())
+        })
+        nameBro.setText("Имя: " + name)
+        stockPriceBro.setText("Стоимость моих акций:  " + stockPrice.toString())
         var pi = LinearLayoutManager(ret.context)
         recycler.layoutManager = pi
         return ret
