@@ -12,7 +12,7 @@ class StockGroup {
             TypeEvent.OBVAL -> 0.9
             TypeEvent.NOTHING -> 1.0
             TypeEvent.PODEM -> 1.1
-            TypeEvent.INCREASE ->1.20
+            TypeEvent.INCREASE -> 1.20
             else -> 1.0
         }
         for (i in 0..grouplist.size-1){

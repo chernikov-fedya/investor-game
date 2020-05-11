@@ -41,10 +41,7 @@ class BrokerFragment : Fragment() {
     ): View? {
         var ret = inflater.inflate(R.layout.fragment_broker, container, false)
         var recycler : RecyclerView = ret.findViewById(R.id.rec)
-        recycler.adapter = BrokerAdapter().apply {
-            stocks = recStocks
-        }
-
+        recycler.adapter = BrokerAdapter()
         var nameBro : TextView = ret.findViewById(R.id.name)
         var walletBro : TextView = ret.findViewById(R.id.wallet)
         var stockPriceBro: TextView = ret.findViewById(R.id.stockPrice)
@@ -54,10 +51,10 @@ class BrokerFragment : Fragment() {
         walletBro.setText("Наличные:  " + wallet.toString())
         minus.setText("Текущий расход: " + expenditure.toString())
         newwallet.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            walletBro.setText("Наличные:  " + it.toString())
+            walletBro.setText("Наличные:  $" + it.toString())
         })
         newles.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            minus.setText("Текущий расход: " + it.toString())
+            minus.setText("Текущий расход: $" + it.toString())
         })
         nameBro.setText("Имя: " + name)
         stockPriceBro.setText("Стоимость моих акций:  " + stockPrice.toString())

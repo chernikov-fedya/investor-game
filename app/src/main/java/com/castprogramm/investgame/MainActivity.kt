@@ -150,6 +150,7 @@ class MainActivity : AppCompatActivity() {
             Broker.myStockCost,
             Broker.less
         )
+        BrokerAdapter.fragment = f
         ft.replace(R.id.frame_menu, f)
         ft.commit()
 

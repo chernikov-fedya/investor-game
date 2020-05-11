@@ -17,7 +17,8 @@ class CostView(context: Context, atrr: AttributeSet): GraphView(context, atrr), 
     // Функция для добавления DataPoint (серии значений (Date, Double) или (Double, Double)) в график
     fun addStock(stock: Stock, live:LifecycleOwner){
         var newPoint : LiveData<MutableList<DataPoint>> = stock.costsofStock // Копия LiveData из переменной stock
-        newPoint.observe(live, androidx.lifecycle.Observer { t -> // С помощью паттерна Observer (наблюдатель) при обновлении значения в LiveData будет выполняться идущий ниже код
+        // С помощью паттерна Observer (наблюдатель) при обновлении значения в LiveData будет выполняться идущий ниже код
+        newPoint.observe(live, androidx.lifecycle.Observer { t ->
             var functiom = LineGraphSeries<DataPoint>(Array(t.size, { t[it] })) // Создание серии значений
             this.addSeries(functiom) // Добавление серии значений в график
             this.viewport.scrollToEnd() // Прокрутка графика в масимальное значение оси X

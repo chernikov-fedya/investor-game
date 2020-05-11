@@ -14,6 +14,8 @@ import androidx.fragment.app.FragmentManager
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.R
 import com.castprogramm.investgame.Up
+import com.castprogramm.investgame.broker.Broker
+import com.castprogramm.investgame.broker.BrokerFragment
 
 // Класс для создания акции
 class Stock: Up {
@@ -36,91 +38,95 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockViewHolde
         return StockViewHolder(eee)
     }
 
-    override fun getItemId(position: Int): Long = position.toLong() //
+    override fun getItemId(position: Int): Long = position.toLong() //Функция, которая возращает Id
 
-    override fun getItemCount(): Int = Stoks.allStoks.size
+    override fun getItemCount(): Int = Stoks.allStoks.size // Функция, которая возварщает размер RecyclerView
 
-    override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: StockViewHolder, position: Int) { // Функция для отрисовки RecyclerView
         holder.bind(Stoks.allStoks[position])
     }
 
-    override fun onViewDetachedFromWindow(holder: StockViewHolder) {
-        holder.newtest1?.removeObservers(fragment!!)
+    override fun onViewDetachedFromWindow(holder: StockViewHolder) { // Функция для удаления Observer при условии, что объект находится вне пределов экрана
+        holder.newCost?.removeObservers(fragment!!)
     }
 
-    companion object{
-        var fragmentManager : FragmentManager? = null
-        var fragment: AllStockFragment? = null
+    companion object{ // Объект для отрисовки RecyclerView
+        var fragmentManager : FragmentManager? = null // Переменная для передачи supportFragmentManager из MainActivity
+        var fragment: AllStockFragment? = null // Переменная для передачи жизненного цикла фрагмента из MainActivity
         class StockViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-            var name: TextView = itemView.findViewById(R.id.name_st)
-            var cost: TextView = itemView.findViewById(R.id.cost_st)
-            var cardView : CardView = itemView.findViewById(R.id.cardinal)
-            var image: ImageView = itemView.findViewById(R.id.icon_comp)
-            var newtest1 : MutableLiveData<MutableList<DataPoint>>? = null
-            fun bind(stock: Stock){
-                name.setText(stock.companies?.n)
-                cost.setText(stock.cost.toString())
-                image.setImageResource(stock.companies?.r!!)
-                newtest1 = stock.costsofStock
-                newtest1?.observe(fragment!!, androidx.lifecycle.Observer {
-                    cost.setText("%.2f".format(it.last().y))
+            var name: TextView = itemView.findViewById(R.id.name_st) // Переменная для хранения TextView для вывода названия из файла разметки
+            var cost: TextView = itemView.findViewById(R.id.cost_st) // Переменная для хранения TextView для вывода стоимости из файла разметки
+            var cardView : CardView = itemView.findViewById(R.id.cardinal) // Переменная для хранения CardView для отрисовки нового фрагмента при нажатии из файла разметки
+            var image: ImageView = itemView.findViewById(R.id.icon_comp) // Переменная для хранения ImageView для вывода эмблемы компании, которой принадлежит акция из файла разметки
+            var newCost : MutableLiveData<MutableList<DataPoint>>? = null // Переменная для последующего присвоения в неё LiveData
+            fun bind(stock: Stock){ // Функция для отрисовки, принимает в себя акцию
+                name.setText(stock.companies?.n) // Присвоение в поле названия акции
+                cost.setText(stock.cost.toString()) // Присвоение в поле стоимости акции
+                image.setImageResource(stock.companies?.r!!) // Присвоение в поле изображения эмблемы компании, которой принадлежит акция
+                newCost = stock.costsofStock // Присвоение LiveData в переменную
+                // С помощью паттерна Observer (наблюдатель) при обновлении значения в LiveData будет выполняться идущий ниже код
+                newCost?.observe(fragment!!, androidx.lifecycle.Observer {
+                    cost.setText("%.2f".format(it.last().y)) // Присвоение в поле стоимости акции
                 })
+                // Функция для создания фрагмента при нажатии на CardView
                 cardView.setOnClickListener {
-                    val fm =
-                        fragmentManager
+                    val fm = fragmentManager // Присвоение supportFragmentManager из MainActivity
                     val ft = fm?.beginTransaction()
-                    var f =
-                        StockFragment.instfragment(
-                            stock
-                        )
-                    ft?.replace(R.id.frame_menu, f)
-                    ft?.addToBackStack(null)
-                    ft?.commit()
+                    var f = StockFragment.instfragment(stock) // Создание StockFragment
+                    ft?.replace(R.id.frame_menu, f) // Вставка фрагмента
+                    ft?.addToBackStack(null) // Добавление фрагмента в BackStack
+                    ft?.commit() // Сохраняет данные и информирует пользователя об успешности операции
                 }
             }
         }
     }
 }
 class BrokerAdapter(): RecyclerView.Adapter<BrokerAdapter.Companion.BrokerViewHolder>(){
-    var stocks : MutableList<Stock> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrokerViewHolder {
         var eee = LayoutInflater.from(parent.context).inflate(R.layout.broker_recycle, parent, false)
-        return BrokerViewHolder(
-            eee
-        )
+        return BrokerViewHolder(eee)
     }
 
-    override fun getItemCount(): Int = stocks.size
+    override fun getItemId(position: Int): Long = position.toLong() //Функция, которая возращает Id
 
-    override fun onBindViewHolder(holder: BrokerViewHolder, position: Int) {
-        holder.bind(stocks[position])
+    override fun getItemCount(): Int = Broker.myStock.size // Функция, которая возварщает размер RecyclerView
+
+    override fun onBindViewHolder(holder: BrokerViewHolder, position: Int) { // Функция для отрисовки RecyclerView
+        holder.bind(Broker.myStock[position])
+    }
+    override fun onViewDetachedFromWindow(holder: BrokerAdapter.Companion.BrokerViewHolder) { // Функция для удаления Observer при условии, что объект находится вне пределов экрана
+        holder.newCostb?.removeObservers(BrokerAdapter.fragment!!)
     }
 
-    companion object{
-        var fragmentManager : FragmentManager? = null
+    companion object{ // Объект для отрисовки RecyclerView
+        var fragmentManager : FragmentManager? = null // Переменная для передачи supportFragmentManager из MainActivity
+        var fragment: BrokerFragment? = null // Переменная для передачи жизненного цикла фрагмента из MainActivity
         class BrokerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-            var name: TextView = itemView.findViewById(R.id.name_stb)
-            var cost: TextView = itemView.findViewById(R.id.cost_stb)
-            var quantity: TextView = itemView.findViewById(R.id.quantity_stb)
-            var cardView1 : CardView = itemView.findViewById(R.id.cardinalb)
-            var image: ImageView = itemView.findViewById(R.id.icon_compb)
-            fun bind(stock: Stock){
-                name.setText(stock.companies?.name)
-                cost.setText(stock.cost.toString())
-                quantity.setText(stock.quantity.toString())
-                image.setImageResource(stock.companies?.r!!)
-                cardView1.setOnClickListener {
-                    val fm =
-                        fragmentManager
+            var name: TextView = itemView.findViewById(R.id.name_stb) // Переменная для хранения TextView для вывода названия акции из файла разметки
+            var cost: TextView = itemView.findViewById(R.id.cost_stb) // Переменная для хранения TextView для вывода стоимости акции из файла разметки
+            var cardView : CardView = itemView.findViewById(R.id.cardinalb) // Переменная для хранения CardView для отрисовки нового фрагмента при нажатии из файла разметки
+            var image: ImageView = itemView.findViewById(R.id.icon_compb) // Переменная для хранения ImageView для вывода эмблемы компании, которой принадлежит акция из файла разметки
+            var quantity : TextView = itemView.findViewById(R.id.quantity_stb) // Переменная для хранения TextView для вывода количества акции из файла разметки
+            var newCostb : MutableLiveData<MutableList<DataPoint>>? = null // Переменная для последующего присвоения в неё LiveData
+            fun bind(stock: Stock){ // Функция для отрисовки, принимает в себя акцию
+                name.setText(stock.companies?.n) // Присвоение в поле названия акции
+                cost.setText(stock.cost.toString()) // Присвоение в поле стоимости акции
+                image.setImageResource(stock.companies?.r!!) // Присвоение в поле изображения эмблемы компании, которой принадлежит акция
+                newCostb = stock.costsofStock // Присвоение LiveData в переменную
+                quantity.setText(stock.quantity.toString()) // Присвоение количества акции
+                // С помощью паттерна Observer (наблюдатель) при обновлении значения в LiveData будет выполняться идущий ниже код
+                newCostb?.observe(fragment!!, androidx.lifecycle.Observer {
+                    cost.setText("%.2f".format(it.last().y)) // Присвоение в поле стоимости акции
+                })
+                // Функция для создания фрагмента при нажатии на CardView
+                cardView.setOnClickListener {
+                    val fm = fragmentManager // Присвоение supportFragmentManager из MainActivity
                     val ft = fm?.beginTransaction()
-                    var f =
-                        StockFragment.instfragment(
-                            stock
-                        )
-                    ft?.replace(R.id.frame_menu, f)
-                    ft?.addToBackStack(null)
-                    ft?.commit()
+                    var f = StockFragment.instfragment(stock) // Создание StockFragment
+                    ft?.replace(R.id.frame_menu, f) // Вставка фрагмента
+                    ft?.addToBackStack(null) // Добавление фрагмента в BackStack
+                    ft?.commit() // Сохраняет данные и информирует пользователя об успешности операции
                 }
             }
         }
