@@ -44,7 +44,7 @@ class StockFragment : Fragment() {
         imageCountry.setImageResource(stock.companies?.country?.n!!)
         image.setImageResource(stock.companies?.r!!)
         bsold.setOnClickListener { v->
-            x1 = x1 + 1
+            x1 = x1 + 1 // обновляем счетчик нажатий
                 var cent = 1
                 if (k.text.isNotEmpty() )
                     cent = k.text.toString().toInt()
@@ -66,7 +66,7 @@ class StockFragment : Fragment() {
 
         }
         bbuy.setOnClickListener { v->
-            x2 = x2 + 1
+            x2 = x2 + 1 // обновляем счетчик нажатий
             var cent = 1
             if (k.text.isNotEmpty() )
                 cent = k.text.toString().toInt()

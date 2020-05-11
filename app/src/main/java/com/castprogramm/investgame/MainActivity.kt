@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.reset -> {
+                // функция обнуления прогресса для новой игры
                 Broker.myStock.clear()
                 Stoks.newsarray.clear()
                 Broker.myStockCost = 0.0
@@ -86,8 +87,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var x1: Int = 0
-        var x2: Int = 0
+
 
         // обовление класса брокер
         testing.objectsToUpdate.add(Broker)

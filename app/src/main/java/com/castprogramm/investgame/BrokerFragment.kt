@@ -66,22 +66,25 @@ class BrokerFragment : Fragment() {
         stockPriceBro.setText("Стоимость моих акций:  " + stockPrice.toString())
         var pi = LinearLayoutManager(ret.context)
         recycler.layoutManager = pi
-        // Устанавливаем имя
-        var adf = ret.findViewById<TextView>(R.id.name)
-        adf.setOnClickListener{
+        // Находим поле отображения имени брокера по id и устанавливаем слушатель
+        var namevalue = ret.findViewById<TextView>(R.id.name)
+        namevalue.setOnClickListener{
+            // Вызываем AlertDialog для заполнения имени
             val mDialogView = LayoutInflater.from(ret.context).inflate(R.layout.login_dialog, null)
             val mBuilder = AlertDialog.Builder(ret.context)
                 .setView(mDialogView)
                 .setTitle("Авторизация")
             val  mAlertDialog = mBuilder.show()
+            // Устанавливаем слушатель на кнопку "авторизироваться" для ее обработки
             mDialogView.dialogLoginBtn.setOnClickListener {
                 mAlertDialog.dismiss()
                 val username = mDialogView.dialogNameEt.text.toString()
-                // Запоминаем имя 3 ебаными способами, потому что по 1 не работает
+                // Присваиваем имя Брокеру
                 name = username
                 Broker.name = username
                 nameBro.text = username
             }
+            // Слушатель для отмены AlertDialog'а
             mDialogView.dialogCancelBtn.setOnClickListener {
                 mAlertDialog.dismiss()
             }
