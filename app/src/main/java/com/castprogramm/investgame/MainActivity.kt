@@ -40,23 +40,10 @@ class MainActivity : AppCompatActivity() {
                 Stoks.newsarray.clear()
                 Broker.myStockCost = 0.0
                 Broker.wallet = 10000.0
-                Stoks.allStoks = mutableListOf(
-                    Stock().apply { cost = 310.13; companies = Companies.Apple },
-                    Stock().apply { cost = 59.62 ; companies = Companies.Intel},
-                    Stock().apply { cost = 29.83 ; companies = Companies.Twitter},
-                    Stock().apply { cost = 16.42 ; companies = Companies.Mailru},
-                    Stock().apply { cost = 212.53; companies = Companies.Facebook},
-                    Stock().apply { cost = 40.74 ; companies = Companies.Yandex},
-                    Stock().apply { cost = 2379.4; companies = Companies.Amazon},
-                    Stock().apply { cost = 282.7 ; companies = Companies.MasterCard},
-                    Stock().apply { cost = 123.2 ; companies = Companies.IBM},
-                    Stock().apply { cost = 203.33; companies = Companies.GazProm},
-                    Stock().apply { cost = 4.83  ; companies = Companies.Lukoil},
-                    Stock().apply { cost = 46.14 ; companies = Companies.CocaCola},
-                    Stock().apply { cost = 181.67; companies = Companies.McDonalds},
-                    Stock().apply { cost = 184.67; companies = Companies.Microsoft},
-                    Stock().apply { cost = 3.01  ; companies = Companies.Huawei}
-                )
+
+                val intent = intent
+                finish()
+                startActivity(intent)
                 }
             R.id.reference -> {
                 val f = ReferenceFragmemt()

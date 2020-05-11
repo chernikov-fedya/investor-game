@@ -1,5 +1,6 @@
 package com.castprogramm.investgame
 
+import android.widget.EditText
 import com.castprogramm.investgame.EnumClasses.Error
 
 class stockMarket {

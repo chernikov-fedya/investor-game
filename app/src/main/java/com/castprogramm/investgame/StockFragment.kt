@@ -1,17 +1,22 @@
 package com.castprogramm.investgame
 
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import com.castprogramm.investgame.EnumClasses.Error
 import com.jjoe64.graphview.series.DataPoint
+import kotlinx.android.synthetic.main.fragment_stock.*
 
 
 class StockFragment : Fragment() {
@@ -75,6 +80,7 @@ class StockFragment : Fragment() {
                     var toast =Toast.makeText(this.activity, text, Toast.LENGTH_LONG)
                     toast.setGravity(Gravity.CENTER, 0, 0)
                     toast.show()
+                    quantity_stock.setText("")
                 }
             }
         }
