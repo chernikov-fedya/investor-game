@@ -8,10 +8,12 @@ android:layout_width="match_parent">
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/aleksey"
         tools:ignore="MissingConstraints" />
+
 </ScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

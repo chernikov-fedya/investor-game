@@ -1,14 +1,18 @@
 package com.castprogramm.investgame
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.DecelerateInterpolator
 import com.castprogramm.investgame.EnumClasses.Companies
-import kotlinx.android.synthetic.main.activity_main.*
+
 import com.castprogramm.investgame.Stoks.newsarray
-import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         inflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.reset -> {
@@ -52,6 +58,13 @@ class MainActivity : AppCompatActivity() {
                     Stock().apply { cost = 3.01  ; companies = Companies.Huawei}
                 )
                 }
+            R.id.reference -> {
+                val f = ReferenceFragmemt()
+                val fm = supportFragmentManager
+                val ft = fm.beginTransaction()
+                ft.replace(R.id.frame_menu, f)
+                ft.commit()
+            }
             }
         return super.onOptionsItemSelected(item)
     }
@@ -80,14 +93,15 @@ class MainActivity : AppCompatActivity() {
             handler.post(testing)
         StockAdapter.fragmentManager = supportFragmentManager
         BrokerAdapter.fragmentManager = supportFragmentManager
-            bnv.setOnNavigationItemSelectedListener(object : OnNavigationItemSelectedListener {
+            bnv.setOnNavigationItemSelectedListener(object :
+                BottomNavigationView.OnNavigationItemSelectedListener {
                 override fun onNavigationItemSelected(item: MenuItem): Boolean {
                     when (item.itemId) {
                         R.id.butProfile -> {
                             val fm = supportFragmentManager
                             val ft = fm.beginTransaction()
                             var f = BrokerFragment.newInstance(
-                                Broker.myStock,
+                               Broker.myStock,
                                 Broker.name,
                                 Broker.wallet,
                                 Broker.myStockCost
