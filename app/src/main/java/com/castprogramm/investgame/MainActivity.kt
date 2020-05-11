@@ -20,12 +20,6 @@ class MainActivity : AppCompatActivity() {
     var handler = Handler()
     var testing = Updater(handler)
 
-    var mstck: MutableList<Stock> = mutableListOf(
-        Stock().apply {name = "СЫР"; cost = 1352.5 },
-        Stock().apply {name = "Nokia"; cost = 240.2 },
-        Stock().apply { name = "MOMO"; cost = 1400.24 },
-        Stock().apply {name = "KinderMorgan"; cost = 1050.0})
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_main, menu)
@@ -75,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         testing.objectsToUpdate.add(Broker)
         // добавление новостей к апдейтеру
         News.fillNews(testing)
-            testing.objectsToUpdate.plusAssign(mstck)
             testing.objectsToUpdate.plusAssign(Stoks.allStoks)
 
         //testing.objectsToUpdate.add(ss)
@@ -103,6 +96,7 @@ class MainActivity : AppCompatActivity() {
                             val fm = supportFragmentManager
                             val ft = fm.beginTransaction()
                             var f = AllStockFragment.newInstance(Stoks.allStoks)
+                            StockAdapter.fragment = f
                             ft.replace(R.id.frame_menu, f)
                             ft.commit()
                         }
