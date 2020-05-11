@@ -93,7 +93,8 @@ class MainActivity : AppCompatActivity() {
                                Broker.myStock,
                                 Broker.name,
                                 Broker.wallet,
-                                Broker.myStockCost
+                                Broker.myStockCost,
+                                Broker.less
                             )
                             ft.replace(R.id.frame_menu, f)
                             ft.commit()
@@ -122,7 +123,8 @@ class MainActivity : AppCompatActivity() {
             Broker.myStock,
             Broker.name,
             Broker.wallet,
-            Broker.myStockCost
+            Broker.myStockCost,
+            Broker.less
         )
         ft.replace(R.id.frame_menu, f)
         ft.commit()
