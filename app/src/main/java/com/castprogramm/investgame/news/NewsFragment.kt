@@ -25,7 +25,6 @@ class NewsFragment: Fragment() {
     var recMSG: MutableList<String> =  mutableListOf()
     private lateinit var runnable: Runnable
     var handler = Handler()
-    var testing = Updater(handler)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
