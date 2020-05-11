@@ -35,9 +35,11 @@
     </RelativeLayout>
 
     <com.castprogramm.investgame.CostView
+        android:id="@+id/graphic"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
-        android:id="@+id/graphic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name_graph"
         tools:ignore="MissingConstraints" />
 
@@ -45,34 +47,33 @@
         android:id="@+id/quantity_stock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Введите количество акций:"
-        android:layout_marginStart="16dp"
+        android:hint="Кол-во:"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/graphic"
+        app:layout_constraintEnd_toStartOf="@+id/buy"
+        app:layout_constraintStart_toEndOf="@+id/sold"
+        app:layout_constraintTop_toBottomOf="@+id/graphic"
         tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/sold"
-        android:layout_width="120dp"
+        android:layout_width="116dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
         android:gravity="center"
         android:text="Продать"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quantity_stock"
+        app:layout_constraintTop_toBottomOf="@+id/graphic"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/buy"
-        android:layout_width="120dp"
+        android:layout_width="116dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="16dp"
         android:gravity="center"
+        android:layout_marginEnd="10dp"
         android:text="Купить"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quantity_stock"
+        app:layout_constraintTop_toBottomOf="@+id/graphic"
         tools:ignore="MissingConstraints" />
     <TextView
         android:id="@+id/prquant"
@@ -111,7 +112,7 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="269dp"
+        android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:text="Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты.
         Вдали от всех живут они в буквенных домах на берегу Семантика большого языкового океана.
