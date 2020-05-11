@@ -2,10 +2,10 @@ package com.castprogramm.investgame.stock
 
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.EnumClasses.Error
-
+// класс биржи
 class stockMarket {
-    var markStock = Stoks.allStoks
 
+    // функция продажи k-числа акций
     fun sold(stock: Stock, k: Int): Error? {
         if (Broker.myStock.find { it == stock } == null)
             return Error.NOSTOCK
@@ -21,7 +21,7 @@ class stockMarket {
 
         }
     }
-
+    // функция покупки k-числа акций
     fun buy(stock: Stock, k: Int): Error? {
         if (Broker.wallet < stock.cost * k)
             return Error.NOMONEY

@@ -3,7 +3,9 @@ package com.castprogramm.investgame.stock
 import com.castprogramm.investgame.EnumClasses.Companies
 
 object Stoks {
+    // список для хранения все новостей
     var newsarray: MutableList<String> = mutableListOf()
+    // список дл хранения всех акций
     var allStoks: MutableList<Stock> = mutableListOf(
         Stock()
             .apply { cost = Companies.Apple.cent; companies = Companies.Apple },

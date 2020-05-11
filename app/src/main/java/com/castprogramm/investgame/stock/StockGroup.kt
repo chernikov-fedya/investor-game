@@ -5,6 +5,7 @@ import com.castprogramm.investgame.news.TypeEvent
 class StockGroup {
     var name : String? = null
     var grouplist: MutableList<Stock> = mutableListOf()
+    // изменение цены при определенных ивентах
     fun changePrice(typeEvent: TypeEvent){
         var a: Double = when(typeEvent){
             TypeEvent.CRYSIS -> 0.8
