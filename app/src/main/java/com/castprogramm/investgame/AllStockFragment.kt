@@ -24,10 +24,11 @@ class AllStockFragment: Fragment() {
     ): View? {
         var ret = inflater.inflate(R.layout.fragment_all_stock, container, false)
         var recycler : RecyclerView = ret.findViewById(R.id.newaleksey)
+
         recycler.adapter = StockAdapter().apply {
             stocks = recStocks
+            setHasStableIds(true)
         }
-        recycler.itemAnimator
         var pi = LinearLayoutManager(ret.context)
         recycler.layoutManager = pi
         return ret

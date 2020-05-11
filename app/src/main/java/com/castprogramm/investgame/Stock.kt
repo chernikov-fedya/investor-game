@@ -39,6 +39,8 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolde
         )
     }
 
+    override fun getItemId(position: Int): Long = position.toLong()
+
     override fun getItemCount(): Int = stocks.size
 
     override fun onBindViewHolder(holder: StockVIewHolder, position: Int) {
