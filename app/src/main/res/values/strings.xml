@@ -7,5 +7,6 @@
     <string name="chart">Активы</string>
     <string name="news">Новости</string>
     <string name="profile">Профиль</string>
+    <string name="info">Описание компании</string>
 
 </resources>
