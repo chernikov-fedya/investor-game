@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.R
 import com.castprogramm.investgame.Up
+import com.castprogramm.investgame.broker.BrokerFragment
 
 class Stock: Up {
     var name: String = ""
@@ -52,7 +53,6 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolde
     companion object{
         var fragmentManager : FragmentManager? = null
         var fragment: AllStockFragment? = null
-
         class StockVIewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
             var name: TextView = itemView.findViewById(R.id.name_st)
             var cost: TextView = itemView.findViewById(R.id.cost_st)
@@ -60,11 +60,12 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolde
             var image: ImageView = itemView.findViewById(R.id.icon_comp)
             var newtest1 : MutableLiveData<MutableList<DataPoint>>? = null
             fun bind(stock: Stock){
-                name.setText(stock.companies?.name)
+                name.setText(stock.companies?.n)
+                cost.setText(stock.cost.toString())
                 image.setImageResource(stock.companies?.r!!)
                 newtest1 = stock.costsofStock
                 newtest1?.observe(fragment!!, androidx.lifecycle.Observer {
-                    cost.setText(it.last().y.toString())
+                    cost.setText("%.2f".format(it.last().y))
                 })
                 cardView.setOnClickListener {
                     val fm =

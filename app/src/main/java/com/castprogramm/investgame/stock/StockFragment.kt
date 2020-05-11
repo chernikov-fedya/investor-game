@@ -42,6 +42,8 @@ class StockFragment : Fragment() {
         var image: ImageView = view.findViewById(R.id.icon_graph)
         var pr :TextView = view.findViewById(R.id.prquant)
         var imageCountry : ImageView = view.findViewById(R.id.imagecountry)
+        var text: TextView = view.findViewById(R.id.textView)
+        text.setText(stock.companies?.opisanie)
         imageCountry.setImageResource(stock.companies?.country?.n!!)
         image.setImageResource(stock.companies?.r!!)
         bsold.setOnClickListener { v->
@@ -98,7 +100,7 @@ class StockFragment : Fragment() {
         }
         var newtest1 : LiveData<MutableList<DataPoint>> = stock.costsofStock
         newtest1.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            pr.setText("Цена акции: "+ it.last().y.toString())
+            pr.setText("$  "+ "%.2f".format(it.last().y))
         })
         costGraphic.viewport.isScalable = true
         costGraphic.viewport.isScrollable = true
