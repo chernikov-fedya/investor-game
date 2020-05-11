@@ -14,46 +14,44 @@ import androidx.fragment.app.FragmentManager
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.R
 import com.castprogramm.investgame.Up
-import com.castprogramm.investgame.broker.BrokerFragment
 
+// Класс для создания акции
 class Stock: Up {
-    var name: String = ""
-    var cost: Double = 0.0
-    var quantity: Int = 0  //Поменять для корректного отображения прибыли
-    var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData()
-    var costs : MutableList<DataPoint> = mutableListOf()
-    var companies: Companies? = null
-    override fun update() {
-        costs.add(DataPoint(costs.size.toDouble(), cost))
-        costsofStock.value = costs
+    var name: String = "" // Название акции
+    var cost: Double = 0.0 // Стоимость акции
+    var quantity: Int = 0  // Количество акций этого типа
+    var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData() // LiveData, которая хранит в себе изменяемый список DataPoint
+    var costs : MutableList<DataPoint> = mutableListOf() // Изменяемый список, который присваивается в LiveData
+    var companies: Companies? = null // Компания, к которой принадлежит акция
+    override fun update() { // Переопределение функции из интерфейса Up
+        costs.add(DataPoint(costs.size.toDouble(), cost)) // Добавление в список новой серии значений
+        costsofStock.value = costs // Присвоение в хранилище списка с сериями данных
     }
 }
+// Адаптер для вывода списка акиций в фрагмент активов с помощью RecyclerView
+class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockViewHolder>(){
 
-class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockVIewHolder>(){
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockVIewHolder {
-        var eee = LayoutInflater.from(parent.context).inflate(R.layout.stock_recycle, parent, false)
-        return StockVIewHolder(
-            eee
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
+        var eee = LayoutInflater.from(parent.context).inflate(R.layout.stock_recycle, parent, false) // Переменная для хранения файла разметки
+        return StockViewHolder(eee)
     }
 
-    override fun getItemId(position: Int): Long = position.toLong()
+    override fun getItemId(position: Int): Long = position.toLong() //
 
     override fun getItemCount(): Int = Stoks.allStoks.size
 
-    override fun onBindViewHolder(holder: StockVIewHolder, position: Int) {
+    override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
         holder.bind(Stoks.allStoks[position])
     }
 
-    override fun onViewDetachedFromWindow(holder: StockVIewHolder) {
+    override fun onViewDetachedFromWindow(holder: StockViewHolder) {
         holder.newtest1?.removeObservers(fragment!!)
     }
 
     companion object{
         var fragmentManager : FragmentManager? = null
         var fragment: AllStockFragment? = null
-        class StockVIewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+        class StockViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
             var name: TextView = itemView.findViewById(R.id.name_st)
             var cost: TextView = itemView.findViewById(R.id.cost_st)
             var cardView : CardView = itemView.findViewById(R.id.cardinal)

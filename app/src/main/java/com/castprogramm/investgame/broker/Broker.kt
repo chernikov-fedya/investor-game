@@ -1,6 +1,7 @@
 package com.castprogramm.investgame.broker
 
 import androidx.lifecycle.MutableLiveData
+import com.castprogramm.investgame.Expense
 import com.castprogramm.investgame.Up
 import com.castprogramm.investgame.stock.Stock
 import kotlin.math.round
