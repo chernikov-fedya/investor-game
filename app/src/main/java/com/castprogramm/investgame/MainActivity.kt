@@ -100,6 +100,18 @@ class MainActivity : AppCompatActivity() {
                     return true
                 }
             })
+        val fm = supportFragmentManager
+        val ft = fm.beginTransaction()
+        var f = BrokerFragment.newInstance(
+            Broker.myStock,
+            Broker.name,
+            Broker.wallet,
+            Broker.myStockCost
+        )
+        ft.replace(R.id.frame_menu, f)
+        ft.commit()
+
+
         }
 
     }
