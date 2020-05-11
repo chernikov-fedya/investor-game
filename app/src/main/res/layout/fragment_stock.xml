@@ -27,11 +27,9 @@
 
         <ImageView
             android:id="@+id/icon_graph"
-            android:layout_width="42dp"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="0dp"
             android:layout_marginEnd="4dp" />
 
     </RelativeLayout>
@@ -115,8 +113,6 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:paddingTop="8dp"
         android:text="Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты.
         Вдали от всех живут они в буквенных домах на берегу Семантика большого языкового океана.
@@ -124,6 +120,9 @@
          Эта парадигматическая страна, в которой жаренные члены предложения залетают прямо в рот.
          Даже всемогущая пунктуация не имеет власти над рыбными текстами, ведущими безорфографичный образ жизни.
          Однажды одна маленькая строчка рыбного текста по имени Lorem ipsum решила выйти в большой мир грамматики."
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />

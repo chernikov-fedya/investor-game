@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() {
             testing.objectsToUpdate.plusAssign(Stoks.allStoks)
 
         //testing.objectsToUpdate.add(ss)
+
             handler.post(testing)
         StockAdapter.fragmentManager = supportFragmentManager
         BrokerAdapter.fragmentManager = supportFragmentManager
