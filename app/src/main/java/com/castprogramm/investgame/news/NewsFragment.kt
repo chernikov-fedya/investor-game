@@ -12,7 +12,7 @@ import com.castprogramm.investgame.R
 import com.castprogramm.investgame.Updater
 import kotlinx.android.synthetic.main.fragment_news.*
 import kotlinx.android.synthetic.main.fragment_news.view.swipeRefreshLayout
-
+// фрагмент для отрисовки новостей
 class NewsFragment: Fragment() {
     companion object{
         fun newInstance(excer: MutableList<String>): NewsFragment {
@@ -31,15 +31,15 @@ class NewsFragment: Fragment() {
     ): View? {
         var ret = inflater.inflate(R.layout.fragment_news, container, false)
         ret.swipeRefreshLayout.setOnRefreshListener {
-            // Initialize a new Runnable
+            // инициализирует новый Runnable
             runnable = Runnable {
-                // Update the text view text with a random number
+                // обновлени е информации RecyclerView
                 var recycler : RecyclerView = ret.findViewById(R.id.aleksey)
                 recycler.adapter = NewsAdapter()
                     .apply {
                     msgs = recMSG
                 }
-                // Hide swipe to refresh icon animation
+                // Для того чтобы после обновления значок пропадал
                 swipeRefreshLayout.isRefreshing = false
             }
             handler.postDelayed(
