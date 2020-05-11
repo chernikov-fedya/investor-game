@@ -83,8 +83,6 @@ class BrokerFragment : Fragment() {
                 mAlertDialog.dismiss()
             }
         }
-
-
         return ret
     }
 }

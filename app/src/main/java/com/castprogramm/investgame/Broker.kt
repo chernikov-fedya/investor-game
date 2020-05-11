@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import kotlin.math.round
 
 object Broker: Up {
-    var name = "Alexsey"
+    var name = "Нажмите, чтобы ввести"
     var myStock = mutableListOf<Stock>()
     var wallet: Double = 10000.0// сколько есть денег у брокера
     var myStockCost: Double = 0.0
