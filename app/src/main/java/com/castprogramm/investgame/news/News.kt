@@ -146,7 +146,7 @@ class Industry: News(){
     override fun funnymessage() {
         Log.d("debug", msg)
         events = mutableListOf("прорыв", "упадок")
-        eventType = events[0]
+        eventType = events[(0..events.size-1).random()]
         name = Industries.values()[(0..Industries.values().size-1).random()].n
         msg = "В отрасли $name произошел $eventType"
         newsarray.add(0, msg)
@@ -156,7 +156,7 @@ class Industry: News(){
 }
 class Enterprise: News(){
     init {
-    events = mutableListOf("кризис", "прикол")
+    events = mutableListOf("кризис", "подъем")
     name = Companies.values()[(0..Companies.values().size-1).random()].n
     eventType = events[(0..events.size-1).random()]
     msg = "В компании $name произошел $eventType"
@@ -164,7 +164,7 @@ class Enterprise: News(){
 }
     override fun sadmessage() {
         Log.d("debug", msg)
-        events = mutableListOf("кризис", "прикол")
+        events = mutableListOf("кризис", "подъем")
         name = Companies.values()[(0..Companies.values().size-1).random()].n
         eventType = events[0]
         msg = "В компании $name произошел $eventType"
@@ -173,7 +173,7 @@ class Enterprise: News(){
 
     override fun funnymessage() {
         Log.d("debug", msg)
-        events = mutableListOf("кризис", "прикол")
+        events = mutableListOf("кризис", "подъем")
         name = Companies.values()[(0..Companies.values().size-1).random()].n
         eventType = events[1]
         msg = "В компании $name произошел $eventType"
