@@ -76,8 +76,11 @@ class BrokerFragment : Fragment() {
             val  mAlertDialog = mBuilder.show()
             mDialogView.dialogLoginBtn.setOnClickListener {
                 mAlertDialog.dismiss()
-                val name = mDialogView.dialogNameEt.text.toString()
-                nameBro.setText(name)
+                val username = mDialogView.dialogNameEt.text.toString()
+                // Запоминаем имя 3 ебаными способами, потому что по 1 не работает
+                name = username
+                Broker.name = username
+                nameBro.text = username
             }
             mDialogView.dialogCancelBtn.setOnClickListener {
                 mAlertDialog.dismiss()
