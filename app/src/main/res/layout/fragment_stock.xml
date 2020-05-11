@@ -51,10 +51,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/graphic"
         tools:ignore="MissingConstraints" />
-
-
-
-
     <Button
         android:id="@+id/sold"
         android:layout_width="120dp"
@@ -84,5 +80,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/quantity_stock"
         app:layout_constraintTop_toBottomOf="@id/graphic"
+        tools:ignore="MissingConstraints" />
+    <ImageView
+        android:id="@+id/imagecountry"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        app:layout_constraintTop_toBottomOf="@id/sold"
+        android:layout_marginEnd="4dp"
         tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,15 +22,13 @@ class CostView(context: Context, atrr: AttributeSet): GraphView(context, atrr), 
             this.addSeries(functiom)
             this.viewport.scrollToEnd()
             this.viewport.computeScroll()
-            this.viewport.maxYAxisSize
-            this.viewport.maxXAxisSize
-            this.viewport.setMinimalViewport(0.0, this.viewport.getMaxX(true),0.0, this.viewport.getMaxY(true))
             this.viewport.setMinX(0.0)
-
         })
     }
 
     override fun update() {
         this.viewport.scrollToEnd()
+        this.viewport.setMinX(0.0)
+        this.viewport.setMinY(0.0)
     }
 }

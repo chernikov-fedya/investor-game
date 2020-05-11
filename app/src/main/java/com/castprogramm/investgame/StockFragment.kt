@@ -32,6 +32,8 @@ class StockFragment : Fragment() {
         var k: EditText = view.findViewById(R.id.quantity_stock)
         var image: ImageView = view.findViewById(R.id.icon_graph)
         var pr :TextView = view.findViewById(R.id.prquant)
+        var imageCountry : ImageView = view.findViewById(R.id.imagecountry)
+        imageCountry.setImageResource(stock.companies?.country?.n!!)
         image.setImageResource(stock.companies?.r!!)
         bsold.setOnClickListener { v->
             var cent = 1
