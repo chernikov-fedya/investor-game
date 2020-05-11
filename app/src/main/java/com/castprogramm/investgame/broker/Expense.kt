@@ -1,6 +1,5 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.broker
 
-import kotlin.math.exp
 enum class LossEvent{
     Pet,
     Family,
@@ -13,7 +12,7 @@ class Expense{
 
     var loss: Double = 0.0
 
-    fun makeLossEvent(): LossEvent=
+    fun makeLossEvent(): LossEvent =
         when ((0..100).random()) {
             in 1..15 ->  {
                 loss = 20.0
@@ -23,7 +22,7 @@ class Expense{
                 loss = 40.0
                 LossEvent.Food
             }
-            in 70..71 ->  LossEvent.Nothing
+            in 70..71 -> LossEvent.Nothing
             in 72..90 ->  {
                 loss = 20.0
                 LossEvent.Transport

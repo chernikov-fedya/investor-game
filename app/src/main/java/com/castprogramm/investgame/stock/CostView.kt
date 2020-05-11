@@ -1,16 +1,16 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.stock
 
 import android.content.Context
 import android.util.AttributeSet
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import com.castprogramm.investgame.Up
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
-import kotlinx.android.synthetic.main.activity_main.view.*
-import java.util.concurrent.TimeUnit
 
-class CostView(context: Context, atrr: AttributeSet): GraphView(context, atrr), Up{
+class CostView(context: Context, atrr: AttributeSet): GraphView(context, atrr),
+    Up {
     init {
         this.viewport.setScalable(true)
         this.viewport.setScalableY(true)

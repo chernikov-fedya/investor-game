@@ -1,4 +1,4 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.news
 
 import android.os.Bundle
 import android.os.Handler
@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_all_stock.*
-import kotlinx.android.synthetic.main.fragment_all_stock.view.*
+import com.castprogramm.investgame.R
+import com.castprogramm.investgame.Updater
 import kotlinx.android.synthetic.main.fragment_news.*
-import kotlinx.android.synthetic.main.fragment_news.view.*
 import kotlinx.android.synthetic.main.fragment_news.view.swipeRefreshLayout
 
 class NewsFragment: Fragment() {
@@ -37,7 +36,8 @@ class NewsFragment: Fragment() {
             runnable = Runnable {
                 // Update the text view text with a random number
                 var recycler : RecyclerView = ret.findViewById(R.id.aleksey)
-                recycler.adapter = NewsAdapter().apply {
+                recycler.adapter = NewsAdapter()
+                    .apply {
                     msgs = recMSG
                 }
                 // Hide swipe to refresh icon animation

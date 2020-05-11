@@ -1,6 +1,8 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.broker
 
 import androidx.lifecycle.MutableLiveData
+import com.castprogramm.investgame.Up
+import com.castprogramm.investgame.stock.Stock
 import kotlin.math.round
 
 object Broker: Up {
@@ -20,12 +22,14 @@ object Broker: Up {
     override fun update() {
         myStockCost = 0.0
         var expense = Expense()
-        Broker.less = expense.loss
+        less = expense.loss
         wallet = wallet - expense.loss
         for (i in 0..myStock.size-1){
             myStockCost = (myStockCost + myStock[i].cost * myStock[i].quantity).round(2)
         }
-        thisWallet.value = wallet
-        thisLess.value = less
+        thisWallet.value =
+            wallet
+        thisLess.value =
+            less
     }
 }

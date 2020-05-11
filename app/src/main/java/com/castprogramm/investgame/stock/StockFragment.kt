@@ -1,8 +1,5 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.stock
 
-import android.animation.AnimatorInflater
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
@@ -10,18 +7,20 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import com.castprogramm.investgame.EnumClasses.Error
+import com.castprogramm.investgame.MainActivity
+import com.castprogramm.investgame.R
 import com.jjoe64.graphview.series.DataPoint
 import kotlinx.android.synthetic.main.fragment_stock.*
 
 
 class StockFragment : Fragment() {
-    var stock: Stock = Stock()
+    var stock: Stock =
+        Stock()
     var x1: Int = 0
     var x2: Int = 0
     var a = activity as MainActivity?
@@ -33,7 +32,9 @@ class StockFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var view = inflater.inflate(R.layout.fragment_stock, container, false)
-        var costGraphic : CostView = view.findViewById(R.id.graphic)
+        var costGraphic : CostView = view.findViewById(
+            R.id.graphic
+        )
         var stockMarket = stockMarket()
         var bsold : Button = view.findViewById(R.id.sold)
         var bbuy : Button = view.findViewById(R.id.buy)

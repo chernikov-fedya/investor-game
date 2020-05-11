@@ -1,4 +1,6 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.stock
+
+import com.castprogramm.investgame.news.TypeEvent
 
 class StockGroup {
     var name : String? = null
@@ -14,7 +16,6 @@ class StockGroup {
         }
         for (i in 0..grouplist.size-1){
         grouplist[i].cost = grouplist[i].cost.times(a)
-
     }
     }
 }
