@@ -1,14 +1,12 @@
 package com.castprogramm.investgame
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.content.pm.ActivityInfo
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.broker.BrokerFragment
@@ -114,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                                 Broker.name,
                                 Broker.wallet,
                                 Broker.myStockCost,
-                                Broker.less
+                                Broker.loss
                             )
                             BrokerAdapter.fragment = f
                             ft.replace(R.id.frame_menu, f)
@@ -149,7 +147,7 @@ class MainActivity : AppCompatActivity() {
             Broker.name,
             Broker.wallet,
             Broker.myStockCost,
-            Broker.less
+            Broker.loss
         )
         BrokerAdapter.fragment = f
         ft.replace(R.id.frame_menu, f)

@@ -1,5 +1,6 @@
 package com.castprogramm.investgame.broker
 
+import android.content.Intent
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import android.view.textclassifier.ConversationActions
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -15,6 +17,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.castprogramm.investgame.R
+import com.castprogramm.investgame.SplashActivity
 import com.castprogramm.investgame.stock.BrokerAdapter
 import com.castprogramm.investgame.stock.Stock
 import kotlinx.android.synthetic.main.login_dialog.view.*
@@ -53,6 +56,7 @@ class BrokerFragment : Fragment() {
         var newwallet: MutableLiveData<Double> = Broker.thisWallet
         var newles : MutableLiveData<Double> = Broker.thisLess
         var newSum : MutableLiveData<Double> = Broker.thisMyStock
+        var end : MutableLiveData<Double> = Broker.thisEnd
         walletBro.setText("Наличные:  $" + "%.2f".format(wallet))
         minus.setText("Текущий расход: " + expenditure.toString())
         stockPriceBro.setText("Стоимость моих акций:  $" + "%.2f".format(stockPrice))
@@ -68,6 +72,16 @@ class BrokerFragment : Fragment() {
         nameBro.setText("Имя: " + name)
         var pi = LinearLayoutManager(ret.context)
         recycler.layoutManager = pi
+        end.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it <= 0.0){
+                var endDialog = LayoutInflater.from(ret.context).inflate(R.layout.fragment_end, null)
+                var builder = AlertDialog.Builder(ret.context)
+                    .setTitle("Конец игры")
+                    .setMessage("Вы проиграли")
+                var alertDialog = builder.show()
+            }
+        })
+
         // Находим поле отображения имени брокера по id и устанавливаем слушатель
         var namevalue = ret.findViewById<TextView>(R.id.name)
         namevalue.setOnClickListener{
