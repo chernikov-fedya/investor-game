@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#EDEDED"
+    android:background="#5A5D7A"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,6 +19,7 @@
         >
 
         <ImageView
+            android:layout_marginTop="14dp"
             android:id="@+id/photo"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -31,20 +32,24 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_gravity="clip_vertical|right"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/photo"
             android:layout_toRightOf="@id/photo"
             android:paddingStart="16dp"
-            android:layout_marginTop="8dp"
             android:paddingEnd="16dp"
-            tools:text="Name"
             android:textColor="#000"
-            app:layout_constraintHorizontal_bias="0.0" />
+            app:layout_constraintHorizontal_bias="0.0"
+            tools:text="Name" />
 
         <TextView
             android:id="@+id/wallet"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_below="@id/name"
+            android:layout_alignStart="@+id/stockPrice"
             android:layout_gravity="clip_vertical|right"
+            android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
             android:layout_toRightOf="@id/photo"
             android:paddingStart="16dp"
@@ -59,8 +64,10 @@
             android:layout_height="30dp"
             android:layout_below="@id/name"
             android:layout_gravity="clip_vertical|right"
+            android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="31dp"
+            android:layout_toEndOf="@+id/photo"
             android:layout_toRightOf="@id/photo"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
@@ -90,6 +97,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec"
+            android:paddingBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </ScrollView>

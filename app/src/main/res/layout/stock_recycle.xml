@@ -27,7 +27,7 @@
 
             <TextView
                 android:id="@+id/name_st"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_toRightOf="@+id/icon_comp"
                 android:layout_marginTop="10dp"
@@ -36,11 +36,11 @@
 
             <TextView
                 android:id="@+id/cost_st"
-                android:layout_toRightOf="@+id/icon_comp"
-                android:layout_marginBottom="10dp"
-                android:layout_below="@+id/name_st"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
+                android:layout_below="@+id/name_st"
+                android:layout_marginBottom="10dp"
+                android:layout_toRightOf="@+id/icon_comp"
                 android:gravity="left"
                 android:text="Cost" />
 
