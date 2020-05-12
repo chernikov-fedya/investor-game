@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item
+        android:id="@+id/manual"
+        android:orderInCategory="100"
+        android:title="Руководство"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/reference"
         android:orderInCategory="100"
         android:title="Справочник"
@@ -12,4 +17,5 @@
         android:orderInCategory="100"
         android:title="Сбросить прогресс"
         app:showAsAction="never"/>
+
 </menu>

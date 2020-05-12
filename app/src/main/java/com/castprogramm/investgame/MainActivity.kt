@@ -1,19 +1,10 @@
 package com.castprogramm.investgame
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.view.animation.DecelerateInterpolator
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.RecyclerView
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.broker.BrokerFragment
@@ -69,7 +60,14 @@ class MainActivity : AppCompatActivity() {
                 }
             R.id.reference -> {
                 // запуск подсказки
-                val f = ReferenceFragmemt()
+                val f = ReferenceFragmemt(URL.REFERENCE)
+                val fm = supportFragmentManager
+                val ft = fm.beginTransaction()
+                ft.replace(R.id.frame_menu, f)
+                ft.commit()
+            }
+            R.id.manual ->{
+                val f = ReferenceFragmemt(URL.MANUAL)
                 val fm = supportFragmentManager
                 val ft = fm.beginTransaction()
                 ft.replace(R.id.frame_menu, f)
