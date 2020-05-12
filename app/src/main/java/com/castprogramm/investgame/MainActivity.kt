@@ -1,5 +1,9 @@
 package com.castprogramm.investgame
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.content.pm.ActivityInfo
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
