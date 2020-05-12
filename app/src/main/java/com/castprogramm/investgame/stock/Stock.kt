@@ -33,25 +33,19 @@ class Stock: Up {
 }
 // Адаптер для вывода списка акиций в фрагмент активов с помощью RecyclerView
 class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockViewHolder>(){
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
         var eee = LayoutInflater.from(parent.context).inflate(R.layout.stock_recycle, parent, false) // Переменная для хранения файла разметки
         return StockViewHolder(eee)
     }
-
     override fun getItemId(position: Int): Long = position.toLong() //Функция, которая возращает Id
-
     override fun getItemCount(): Int = Stoks.allStoks.size // Функция, которая возварщает размер RecyclerView
-
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) { // Функция для отрисовки RecyclerView
         holder.bind(Stoks.allStoks[position])
     }
-
     override fun onViewDetachedFromWindow(holder: StockViewHolder) { // Функция для удаления Observer при условии, что объект находится вне пределов экрана
         holder.newCost?.removeObservers(fragment!!)
     }
-
-    companion object{ // Объект для отрисовки RecyclerView
+    companion object{
         var fragmentManager : FragmentManager? = null // Переменная для передачи supportFragmentManager из MainActivity
         var fragment: AllStockFragment? = null // Переменная для передачи жизненного цикла фрагмента из MainActivity
         class StockViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -88,16 +82,13 @@ class BrokerAdapter(): RecyclerView.Adapter<BrokerAdapter.Companion.BrokerViewHo
         var eee = LayoutInflater.from(parent.context).inflate(R.layout.broker_recycle, parent, false) // Переменная для хранения файла разметки
         return BrokerViewHolder(eee)
     }
-
     override fun getItemId(position: Int): Long = position.toLong() //Функция, которая возращает Id
-
     override fun getItemCount(): Int = Broker.myStock.size // Функция, которая возварщает размер RecyclerView
-
     override fun onBindViewHolder(holder: BrokerViewHolder, position: Int) { // Функция для отрисовки RecyclerView
         holder.bind(Broker.myStock[position])
     }
-    override fun onViewDetachedFromWindow(holder: BrokerAdapter.Companion.BrokerViewHolder) { // Функция для удаления Observer при условии, что объект находится вне пределов экрана
-        holder.newCostb?.removeObservers(BrokerAdapter.fragment!!)
+    override fun onViewDetachedFromWindow(holder: BrokerViewHolder) { // Функция для удаления Observer при условии, что объект находится вне пределов экрана
+        holder.newCostb?.removeObservers(fragment!!)
     }
     companion object{ // Статические поля
         var fragmentManager : FragmentManager? = null // Переменная для передачи supportFragmentManager из MainActivity
