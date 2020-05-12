@@ -1,6 +1,10 @@
 package com.castprogramm.investgame.stock
 
 import android.annotation.SuppressLint
+import android.content.res.AssetManager
+import android.media.AudioAttributes
+import android.media.AudioManager
+import android.media.SoundPool
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
@@ -15,10 +19,25 @@ import com.castprogramm.investgame.EnumClasses.Error
 import com.castprogramm.investgame.MainActivity
 import com.castprogramm.investgame.R
 import com.jjoe64.graphview.series.DataPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_stock.*
 
 // Класс фрагментов, наследующийся от встроенного класса Fragment, для вывода акций и её параметров
 class StockFragment : Fragment() {
+    fun buildSoundPool(maxStreams: Int): SoundPool =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val attrs = AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build()
+            SoundPool.Builder()
+                .setAudioAttributes(attrs)
+                .setMaxStreams(maxStreams)
+                .build()
+        } else {
+            SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0)
+        }
+
     var stock: Stock = Stock()
     var counterSold: Int = 0 // Счётчик нажатий на кнопку продажи
     var counterBuy: Int = 0 // Счётчик нажатий на кнопку покупки
@@ -30,6 +49,9 @@ class StockFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var sd = activity?.assets?.openFd("zvon.mp3")
+        val soundPool: SoundPool = buildSoundPool(10)
+        val zvon = soundPool.load(sd, 1)
         var view = inflater.inflate(R.layout.fragment_stock, container, false)
         var costGraphic : CostView = view.findViewById(R.id.graphic)
         var stockMarket = StockMarket()
@@ -55,6 +77,7 @@ class StockFragment : Fragment() {
                     toast.show()
                 }
                 else{
+                    soundPool.play(zvon, 1f, 1f, 1, 0, 1f)
                     if (counterSold < 2){ // Вывод сообщения при успехе
                         var text = "Продано"
                         var toast =Toast.makeText(this.activity, text, 1000)
@@ -83,6 +106,7 @@ class StockFragment : Fragment() {
                     toast.show()
                 }
                 else ->{ // Вывод сообщения при успехе
+                    soundPool.play(zvon, 1f, 1f, 1, 0, 1f)
                     if (counterBuy<2){
                         var text = "Куплено"
                         var toast =Toast.makeText(this.activity, text, 1000)
