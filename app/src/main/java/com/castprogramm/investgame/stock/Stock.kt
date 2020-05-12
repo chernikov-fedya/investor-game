@@ -111,7 +111,7 @@ class BrokerAdapter(): RecyclerView.Adapter<BrokerAdapter.Companion.BrokerViewHo
             var newCostb : MutableLiveData<MutableList<DataPoint>>? = null // Переменная для последующего присвоения в неё LiveData
             fun bind(stock: Stock){ // Функция для отрисовки, принимает в себя акцию
                 name.setText(stock.companies?.n) // Присвоение в поле названия акции
-                cost.setText(stock.cost.toString()) // Присвоение в поле стоимости акции
+                cost.setText("%.2f".format(stock.cost)) // Присвоение в поле стоимости акции
                 image.setImageResource(stock.companies?.r!!) // Присвоение в поле изображения эмблемы компании, которой принадлежит акция
                 newCostb = stock.costsofStock // Присвоение LiveData в переменную
                 quantity.setText(stock.quantity.toString()) // Присвоение количества акции

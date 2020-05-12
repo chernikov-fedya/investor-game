@@ -13,6 +13,7 @@ object Broker: Up {
     var myStockCost: Double = 0.0 // стоимость акций брокера
     var thisWallet : MutableLiveData<Double> = MutableLiveData()
     var thisLess : MutableLiveData<Double> = MutableLiveData()
+    var thisMyStock : MutableLiveData<Double> = MutableLiveData()
     var less : Double = 0.0
 
     // округление до сотых
@@ -27,9 +28,10 @@ object Broker: Up {
         less = expense.loss
         wallet = wallet - expense.loss
         for (i in 0..myStock.size-1){  // считаем стоимость акций у брокера
-            myStockCost = (myStockCost + myStock[i].cost * myStock[i].quantity).round(2)
+            myStockCost += (myStock[i].cost * myStock[i].quantity)
         }
-        thisWallet.value = wallet  // передаем значения в лайв дату для отрисовки графика
+        thisMyStock.value = myStockCost
+        thisWallet.value = wallet  // передаем значения в LiveData для отрисовки графика
         thisLess.value = less
     }
 }

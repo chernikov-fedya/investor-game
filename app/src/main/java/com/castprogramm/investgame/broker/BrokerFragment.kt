@@ -48,16 +48,20 @@ class BrokerFragment : Fragment() {
         var minus : TextView = ret.findViewById(R.id.printminus)
         var newwallet: MutableLiveData<Double> = Broker.thisWallet
         var newles : MutableLiveData<Double> = Broker.thisLess
-        walletBro.setText("Наличные:  " + wallet.toString())
+        var newSum : MutableLiveData<Double> = Broker.thisMyStock
+        walletBro.setText("Наличные:  $" + "%.2f".format(wallet))
         minus.setText("Текущий расход: " + expenditure.toString())
+        stockPriceBro.setText("Стоимость моих акций:  $" + "%.2f".format(stockPrice))
         newwallet.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            walletBro.setText("Наличные:  $" + it.toString())
+            walletBro.setText("Наличные:  $" + "%.2f".format(it))
         })
         newles.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             minus.setText("Текущий расход: $" + it.toString())
         })
+        newSum.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            stockPriceBro.setText("Стоимость моих акций:  $" + "%.2f".format(it))
+        })
         nameBro.setText("Имя: " + name)
-        stockPriceBro.setText("Стоимость моих акций:  " + stockPrice.toString())
         var pi = LinearLayoutManager(ret.context)
         recycler.layoutManager = pi
         // Находим поле отображения имени брокера по id и устанавливаем слушатель
