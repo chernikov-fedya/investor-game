@@ -63,12 +63,12 @@ class MainActivity : AppCompatActivity() {
                     Stock().apply { cost = 184.67; companies = Companies.Microsoft},
                     Stock().apply { cost = 3.01; companies = Companies.Huawei}
                 )
-
                 val intent = intent
                 finish()
                 startActivity(intent)
                 }
             R.id.reference -> {
+                // запуск подсказки
                 val f = ReferenceFragmemt()
                 val fm = supportFragmentManager
                 val ft = fm.beginTransaction()
@@ -79,11 +79,11 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onPause() {
+    override fun onPause(){
         super.onPause()
         testing.play = false
     }
-    override fun onResume() {
+    override fun onResume(){
         super.onResume()
         testing.play = true
         handler.post(testing)
@@ -91,22 +91,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
         // обовление класса брокер
         testing.objectsToUpdate.add(Broker)
         // добавление новостей к апдейтеру
         News.fillNews(testing)
         testing.objectsToUpdate.plusAssign(Stoks.allStoks)
-        //testing.objectsToUpdate.add(ss)
-
-            handler.post(testing)
+        handler.post(testing)
         StockAdapter.fragmentManager = supportFragmentManager
         BrokerAdapter.fragmentManager = supportFragmentManager
             bnv.setOnNavigationItemSelectedListener(object :
                 BottomNavigationView.OnNavigationItemSelectedListener {
                 override fun onNavigationItemSelected(item: MenuItem): Boolean {
                     when (item.itemId) {
+                        // создание и запуск фрагмента профиля
                         R.id.butProfile -> {
                             val fm = supportFragmentManager
                             val ft = fm.beginTransaction()
@@ -117,10 +114,11 @@ class MainActivity : AppCompatActivity() {
                                 Broker.myStockCost,
                                 Broker.less
                             )
-                            //BrokerAdapter.fragment = f
+                            BrokerAdapter.fragment = f
                             ft.replace(R.id.frame_menu, f)
                             ft.commit()
                         }
+                        // создание и запуск фрагмента всех акций
                         R.id.butStock -> {
                             val fm = supportFragmentManager
                             val ft = fm.beginTransaction()
@@ -129,6 +127,7 @@ class MainActivity : AppCompatActivity() {
                             ft.replace(R.id.frame_menu, f)
                             ft.commit()
                         }
+                        // создание и запуск фрагмента новостей
                         R.id.butNews -> {
                             val fm = supportFragmentManager
                             val ft = fm.beginTransaction()
@@ -140,6 +139,7 @@ class MainActivity : AppCompatActivity() {
                     return true
                 }
             })
+        // при первом запуске создаётся и запускается фрагмент профиля
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
         var f = BrokerFragment.newInstance(

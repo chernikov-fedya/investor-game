@@ -17,12 +17,12 @@ import com.castprogramm.investgame.R
 import com.jjoe64.graphview.series.DataPoint
 import kotlinx.android.synthetic.main.fragment_stock.*
 
-
+// Класс фрагментов, наследующийся от встроенного класса Fragment, для вывода акций и её параметров
 class StockFragment : Fragment() {
     var stock: Stock = Stock()
-    var counterSold: Int = 0
-    var counterBuy: Int = 0
-    var a = activity as MainActivity?
+    var counterSold: Int = 0 // Счётчик нажатий на кнопку продажи
+    var counterBuy: Int = 0 // Счётчик нажатий на кнопку покупки
+    var a = activity as MainActivity? // Наследование MainActivity
     @SuppressLint("WrongConstant")
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateView(
@@ -31,9 +31,7 @@ class StockFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var view = inflater.inflate(R.layout.fragment_stock, container, false)
-        var costGraphic : CostView = view.findViewById(
-            R.id.graphic
-        )
+        var costGraphic : CostView = view.findViewById(R.id.graphic)
         var stockMarket = StockMarket()
         var bsold : Button = view.findViewById(R.id.sold)
         var bbuy : Button = view.findViewById(R.id.buy)
@@ -47,17 +45,17 @@ class StockFragment : Fragment() {
         image.setImageResource(stock.companies?.r!!)
         bsold.setOnClickListener { v->
             counterSold = counterSold + 1 // обновляем счетчик нажатий
-                var cent = 1
-                if (k.text.isNotEmpty() )
+                var cent = 1 // Стандартное количество акций
+                if (k.text.isNotEmpty()) // Проверка поля ввода на заполненность
                     cent = k.text.toString().toInt()
-                if (stockMarket.sold(stock, cent) == Error.EMPTYBAG){
+                if (stockMarket.sold(stock, cent) == Error.EMPTYBAG){ // Вывод сообщения, если у пользователя количество данных акций меньше того количества, что он хочет продать
                     var texr = Error.EMPTYBAG.s
                     var toast = Toast.makeText(this.activity, texr, 1000)
                     toast.setGravity(Gravity.CENTER, 0, 0)
                     toast.show()
                 }
                 else{
-                    if (counterSold<2){
+                    if (counterSold < 2){ // Вывод сообщения при успехе
                         var text = "Продано"
                         var toast =Toast.makeText(this.activity, text, 1000)
                         toast.setGravity(Gravity.CENTER, 0, 0)
@@ -69,23 +67,22 @@ class StockFragment : Fragment() {
         bbuy.setOnClickListener { v->
             counterBuy = counterBuy + 1 // обновляем счетчик нажатий
             var cent = 1
-            if (k.text.isNotEmpty() )
+            if (k.text.isNotEmpty()) // Проверка поля ввода на заполненность
                 cent = k.text.toString().toInt()
             when(stockMarket.buy(stock, cent)){
-                Error.EMPTYMARKET -> {
+                Error.EMPTYMARKET -> { // Вывод сообщения, если в магазине недостаточное количество акций
                     var text = Error.EMPTYMARKET.s
                     var toast = Toast.makeText(this.activity, text, 1000)
                     toast.setGravity(Gravity.CENTER, 0, 0)
                     toast.show()
                 }
-
-                Error.NOMONEY -> {
+                Error.NOMONEY -> { // Вывод сообщения, если у пользователя недостаточное количество денег
                     var text = Error.NOMONEY.s
                     var toast = Toast.makeText(this.activity, text, 1000)
                     toast.setGravity(Gravity.CENTER, 0, 0)
                     toast.show()
                 }
-                else ->{
+                else ->{ // Вывод сообщения при успехе
                     if (counterBuy<2){
                         var text = "Куплено"
                         var toast =Toast.makeText(this.activity, text, 1000)
@@ -100,18 +97,17 @@ class StockFragment : Fragment() {
         newtest1.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             pr.setText("$  "+ "%.2f".format(it.last().y))
         })
-        costGraphic.viewport.isScalable = true
+        costGraphic.viewport.isScalable = true // Разрешение скролла
         costGraphic.viewport.isScrollable = true
-        costGraphic.gridLabelRenderer.horizontalAxisTitle = "Время"
+        costGraphic.gridLabelRenderer.horizontalAxisTitle = "Время" // Подпись оси Х у графика
         a?.testing?.objectsToUpdate?.add(costGraphic)
-        a?.handler?.post(a?.testing)
-        costGraphic.addStock(stock, this)
+        a?.handler?.post(a?.testing) // Обновление
+        costGraphic.addStock(stock, this) // Добавление нового значения на график
         var name : TextView = view.findViewById(R.id.namestock)
         name.setText(stock.companies?.n)
         return view
     }
     companion object{
-
         fun instfragment(temp: Stock): StockFragment {
             return StockFragment().apply {
                 stock = temp
@@ -119,4 +115,3 @@ class StockFragment : Fragment() {
         }
         }
     }
-

@@ -32,7 +32,7 @@ abstract class News: Up {
                 StockGroup()
                     .apply { name =  Industries.values()[it].name }}
 
-            // создание группы на кажду акцию
+            // создание группы на каждую акцию
             var companies = Array<StockGroup>(Stoks.allStoks.size) {
                 StockGroup().apply{
                     name = Stoks.allStoks[it].name

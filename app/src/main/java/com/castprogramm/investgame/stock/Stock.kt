@@ -85,7 +85,7 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockViewHolde
 class BrokerAdapter(): RecyclerView.Adapter<BrokerAdapter.Companion.BrokerViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrokerViewHolder {
-        var eee = LayoutInflater.from(parent.context).inflate(R.layout.broker_recycle, parent, false)
+        var eee = LayoutInflater.from(parent.context).inflate(R.layout.broker_recycle, parent, false) // Переменная для хранения файла разметки
         return BrokerViewHolder(eee)
     }
 
