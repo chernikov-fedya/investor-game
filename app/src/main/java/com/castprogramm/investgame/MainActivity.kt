@@ -97,8 +97,7 @@ class MainActivity : AppCompatActivity() {
         testing.objectsToUpdate.add(Broker)
         // добавление новостей к апдейтеру
         News.fillNews(testing)
-            testing.objectsToUpdate.plusAssign(Stoks.allStoks)
-
+        testing.objectsToUpdate.plusAssign(Stoks.allStoks)
         //testing.objectsToUpdate.add(ss)
 
             handler.post(testing)
@@ -153,10 +152,7 @@ class MainActivity : AppCompatActivity() {
         BrokerAdapter.fragment = f
         ft.replace(R.id.frame_menu, f)
         ft.commit()
-
-
         }
-
     }
 
 

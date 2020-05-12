@@ -19,10 +19,9 @@ import kotlinx.android.synthetic.main.fragment_stock.*
 
 
 class StockFragment : Fragment() {
-    var stock: Stock =
-        Stock()
-    var x1: Int = 0
-    var x2: Int = 0
+    var stock: Stock = Stock()
+    var counterSold: Int = 0
+    var counterBuy: Int = 0
     var a = activity as MainActivity?
     @SuppressLint("WrongConstant")
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -35,7 +34,7 @@ class StockFragment : Fragment() {
         var costGraphic : CostView = view.findViewById(
             R.id.graphic
         )
-        var stockMarket = stockMarket()
+        var stockMarket = StockMarket()
         var bsold : Button = view.findViewById(R.id.sold)
         var bbuy : Button = view.findViewById(R.id.buy)
         var k: EditText = view.findViewById(R.id.quantity_stock)
@@ -47,7 +46,7 @@ class StockFragment : Fragment() {
         imageCountry.setImageResource(stock.companies?.country?.n!!)
         image.setImageResource(stock.companies?.r!!)
         bsold.setOnClickListener { v->
-            x1 = x1 + 1 // обновляем счетчик нажатий
+            counterSold = counterSold + 1 // обновляем счетчик нажатий
                 var cent = 1
                 if (k.text.isNotEmpty() )
                     cent = k.text.toString().toInt()
@@ -58,7 +57,7 @@ class StockFragment : Fragment() {
                     toast.show()
                 }
                 else{
-                    if (x1<2){
+                    if (counterSold<2){
                         var text = "Продано"
                         var toast =Toast.makeText(this.activity, text, 1000)
                         toast.setGravity(Gravity.CENTER, 0, 0)
@@ -66,10 +65,9 @@ class StockFragment : Fragment() {
                         quantity_stock.setText("")
                     }
                 }
-
         }
         bbuy.setOnClickListener { v->
-            x2 = x2 + 1 // обновляем счетчик нажатий
+            counterBuy = counterBuy + 1 // обновляем счетчик нажатий
             var cent = 1
             if (k.text.isNotEmpty() )
                 cent = k.text.toString().toInt()
@@ -88,7 +86,7 @@ class StockFragment : Fragment() {
                     toast.show()
                 }
                 else ->{
-                    if (x2<2){
+                    if (counterBuy<2){
                         var text = "Куплено"
                         var toast =Toast.makeText(this.activity, text, 1000)
                         toast.setGravity(Gravity.CENTER, 0, 0)

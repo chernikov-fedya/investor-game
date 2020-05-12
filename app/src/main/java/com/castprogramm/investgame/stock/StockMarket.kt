@@ -1,10 +1,12 @@
 package com.castprogramm.investgame.stock
 
+import android.os.Handler
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.EnumClasses.Error
-// класс биржи
-class stockMarket {
+import com.castprogramm.investgame.Updater
 
+// класс биржи
+class StockMarket() {
     // функция продажи k-числа акций
     fun sold(stock: Stock, k: Int): Error? {
         if (Broker.myStock.find { it == stock } == null)

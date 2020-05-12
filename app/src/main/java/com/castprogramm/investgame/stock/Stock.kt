@@ -25,6 +25,7 @@ class Stock: Up {
     var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData() // LiveData, которая хранит в себе изменяемый список DataPoint
     var costs : MutableList<DataPoint> = mutableListOf() // Изменяемый список, который присваивается в LiveData
     var companies: Companies? = null // Компания, к которой принадлежит акция
+
     override fun update() { // Переопределение функции из интерфейса Up
         costs.add(DataPoint(costs.size.toDouble(), cost)) // Добавление в список новой серии значений
         costsofStock.value = costs // Присвоение в хранилище списка с сериями данных
@@ -61,12 +62,12 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockViewHolde
             var newCost : MutableLiveData<MutableList<DataPoint>>? = null // Переменная для последующего присвоения в неё LiveData
             fun bind(stock: Stock){ // Функция для отрисовки, принимает в себя акцию
                 name.setText(stock.companies?.n) // Присвоение в поле названия акции
-                cost.setText(stock.cost.toString()) // Присвоение в поле стоимости акции
+                cost.setText("$" + stock.cost.toString()) // Присвоение в поле стоимости акции
                 image.setImageResource(stock.companies?.r!!) // Присвоение в поле изображения эмблемы компании, которой принадлежит акция
                 newCost = stock.costsofStock // Присвоение LiveData в переменную
                 // С помощью паттерна Observer (наблюдатель) при обновлении значения в LiveData будет выполняться идущий ниже код
                 newCost?.observe(fragment!!, androidx.lifecycle.Observer {
-                    cost.setText("%.2f".format(it.last().y)) // Присвоение в поле стоимости акции
+                    cost.setText("$" + "%.2f".format(it.last().y)) // Присвоение в поле стоимости акции
                 })
                 // Функция для создания фрагмента при нажатии на CardView
                 cardView.setOnClickListener {
@@ -98,8 +99,7 @@ class BrokerAdapter(): RecyclerView.Adapter<BrokerAdapter.Companion.BrokerViewHo
     override fun onViewDetachedFromWindow(holder: BrokerAdapter.Companion.BrokerViewHolder) { // Функция для удаления Observer при условии, что объект находится вне пределов экрана
         holder.newCostb?.removeObservers(BrokerAdapter.fragment!!)
     }
-
-    companion object{ // Объект для отрисовки RecyclerView
+    companion object{ // Статические поля
         var fragmentManager : FragmentManager? = null // Переменная для передачи supportFragmentManager из MainActivity
         var fragment: BrokerFragment? = null // Переменная для передачи жизненного цикла фрагмента из MainActivity
         class BrokerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -111,13 +111,13 @@ class BrokerAdapter(): RecyclerView.Adapter<BrokerAdapter.Companion.BrokerViewHo
             var newCostb : MutableLiveData<MutableList<DataPoint>>? = null // Переменная для последующего присвоения в неё LiveData
             fun bind(stock: Stock){ // Функция для отрисовки, принимает в себя акцию
                 name.setText(stock.companies?.n) // Присвоение в поле названия акции
-                cost.setText("%.2f".format(stock.cost)) // Присвоение в поле стоимости акции
+                cost.setText("$" + "%.2f".format(stock.cost)) // Присвоение в поле стоимости акции
                 image.setImageResource(stock.companies?.r!!) // Присвоение в поле изображения эмблемы компании, которой принадлежит акция
                 newCostb = stock.costsofStock // Присвоение LiveData в переменную
                 quantity.setText(stock.quantity.toString()) // Присвоение количества акции
                 // С помощью паттерна Observer (наблюдатель) при обновлении значения в LiveData будет выполняться идущий ниже код
                 newCostb?.observe(fragment!!, androidx.lifecycle.Observer {
-                    cost.setText("%.2f".format(it.last().y)) // Присвоение в поле стоимости акции
+                    cost.setText("$" +"%.2f".format(it.last().y)) // Присвоение в поле стоимости акции
                 })
                 // Функция для создания фрагмента при нажатии на CardView
                 cardView.setOnClickListener {
