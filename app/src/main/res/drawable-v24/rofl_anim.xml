@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item android:drawable="@drawable/men" android:duration="35"/>
+    <item android:drawable="@drawable/men_two" android:duration="35"/>
+    <item android:drawable="@drawable/men_tree" android:duration="35"/>
+    <item android:drawable="@drawable/men_four" android:duration="35"/>
+    <item android:drawable="@drawable/men_five" android:duration="35"/>
+    <item android:drawable="@drawable/men_four" android:duration="35"/>
+    <item android:drawable="@drawable/men_tree" android:duration="35"/>
+    <item android:drawable="@drawable/men_two" android:duration="35"/>
+    <item android:drawable="@drawable/men" android:duration="35"/>
+
+</animation-list>

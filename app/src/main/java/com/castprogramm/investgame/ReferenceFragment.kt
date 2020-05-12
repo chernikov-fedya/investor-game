@@ -14,11 +14,11 @@ class ReferenceFragmemt(var urlPath :URL): Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // отрисовка html файла в фрагменте
+        // отрисовка html файла в фрагменте, при получении ссылки
         return WebView(container?.context).apply { loadUrl(urlPath.path) }
     }
 }
-
+// перечисление ссылок на html файлы
 enum class URL(var path : String){
     REFERENCE("file:///android_asset/index.html"),
     MANUAL("file:///android_asset/manual.htm")
