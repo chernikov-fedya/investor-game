@@ -15,8 +15,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.castprogramm.investgame.EnumClasses.Companies
-
-import com.castprogramm.investgame.Stoks.newsarray
+import com.castprogramm.investgame.broker.Broker
+import com.castprogramm.investgame.broker.BrokerFragment
+import com.castprogramm.investgame.news.News
+import com.castprogramm.investgame.news.NewsFragment
+import com.castprogramm.investgame.stock.*
+import com.castprogramm.investgame.stock.Stoks.newsarray
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -37,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.reset -> {
+                // функция обнуления прогресса для новой игры
                 Broker.myStock.clear()
                 Stoks.newsarray.clear()
                 Broker.myStockCost = 0.0
@@ -86,8 +91,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var x1: Int = 0
-        var x2: Int = 0
+
 
         // обовление класса брокер
         testing.objectsToUpdate.add(Broker)
@@ -114,6 +118,7 @@ class MainActivity : AppCompatActivity() {
                                 Broker.myStockCost,
                                 Broker.less
                             )
+                            //BrokerAdapter.fragment = f
                             ft.replace(R.id.frame_menu, f)
                             ft.commit()
                         }
@@ -145,6 +150,7 @@ class MainActivity : AppCompatActivity() {
             Broker.myStockCost,
             Broker.less
         )
+        BrokerAdapter.fragment = f
         ft.replace(R.id.frame_menu, f)
         ft.commit()
 

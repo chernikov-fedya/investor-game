@@ -1,4 +1,4 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.news
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.EnumClasses.Countries
 import com.castprogramm.investgame.EnumClasses.Industries
-import com.castprogramm.investgame.Stoks.newsarray
+import com.castprogramm.investgame.R
+import com.castprogramm.investgame.Up
+import com.castprogramm.investgame.Updater
+import com.castprogramm.investgame.stock.Stoks.newsarray
+import com.castprogramm.investgame.stock.StockGroup
+import com.castprogramm.investgame.stock.Stoks
 
 abstract class News: Up {
     companion object{
@@ -17,11 +22,15 @@ abstract class News: Up {
         fun fillNews(updater: Updater){
             // создание групп стран
             var countries : Array<StockGroup> = Array(Countries.values().size)
-                {StockGroup().apply { name =  Countries.values()[it].name }}
+                {
+                    StockGroup()
+                        .apply { name =  Countries.values()[it].name }}
 
             // создание групп отраслей
             var industries : Array<StockGroup> = Array(Industries.values().size)
-            {StockGroup().apply { name =  Industries.values()[it].name }}
+            {
+                StockGroup()
+                    .apply { name =  Industries.values()[it].name }}
 
             // создание группы на кажду акцию
             var companies = Array<StockGroup>(Stoks.allStoks.size) {
@@ -37,9 +46,12 @@ abstract class News: Up {
             }
                 // созданием объектов - новоснтных лент для каждого типа
             var newMakers = arrayOf(
-                Country().apply { arrayStockGroup = countries.toMutableList()},
-                Industry().apply { arrayStockGroup = industries.toMutableList()},
-                Enterprise().apply { arrayStockGroup = companies.toMutableList()}
+                Country()
+                    .apply { arrayStockGroup = countries.toMutableList()},
+                Industry()
+                    .apply { arrayStockGroup = industries.toMutableList()},
+                Enterprise()
+                    .apply { arrayStockGroup = companies.toMutableList()}
             )
             // прикрепление новостных лент к апдейтеру
             updater.objectsToUpdate.addAll(newMakers)
@@ -49,7 +61,7 @@ abstract class News: Up {
     var eventType: String? = null
     var msg: String = ""
 
-    override fun update() {
+    override fun update() { // обновляем цены акций в связи с событиями через интерфейс
         for (i in 0..arrayStockGroup.size-1){
             arrayStockGroup[i].changePrice(makeEvent())
         }
@@ -57,7 +69,7 @@ abstract class News: Up {
     abstract fun sadmessage()
     abstract fun funnymessage()
 
-    fun makeEvent():TypeEvent =
+    fun makeEvent(): TypeEvent =  // генерация случайного события
         when ((0..1000).random()) {
             in 1..5 ->  {eventType = "кризис"
                 sadmessage()
@@ -88,7 +100,7 @@ enum class TypeEvent(){
     PODEM,
     INCREASE
 }
-class Country: News() {
+class Country: News() {  //  класс страна
     init {
         events = mutableListOf("повышение", "понижение")
         eventType = TypeEvent.values()[(0..TypeEvent.values().size-1).random()].name
@@ -114,14 +126,14 @@ class Country: News() {
         newsarray.add(0, msg)
     }
 }
-class Industry: News(){
+class Industry: News(){  //класс предпрития
     init {
-    events = mutableListOf("прорыв", "упадок")
-    eventType = events[(0..events.size-1).random()]
-    name = Industries.values()[(0..Industries.values().size-1).random()].n
-    msg = "В отрасли $name произошел $eventType"
+        events = mutableListOf("прорыв", "упадок")
+        eventType = events[(0..events.size-1).random()]
+        name = Industries.values()[(0..Industries.values().size-1).random()].n
+        msg = "В отрасли $name произошел $eventType"
 
-}
+    }
     override fun sadmessage() {
         Log.d("debug", msg)
         events = mutableListOf("прорыв", "упадок")
@@ -134,7 +146,7 @@ class Industry: News(){
     override fun funnymessage() {
         Log.d("debug", msg)
         events = mutableListOf("прорыв", "упадок")
-        eventType = events[0]
+        eventType = events[(0..events.size-1).random()]
         name = Industries.values()[(0..Industries.values().size-1).random()].n
         msg = "В отрасли $name произошел $eventType"
         newsarray.add(0, msg)
@@ -142,17 +154,17 @@ class Industry: News(){
 
 
 }
-class Enterprise: News(){
+class Enterprise: News(){ //  класс предприятие
     init {
-    events = mutableListOf("кризис", "прикол")
-    name = Companies.values()[(0..Companies.values().size-1).random()].n
-    eventType = events[(0..events.size-1).random()]
-    msg = "В компании $name произошел $eventType"
+        events = mutableListOf("кризис", "подъем")
+        name = Companies.values()[(0..Companies.values().size-1).random()].n
+        eventType = events[(0..events.size-1).random()]
+        msg = "В компании $name произошел $eventType"
 
-}
+    }
     override fun sadmessage() {
         Log.d("debug", msg)
-        events = mutableListOf("кризис", "прикол")
+        events = mutableListOf("кризис", "подъем")
         name = Companies.values()[(0..Companies.values().size-1).random()].n
         eventType = events[0]
         msg = "В компании $name произошел $eventType"
@@ -161,7 +173,7 @@ class Enterprise: News(){
 
     override fun funnymessage() {
         Log.d("debug", msg)
-        events = mutableListOf("кризис", "прикол")
+        events = mutableListOf("кризис", "подъем")
         name = Companies.values()[(0..Companies.values().size-1).random()].n
         eventType = events[1]
         msg = "В компании $name произошел $eventType"

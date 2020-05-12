@@ -1,22 +1,19 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.broker
 
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_main.*
+import com.castprogramm.investgame.R
+import com.castprogramm.investgame.stock.BrokerAdapter
+import com.castprogramm.investgame.stock.Stock
 import kotlinx.android.synthetic.main.login_dialog.view.*
-import kotlin.math.min
 
 class BrokerFragment : Fragment() {
 
@@ -44,10 +41,7 @@ class BrokerFragment : Fragment() {
     ): View? {
         var ret = inflater.inflate(R.layout.fragment_broker, container, false)
         var recycler : RecyclerView = ret.findViewById(R.id.rec)
-        recycler.adapter = BrokerAdapter().apply {
-            stocks = recStocks
-        }
-
+        recycler.adapter = BrokerAdapter()
         var nameBro : TextView = ret.findViewById(R.id.name)
         var walletBro : TextView = ret.findViewById(R.id.wallet)
         var stockPriceBro: TextView = ret.findViewById(R.id.stockPrice)
@@ -57,31 +51,34 @@ class BrokerFragment : Fragment() {
         walletBro.setText("Наличные:  " + wallet.toString())
         minus.setText("Текущий расход: " + expenditure.toString())
         newwallet.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            walletBro.setText("Наличные:  " + it.toString())
+            walletBro.setText("Наличные:  $" + it.toString())
         })
         newles.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            minus.setText("Текущий расход: " + it.toString())
+            minus.setText("Текущий расход: $" + it.toString())
         })
         nameBro.setText("Имя: " + name)
         stockPriceBro.setText("Стоимость моих акций:  " + stockPrice.toString())
         var pi = LinearLayoutManager(ret.context)
         recycler.layoutManager = pi
-        // Устанавливаем имя
-        var adf = ret.findViewById<TextView>(R.id.name)
-        adf.setOnClickListener{
+        // Находим поле отображения имени брокера по id и устанавливаем слушатель
+        var namevalue = ret.findViewById<TextView>(R.id.name)
+        namevalue.setOnClickListener{
+            // Вызываем AlertDialog для заполнения имени
             val mDialogView = LayoutInflater.from(ret.context).inflate(R.layout.login_dialog, null)
             val mBuilder = AlertDialog.Builder(ret.context)
                 .setView(mDialogView)
                 .setTitle("Авторизация")
             val  mAlertDialog = mBuilder.show()
+            // Устанавливаем слушатель на кнопку "авторизироваться" для ее обработки
             mDialogView.dialogLoginBtn.setOnClickListener {
                 mAlertDialog.dismiss()
                 val username = mDialogView.dialogNameEt.text.toString()
-                // Запоминаем имя 3 ебаными способами, потому что по 1 не работает
+                // Присваиваем имя Брокеру
                 name = username
                 Broker.name = username
                 nameBro.text = username
             }
+            // Слушатель для отмены AlertDialog'а
             mDialogView.dialogCancelBtn.setOnClickListener {
                 mAlertDialog.dismiss()
             }

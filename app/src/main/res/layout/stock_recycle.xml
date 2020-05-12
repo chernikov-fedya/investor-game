@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:gravity="center">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardinal"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:id="@+id/cardinal"
         app:cardCornerRadius="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="14dp">
-
+            android:padding="14dp"
+            android:orientation="vertical">
             <ImageView
                 android:id="@+id/icon_comp"
                 android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginRight="8dp" />
+                android:layout_marginRight="8dp"
+                android:layout_height="64dp"/>
 
             <TextView
                 android:id="@+id/name_st"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/icon_comp"
-                android:gravity="left"
-                android:text="Stock" />
+                android:layout_marginTop="10dp"
+                android:text="Stock"
+                android:gravity="left"/>
 
             <TextView
                 android:id="@+id/cost_st"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_below="@+id/name_st"
                 android:layout_marginBottom="10dp"
