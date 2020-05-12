@@ -1,9 +1,13 @@
 package com.castprogramm.investgame.broker
 
+import android.graphics.drawable.Animatable
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -85,6 +89,14 @@ class BrokerFragment : Fragment() {
             // Слушатель для отмены AlertDialog'а
             mDialogView.dialogCancelBtn.setOnClickListener {
                 mAlertDialog.dismiss()
+            }
+        }
+        var image : ImageView = ret.findViewById(R.id.photo)
+        image.setOnClickListener {
+            image.setBackgroundResource(R.drawable.rofl_anim)
+            val animation = image.background
+            if (animation is Animatable){
+                animation.start()
             }
         }
         return ret

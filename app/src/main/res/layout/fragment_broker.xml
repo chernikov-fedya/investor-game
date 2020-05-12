@@ -25,8 +25,8 @@
             android:layout_height="100dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            app:srcCompat="@mipmap/men" />
-
+            />
+<!--        app:srcCompat="@mipmap/men"-->
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
