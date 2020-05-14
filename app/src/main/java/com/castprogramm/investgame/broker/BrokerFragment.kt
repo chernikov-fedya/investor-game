@@ -78,6 +78,7 @@ class BrokerFragment : Fragment() {
                     .setTitle("Конец игры")
                     .setMessage("Вы проиграли")
                 var alertDialog = builder.show()
+
             }
         })
 
