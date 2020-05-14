@@ -16,6 +16,7 @@ import com.castprogramm.investgame.stock.*
 import com.castprogramm.investgame.stock.Stoks.newsarray
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.nio.file.Files.find
 
 
 class MainActivity : AppCompatActivity() {
@@ -79,9 +80,21 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onPause(){
-        super.onPause()
+    override fun onStop(){
+        super.onStop()
         testing.play = false
+        val dbhelper = MindOrksDBOpenHelper(this, null)
+        for (i in 0..Broker.myStock.size-1){
+            dbhelper.addStock(Broker.myStock[i])
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val dbhelper = MindOrksDBOpenHelper(this, null)
+        for (i in 0..Broker.myStock.size-1){
+            dbhelper.addStock(Broker.myStock[i])
+        }
     }
     override fun onResume(){
         super.onResume()
@@ -91,6 +104,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        testing.play = true
+        handler.post(testing)
+        if (MindOrksDBOpenHelper.COLOUM_CENT != "cent"){
+        val dbhadler = MindOrksDBOpenHelper(this, null)
+        val cursor = dbhadler.getAllStock()
+        cursor!!.moveToFirst()
+        Broker.myStock.add(
+            Stoks.allStoks.find { it.name ==  cursor.getString(cursor.getColumnIndex(MindOrksDBOpenHelper.COLUMN_NAME))}.apply {
+                this!!.cost = cursor.getDouble(cursor.getColumnIndex(MindOrksDBOpenHelper.COLOUM_CENT))
+                quantity = cursor.getInt(cursor.getColumnIndex(MindOrksDBOpenHelper.COLOUM_QUANTITY))
+            }!!
+        )}
         // обовление класса брокер
         testing.objectsToUpdate.add(Broker)
         // добавление новостей к апдейтеру
