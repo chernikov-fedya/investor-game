@@ -22,9 +22,9 @@ class Stock: Up {
     var name: String = "" // Название акции
     var cost: Double = 0.0 // Стоимость акции
     var quantity: Int = 0  // Количество акций этого типа
+    var companies: Companies? = null // Компания, к которой принадлежит акция
     var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData() // LiveData, которая хранит в себе изменяемый список DataPoint
     var costs : MutableList<DataPoint> = mutableListOf() // Изменяемый список, который присваивается в LiveData
-    var companies: Companies? = null // Компания, к которой принадлежит акция
 
     override fun update() { // Переопределение функции из интерфейса Up
         costs.add(DataPoint(costs.size.toDouble(), cost)) // Добавление в список новой серии значений
