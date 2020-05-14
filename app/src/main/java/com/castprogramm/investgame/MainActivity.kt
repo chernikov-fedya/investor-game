@@ -105,11 +105,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         testing.play = true
-        handler.post(testing)
-        if (MindOrksDBOpenHelper.COLOUM_CENT != "cent"){
         val dbhadler = MindOrksDBOpenHelper(this, null)
         val cursor = dbhadler.getAllStock()
-        cursor!!.moveToFirst()
+        if (cursor!=null && cursor.getCount() > 0){
+        cursor.moveToFirst()
         Broker.myStock.add(
             Stoks.allStoks.find { it.name ==  cursor.getString(cursor.getColumnIndex(MindOrksDBOpenHelper.COLUMN_NAME))}.apply {
                 this!!.cost = cursor.getDouble(cursor.getColumnIndex(MindOrksDBOpenHelper.COLOUM_CENT))
