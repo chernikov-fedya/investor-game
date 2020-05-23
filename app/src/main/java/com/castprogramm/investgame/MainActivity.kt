@@ -1,22 +1,23 @@
 package com.castprogramm.investgame
 
+import android.database.sqlite.SQLiteException
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.broker.BrokerFragment
 import com.castprogramm.investgame.news.News
 import com.castprogramm.investgame.news.NewsFragment
 import com.castprogramm.investgame.stock.*
+import com.castprogramm.investgame.stock.Stoks.allStoks
 import com.castprogramm.investgame.stock.Stoks.newsarray
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import java.nio.file.Files.find
+import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity() {
@@ -79,47 +80,66 @@ class MainActivity : AppCompatActivity() {
             }
         return super.onOptionsItemSelected(item)
     }
-
+    fun dataShow(){
+        val dbHandler = MindOrksDBOpenHelper(this, null)
+        var listStocks = dbHandler.readDataFromBase()
+        for (i in listStocks){
+            Broker.myStock.add(Stock.readfrombase(i)!!)
+            Log.d("NAME", i.companies?.n.toString())
+        }
+            dbHandler.delete()
+    }
     override fun onStop(){
         super.onStop()
         testing.play = false
-        val dbhelper = MindOrksDBOpenHelper(this, null)
-        for (i in 0..Broker.myStock.size-1){
-            dbhelper.addStock(Broker.myStock[i])
-        }
     }
 
     override fun onPause() {
         super.onPause()
+        testing.play = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         val dbhelper = MindOrksDBOpenHelper(this, null)
-        for (i in 0..Broker.myStock.size-1){
+        for (i in 0..Broker.myStock.size - 1) {
             dbhelper.addStock(Broker.myStock[i])
         }
+        var bd = dbhelper.writableDatabase
+        allStoks.forEach {
+            dbhelper.addDataPoint(it, bd)
+        }
+        bd.close()
     }
     override fun onResume(){
         super.onResume()
         testing.play = true
         handler.post(testing)
+        dataShow()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         testing.play = true
-        val dbhadler = MindOrksDBOpenHelper(this, null)
-        val cursor = dbhadler.getAllStock()
-        if (cursor!=null && cursor.getCount() > 0){
-        cursor.moveToFirst()
-        Broker.myStock.add(
-            Stoks.allStoks.find { it.name ==  cursor.getString(cursor.getColumnIndex(MindOrksDBOpenHelper.COLUMN_NAME))}.apply {
-                this!!.cost = cursor.getDouble(cursor.getColumnIndex(MindOrksDBOpenHelper.COLOUM_CENT))
-                quantity = cursor.getInt(cursor.getColumnIndex(MindOrksDBOpenHelper.COLOUM_QUANTITY))
-            }!!
-        )}
+        dataShow()
+        val dbhelper = MindOrksDBOpenHelper(this, null)
+        var bd = dbhelper.readableDatabase
+        allStoks.forEach {
+            try { it.costs = dbhelper.readDataPoint(bd, it)
+//            bd.delete(it.companies?.n, null, null)
+                Log.d("NAME", "${it.costs.size}")
+            } catch (e: SQLiteException){
+                Log.d("NAME", "Не работает ${it.companies?.n}")
+            }
+        }
+        dbhelper.delete()
+        bd.close()
         // обовление класса брокер
         testing.objectsToUpdate.add(Broker)
         // добавление новостей к апдейтеру
         News.fillNews(testing)
         testing.objectsToUpdate.plusAssign(Stoks.allStoks)
+        testing.objectsToUpdate.plusAssign(Broker.myStock)
         handler.post(testing)
         StockAdapter.fragmentManager = supportFragmentManager
         BrokerAdapter.fragmentManager = supportFragmentManager

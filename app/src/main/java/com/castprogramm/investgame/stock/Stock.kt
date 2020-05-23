@@ -1,5 +1,6 @@
 package com.castprogramm.investgame.stock
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,6 @@ import com.castprogramm.investgame.broker.BrokerFragment
 
 // Класс для создания акции
 class Stock: Up {
-    var name: String = "" // Название акции
     var cost: Double = 0.0 // Стоимость акции
     var quantity: Int = 0  // Количество акций этого типа
     var companies: Companies? = null // Компания, к которой принадлежит акция
@@ -29,6 +29,25 @@ class Stock: Up {
     override fun update() { // Переопределение функции из интерфейса Up
         costs.add(DataPoint(costs.size.toDouble(), cost)) // Добавление в список новой серии значений
         costsofStock.value = costs // Присвоение в хранилище списка с сериями данных
+    }
+
+    override fun equals(other: Any?): Boolean =
+        if (other is Stock)
+            other.companies?.n == this.companies?.n
+        else
+            false
+
+
+    companion object{
+        fun readfrombase(stock: Stock):Stock?{
+            return Stock().apply {
+                var newStock = Stoks.allStoks.find { it == stock }
+                cost = stock.cost
+                quantity = stock.quantity
+                companies = newStock?.companies
+                Log.d("NAME", stock.companies?.n)
+            }
+        }
     }
 }
 // Адаптер для вывода списка акиций в фрагмент активов с помощью RecyclerView
