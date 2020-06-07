@@ -1,5 +1,6 @@
 package com.castprogramm.investgame.stock
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +20,7 @@ import com.castprogramm.investgame.broker.BrokerFragment
 
 // Класс для создания акции
 class Stock: Up {
-    var name: String = "" // Название акции
     var cost: Double = 0.0 // Стоимость акции
-    var quantity: Int = 0  // Количество акций этого типа
     var companies: Companies? = null // Компания, к которой принадлежит акция
     var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData() // LiveData, которая хранит в себе изменяемый список DataPoint
     var costs : MutableList<DataPoint> = mutableListOf() // Изменяемый список, который присваивается в LiveData
@@ -30,6 +29,12 @@ class Stock: Up {
         costs.add(DataPoint(costs.size.toDouble(), cost)) // Добавление в список новой серии значений
         costsofStock.value = costs // Присвоение в хранилище списка с сериями данных
     }
+
+    override fun equals(other: Any?): Boolean =
+        if (other is Stock)
+            other.companies?.n == this.companies?.n
+        else
+            false
 }
 // Адаптер для вывода списка акиций в фрагмент активов с помощью RecyclerView
 class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockViewHolder>(){
@@ -85,7 +90,7 @@ class BrokerAdapter(): RecyclerView.Adapter<BrokerAdapter.Companion.BrokerViewHo
     override fun getItemId(position: Int): Long = position.toLong() //Функция, которая возращает Id
     override fun getItemCount(): Int = Broker.myStock.size // Функция, которая возварщает размер RecyclerView
     override fun onBindViewHolder(holder: BrokerViewHolder, position: Int) { // Функция для отрисовки RecyclerView
-        holder.bind(Broker.myStock[position])
+        holder.bind(Broker.myStock.keys.toMutableList()[position])
     }
     override fun onViewDetachedFromWindow(holder: BrokerViewHolder) { // Функция для удаления Observer при условии, что объект находится вне пределов экрана
         holder.newCostb?.removeObservers(fragment!!)
@@ -105,7 +110,9 @@ class BrokerAdapter(): RecyclerView.Adapter<BrokerAdapter.Companion.BrokerViewHo
                 cost.setText("$" + "%.2f".format(stock.cost)) // Присвоение в поле стоимости акции
                 image.setImageResource(stock.companies?.r!!) // Присвоение в поле изображения эмблемы компании, которой принадлежит акция
                 newCostb = stock.costsofStock // Присвоение LiveData в переменную
-                quantity.setText(stock.quantity.toString()) // Присвоение количества акции
+
+                quantity.setText(Broker.myStock[stock]!!) // Присвоение количества акции
+
                 // С помощью паттерна Observer (наблюдатель) при обновлении значения в LiveData будет выполняться идущий ниже код
                 newCostb?.observe(fragment!!, androidx.lifecycle.Observer {
                     cost.setText("$" +"%.2f".format(it.last().y)) // Присвоение в поле стоимости акции

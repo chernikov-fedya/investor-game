@@ -9,7 +9,7 @@ import kotlin.math.round
 
 object Broker: Up {
     var name = "Нажмите, чтобы ввести"
-    var myStock = mutableListOf<Stock>()  //массив акций, которыми владеет брокер
+    var myStock = mutableMapOf<Stock, Int>()  //массив акций, которыми владеет брокер
     var wallet: Double = 10000.0  // сколько есть денег у брокера
     var myStockCost: Double = 0.0 // стоимость акций брокера
     var thisWallet : MutableLiveData<Double> = MutableLiveData()
@@ -18,16 +18,11 @@ object Broker: Up {
     var thisEnd : MutableLiveData<Double> = MutableLiveData()
     var loss : Double = 0.0
     var allMoney: Double = 1.0
-    // округление до сотых
-    fun Double.round(decimals: Int): Double {
-        var multiplier = 1.0
-        repeat(decimals) { multiplier *= 10 }
-        return round(this * multiplier) / multiplier
-    }
+
     override fun update() {
         myStockCost = 0.0
-        for (i in 0..myStock.size-1){  // считаем стоимость акций у брокера
-            myStockCost += (myStock[i].cost * myStock[i].quantity)
+        for (i in myStock){  // считаем стоимость акций у брокера
+            myStockCost += (i.key.cost * i.value)
         }
         // получаем случайное событие типа расход и задаем расход
             when ((0..100).random()) {
