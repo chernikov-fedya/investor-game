@@ -24,9 +24,9 @@ import kotlinx.android.synthetic.main.login_dialog.view.*
 class BrokerFragment : Fragment() {
 
     companion object{
-        fun newInstance(excer: MutableList<Stock>, name: String, wallet : Double, stockPrice: Double, expenditure: Double): BrokerFragment {
+        fun newInstance(stocks: MutableList<Stock>, name: String, wallet : Double, stockPrice: Double, expenditure: Double): BrokerFragment {
             var temp = BrokerFragment()
-            temp.recStocks = excer
+            temp.recStocks = stocks
             temp.name = name
             temp.wallet = wallet
             temp.stockPrice = stockPrice

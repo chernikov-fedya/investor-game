@@ -16,12 +16,12 @@ class StockMarket() {
                     return Error.EMPTYBAG
                 else{
                     Broker.wallet = Broker.wallet.plus(stock.cost * k)
+                    if (Broker.myStock[stock]!! == k)
+                        Broker.myStock.remove(stock)
+                    else
                     Broker.myStock.replace(stock, Broker.myStock[stock]!! - k)
-
                 }
-
             }
-
         }
         else
             return Error.EMPTYBAG

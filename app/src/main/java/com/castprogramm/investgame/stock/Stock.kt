@@ -110,9 +110,7 @@ class BrokerAdapter(): RecyclerView.Adapter<BrokerAdapter.Companion.BrokerViewHo
                 cost.setText("$" + "%.2f".format(stock.cost)) // Присвоение в поле стоимости акции
                 image.setImageResource(stock.companies?.r!!) // Присвоение в поле изображения эмблемы компании, которой принадлежит акция
                 newCostb = stock.costsofStock // Присвоение LiveData в переменную
-
-                quantity.setText(Broker.myStock[stock]!!) // Присвоение количества акции
-
+                quantity.setText(Broker.myStock[stock]!!.toString()) // Присвоение количества акции
                 // С помощью паттерна Observer (наблюдатель) при обновлении значения в LiveData будет выполняться идущий ниже код
                 newCostb?.observe(fragment!!, androidx.lifecycle.Observer {
                     cost.setText("$" +"%.2f".format(it.last().y)) // Присвоение в поле стоимости акции

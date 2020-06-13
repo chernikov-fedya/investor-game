@@ -3,6 +3,7 @@ package com.castprogramm.investgame
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -13,6 +14,7 @@ import com.castprogramm.investgame.broker.BrokerFragment
 import com.castprogramm.investgame.news.News
 import com.castprogramm.investgame.news.NewsFragment
 import com.castprogramm.investgame.stock.*
+import com.castprogramm.investgame.stock.Stoks.allStoks
 import com.castprogramm.investgame.stock.Stoks.newsarray
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -83,18 +85,23 @@ class MainActivity : AppCompatActivity() {
     override fun onStop(){
         super.onStop()
         testing.play = false
-        val dbhelper = MindOrksDBOpenHelper(this, null)
-        for (i in 0..Broker.myStock.size-1){
-            dbhelper.addStock(Broker.myStock[i])
+        val dbhelper = dbOpenSQLite(this, null)
+        dbhelper.addStock(Broker.myStock)
+        allStoks.forEach {
+            dbhelper.addDataPoint(it)
+            Log.d("TEST", "Вывод: количество цен у акции" + it.costs.size.toString())
         }
+        dbhelper.close()
     }
 
     override fun onPause() {
         super.onPause()
-        val dbhelper = MindOrksDBOpenHelper(this, null)
-        for (i in 0..Broker.myStock.size-1){
-            dbhelper.addStock(Broker.myStock[i])
+        val dbhelper = dbOpenSQLite(this, null)
+        dbhelper.addStock(Broker.myStock)
+        allStoks.forEach {
+            dbhelper.addDataPoint(it)
         }
+        dbhelper.close()
     }
     override fun onResume(){
         super.onResume()
@@ -105,21 +112,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         testing.play = true
-        val dbhadler = MindOrksDBOpenHelper(this, null)
+        val dbhadler = dbOpenSQLite(this, null)
         val cursor = dbhadler.getAllStock()
         if (cursor!=null && cursor.getCount() > 0){
         cursor.moveToFirst()
-        Broker.myStock.add(
-            Stoks.allStoks.find { it.name ==  cursor.getString(cursor.getColumnIndex(MindOrksDBOpenHelper.COLUMN_NAME))}.apply {
-                this!!.cost = cursor.getDouble(cursor.getColumnIndex(MindOrksDBOpenHelper.COLOUM_CENT))
-                quantity = cursor.getInt(cursor.getColumnIndex(MindOrksDBOpenHelper.COLOUM_QUANTITY))
-            }!!
+        Broker.myStock.put(
+            allStoks.find { it.companies?.n ==  cursor.getString(cursor.getColumnIndex(dbOpenSQLite.COLOUM_COMPANY_NAME))}.apply {
+                this!!.cost = cursor.getDouble(cursor.getColumnIndex(dbOpenSQLite.COLOUM_CENT)) }!!,
+            cursor.getInt(cursor.getColumnIndex(dbOpenSQLite.COLOUM_QUANTITY))
         )}
         // обовление класса брокер
         testing.objectsToUpdate.add(Broker)
         // добавление новостей к апдейтеру
         News.fillNews(testing)
-        testing.objectsToUpdate.plusAssign(Stoks.allStoks)
+        testing.objectsToUpdate.plusAssign(allStoks)
         handler.post(testing)
         StockAdapter.fragmentManager = supportFragmentManager
         BrokerAdapter.fragmentManager = supportFragmentManager
@@ -129,10 +135,14 @@ class MainActivity : AppCompatActivity() {
                     when (item.itemId) {
                         // создание и запуск фрагмента профиля
                         R.id.butProfile -> {
+                            var brokerStocks = mutableListOf<Stock>()
+                            for (i in Broker.myStock.toList()){
+                                brokerStocks.add(i.first)
+                            }
                             val fm = supportFragmentManager
                             val ft = fm.beginTransaction()
                             var f = BrokerFragment.newInstance(
-                               Broker.myStock,
+                                brokerStocks,
                                 Broker.name,
                                 Broker.wallet,
                                 Broker.myStockCost,
@@ -164,10 +174,14 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         // при первом запуске создаётся и запускается фрагмент профиля
+        var brokerStocks = mutableListOf<Stock>()
+        for (i in Broker.myStock.toList()){
+            brokerStocks.add(i.first)
+        }
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
         var f = BrokerFragment.newInstance(
-            Broker.myStock,
+            brokerStocks,
             Broker.name,
             Broker.wallet,
             Broker.myStockCost,

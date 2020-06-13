@@ -9,7 +9,7 @@ import kotlin.math.round
 
 object Broker: Up {
     var name = "Нажмите, чтобы ввести"
-    var myStock = mutableMapOf<Stock, Int>()  //массив акций, которыми владеет брокер
+    var myStock = mutableMapOf<Stock, Int>()  //коллекция акций, которыми владеет брокер (первое - ключ, второе - значение)
     var wallet: Double = 10000.0  // сколько есть денег у брокера
     var myStockCost: Double = 0.0 // стоимость акций брокера
     var thisWallet : MutableLiveData<Double> = MutableLiveData()
