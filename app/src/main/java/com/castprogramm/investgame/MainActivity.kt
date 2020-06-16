@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.broker.BrokerFragment
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     var handler = Handler()
     var testing = Updater(handler)
-
+    var mSlowing = false
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
@@ -157,8 +158,7 @@ class MainActivity : AppCompatActivity() {
                             Broker.loss
                         )
                         BrokerAdapter.fragment = f
-                        ft.replace(R.id.frame_menu, f)
-                        ft.commit()
+                        flip(f)
                     }
                     // создание и запуск фрагмента всех акций
                     R.id.butStock -> {
@@ -166,16 +166,14 @@ class MainActivity : AppCompatActivity() {
                         val ft = fm.beginTransaction()
                         var f = AllStockFragment()
                         StockAdapter.fragment = f
-                        ft.replace(R.id.frame_menu, f)
-                        ft.commit()
+                        flip(f)
                     }
                     // создание и запуск фрагмента новостей
                     R.id.butNews -> {
                         val fm = supportFragmentManager
                         val ft = fm.beginTransaction()
                         var f = NewsFragment.newInstance(newsarray)
-                        ft.replace(R.id.frame_menu, f)
-                        ft.commit()
+                        flip(f)
                     }
                 }
                 true
@@ -195,9 +193,18 @@ class MainActivity : AppCompatActivity() {
             Broker.loss
         )
         BrokerAdapter.fragment = f
-        ft.replace(R.id.frame_menu, f)
-        ft.commit()
+        flip(f)
+        }
+    private fun flip(fragment: Fragment){
+            supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                            R.animator.card_flip_right_enter,
+                            R.animator.card_flip_right_exit,
+                            R.animator.card_flip_left_enter,
+                            R.animator.card_flip_left_exit)
+                    .replace(R.id.frame_menu, fragment)
+                    .addToBackStack(null)
+                    .commit()
         }
     }
-
 

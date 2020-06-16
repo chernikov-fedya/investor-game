@@ -73,6 +73,7 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockViewHolde
                     val fm = fragmentManager // Присвоение supportFragmentManager из MainActivity
                     val ft = fm?.beginTransaction()
                     var f = StockFragment.instfragment(stock) // Создание StockFragment
+                    ft?.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
                     ft?.replace(R.id.frame_menu, f) // Вставка фрагмента
                     ft?.addToBackStack(null) // Добавление фрагмента в BackStack
                     ft?.commit() // Сохраняет данные и информирует пользователя об успешности операции
@@ -121,6 +122,7 @@ class BrokerAdapter(): RecyclerView.Adapter<BrokerAdapter.Companion.BrokerViewHo
                     val fm = fragmentManager // Присвоение supportFragmentManager из MainActivity
                     val ft = fm?.beginTransaction()
                     var f = StockFragment.instfragment(stock) // Создание StockFragment
+                    ft?.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
                     ft?.replace(R.id.frame_menu, f) // Вставка фрагмента
                     ft?.addToBackStack(null) // Добавление фрагмента в BackStack
                     ft?.commit() // Сохраняет данные и информирует пользователя об успешности операции
