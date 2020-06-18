@@ -125,7 +125,7 @@ class StockFragment : Fragment() {
         costGraphic.viewport.isScrollable = true
         costGraphic.gridLabelRenderer.horizontalAxisTitle = "Время" // Подпись оси Х у графика
         a?.testing?.objectsToUpdate?.add(costGraphic)
-        a?.handler?.post(a?.testing) // Обновление
+        a?.handler?.post(a?.testing!!) // Обновление
         costGraphic.addStock(stock, this) // Добавление нового значения на график
         var name : TextView = view.findViewById(R.id.namestock)
         name.setText(stock.companies?.n)

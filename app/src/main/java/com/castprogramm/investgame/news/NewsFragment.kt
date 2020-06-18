@@ -51,7 +51,6 @@ class NewsFragment: Fragment() {
             msgs = recMSG
         }
 
-
         var pi = LinearLayoutManager(ret.context)
         recycler.layoutManager = pi
         return ret

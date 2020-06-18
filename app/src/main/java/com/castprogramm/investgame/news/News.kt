@@ -35,7 +35,7 @@ abstract class News: Up {
             // создание группы на каждую акцию
             var companies = Array<StockGroup>(Stoks.allStoks.size) {
                 StockGroup().apply{
-                    name = Stoks.allStoks[it].name
+                    name = Stoks.allStoks[it].companies?.name
                     grouplist.add(Stoks.allStoks[it])
                 }
             }
