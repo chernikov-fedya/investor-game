@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import com.castprogramm.investgame.LossEvent
 import com.castprogramm.investgame.Up
 import com.castprogramm.investgame.stock.Stock
-import com.castprogramm.investgame.stock.Stoks
 import kotlin.math.round
 
 object Broker: Up {

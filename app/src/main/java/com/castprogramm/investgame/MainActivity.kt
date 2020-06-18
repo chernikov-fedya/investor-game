@@ -1,15 +1,18 @@
 package com.castprogramm.investgame
 
+import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.broker.BrokerFragment
+import com.castprogramm.investgame.broker.PreferenceBroker
 import com.castprogramm.investgame.news.News
 import com.castprogramm.investgame.news.NewsFragment
 import com.castprogramm.investgame.stock.*
@@ -60,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = intent
                 finish()
                 startActivity(intent)
-                }
+            }
             R.id.reference -> {
                 // запуск подсказки
                 val f = ReferenceFragmemt(URL.REFERENCE)
@@ -76,45 +79,35 @@ class MainActivity : AppCompatActivity() {
                 ft.replace(R.id.frame_menu, f)
                 ft.commit()
             }
-            }
+        }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onStop(){
         super.onStop()
         testing.play = false
-        val dbhelper = MindOrksDBOpenHelper(this, null)
-        for (i in 0..Broker.myStock.size-1){
-            dbhelper.addStock(Broker.myStock[i])
-        }
+        PreferenceBroker.save(this)
     }
 
-    override fun onPause() {
-        super.onPause()
-        val dbhelper = MindOrksDBOpenHelper(this, null)
-        for (i in 0..Broker.myStock.size-1){
-            dbhelper.addStock(Broker.myStock[i])
-        }
-    }
+
+    //    override fun onPause() {
+//        super.onPause()
+//        val dbhelper = MindOrksDBOpenHelper(this, null)
+//        for (i in 0..Broker.myStock.size-1){
+//            dbhelper.addStock(Broker.myStock[i])
+//        }
+//    }
     override fun onResume(){
         super.onResume()
         testing.play = true
         handler.post(testing)
+
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        PreferenceBroker.load(this)
         testing.play = true
-        val dbhadler = MindOrksDBOpenHelper(this, null)
-        val cursor = dbhadler.getAllStock()
-        if (cursor!=null && cursor.getCount() > 0){
-        cursor.moveToFirst()
-        Broker.myStock.add(
-            Stoks.allStoks.find { it.name ==  cursor.getString(cursor.getColumnIndex(MindOrksDBOpenHelper.COLUMN_NAME))}.apply {
-                this!!.cost = cursor.getDouble(cursor.getColumnIndex(MindOrksDBOpenHelper.COLOUM_CENT))
-                quantity = cursor.getInt(cursor.getColumnIndex(MindOrksDBOpenHelper.COLOUM_QUANTITY))
-            }!!
-        )}
         // обовление класса брокер
         testing.objectsToUpdate.add(Broker)
         // добавление новостей к апдейтеру
@@ -123,46 +116,46 @@ class MainActivity : AppCompatActivity() {
         handler.post(testing)
         StockAdapter.fragmentManager = supportFragmentManager
         BrokerAdapter.fragmentManager = supportFragmentManager
-            bnv.setOnNavigationItemSelectedListener(object :
-                BottomNavigationView.OnNavigationItemSelectedListener {
-                override fun onNavigationItemSelected(item: MenuItem): Boolean {
-                    when (item.itemId) {
-                        // создание и запуск фрагмента профиля
-                        R.id.butProfile -> {
-                            val fm = supportFragmentManager
-                            val ft = fm.beginTransaction()
-                            var f = BrokerFragment.newInstance(
-                               Broker.myStock,
-                                Broker.name,
-                                Broker.wallet,
-                                Broker.myStockCost,
-                                Broker.loss
-                            )
-                            BrokerAdapter.fragment = f
-                            ft.replace(R.id.frame_menu, f)
-                            ft.commit()
-                        }
-                        // создание и запуск фрагмента всех акций
-                        R.id.butStock -> {
-                            val fm = supportFragmentManager
-                            val ft = fm.beginTransaction()
-                            var f = AllStockFragment()
-                            StockAdapter.fragment = f
-                            ft.replace(R.id.frame_menu, f)
-                            ft.commit()
-                        }
-                        // создание и запуск фрагмента новостей
-                        R.id.butNews -> {
-                            val fm = supportFragmentManager
-                            val ft = fm.beginTransaction()
-                            var f = NewsFragment.newInstance(newsarray)
-                            ft.replace(R.id.frame_menu, f)
-                            ft.commit()
-                        }
+        bnv.setOnNavigationItemSelectedListener(object :
+            BottomNavigationView.OnNavigationItemSelectedListener {
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                when (item.itemId) {
+                    // создание и запуск фрагмента профиля
+                    R.id.butProfile -> {
+                        val fm = supportFragmentManager
+                        val ft = fm.beginTransaction()
+                        var f = BrokerFragment.newInstance(
+                            Broker.myStock,
+                            Broker.name,
+                            Broker.wallet,
+                            Broker.myStockCost,
+                            Broker.loss
+                        )
+                        BrokerAdapter.fragment = f
+                        ft.replace(R.id.frame_menu, f)
+                        ft.commit()
                     }
-                    return true
+                    // создание и запуск фрагмента всех акций
+                    R.id.butStock -> {
+                        val fm = supportFragmentManager
+                        val ft = fm.beginTransaction()
+                        var f = AllStockFragment()
+                        StockAdapter.fragment = f
+                        ft.replace(R.id.frame_menu, f)
+                        ft.commit()
+                    }
+                    // создание и запуск фрагмента новостей
+                    R.id.butNews -> {
+                        val fm = supportFragmentManager
+                        val ft = fm.beginTransaction()
+                        var f = NewsFragment.newInstance(newsarray)
+                        ft.replace(R.id.frame_menu, f)
+                        ft.commit()
+                    }
                 }
-            })
+                return true
+            }
+        })
         // при первом запуске создаётся и запускается фрагмент профиля
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
@@ -176,7 +169,7 @@ class MainActivity : AppCompatActivity() {
         BrokerAdapter.fragment = f
         ft.replace(R.id.frame_menu, f)
         ft.commit()
-        }
     }
+}
 
 

@@ -1,8 +1,10 @@
 package com.castprogramm.investgame.broker
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Animatable
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -119,6 +121,25 @@ class BrokerFragment : Fragment() {
         val animation = image.background
         if (animation is Animatable){
             animation.start()
+        }
+
+    }
+}
+
+class PreferenceBroker {
+    companion object{
+        val NAME: String = "key_NAME"
+        val WALLET: String = "key_WALLET"
+        fun save(context: Context){
+            var editor =   PreferenceManager.getDefaultSharedPreferences(context).edit()
+            editor.putString(NAME, Broker.name)
+            editor.putFloat(WALLET, Broker.wallet.toFloat())
+            editor.apply()
+        }
+        fun load(context: Context){
+            Broker.name = PreferenceManager.getDefaultSharedPreferences(context).getString(NAME, "")!!
+            Broker.wallet = PreferenceManager.getDefaultSharedPreferences(context).getFloat(WALLET, 10000f).toDouble()
+
         }
 
     }
