@@ -131,7 +131,7 @@ class PreferenceBroker {
         val NAME: String = "key_NAME"
         val WALLET: String = "key_WALLET"
         fun save(context: Context){
-            var editor =   PreferenceManager.getDefaultSharedPreferences(context).edit()
+            var editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
             editor.putString(NAME, Broker.name)
             editor.putFloat(WALLET, Broker.wallet.toFloat())
             editor.apply()
