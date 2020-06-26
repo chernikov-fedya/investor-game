@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -23,14 +24,13 @@ import com.castprogramm.investgame.stock.Stoks.newsarray
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.nio.file.Files.find
+import kotlin.jvm.internal.PropertyReference
 
 
 class MainActivity : AppCompatActivity() {
 
     var handler = Handler()
     var testing = Updater(handler)
-    var mSlowing = false
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_main, menu)
@@ -101,12 +101,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        val dbhelper = dbOpenSQLite(this, null)
-        dbhelper.addStock(Broker.myStock)
-        allStoks.forEach {
-            dbhelper.addDataPoint(it)
-        }
-        dbhelper.close()
+//        val dbhelper = dbOpenSQLite(this, null)
+//        dbhelper.addStock(Broker.myStock)
+//        allStoks.forEach {
+//            dbhelper.addDataPoint(it)
+//        }
+//        dbhelper.close()
     }
     override fun onResume(){
         super.onResume()
@@ -190,7 +190,6 @@ class MainActivity : AppCompatActivity() {
             brokerStocks.add(i.first)
         }
         val fm = supportFragmentManager
-        val ft = fm.beginTransaction()
         var f = BrokerFragment.newInstance(
             brokerStocks,
             Broker.name,
@@ -199,8 +198,12 @@ class MainActivity : AppCompatActivity() {
             Broker.loss
         )
         BrokerAdapter.fragment = f
-        flip(f)
-        }
+        val ft = fm.beginTransaction()
+            .replace(R.id.frame_menu, f)
+            .addToBackStack(null)
+            .commit()
+
+    }
     private fun flip(fragment: Fragment){
             supportFragmentManager.beginTransaction()
                     .setCustomAnimations(
@@ -213,4 +216,4 @@ class MainActivity : AppCompatActivity() {
                     .commit()
         }
     }
-
+    

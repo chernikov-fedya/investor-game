@@ -17,11 +17,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.R
 import com.castprogramm.investgame.SplashActivity
 import com.castprogramm.investgame.stock.BrokerAdapter
 import com.castprogramm.investgame.stock.Stock
+import com.castprogramm.investgame.stock.Stoks
+import kotlinx.android.synthetic.main.fragment_broker.*
 import kotlinx.android.synthetic.main.login_dialog.view.*
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
+import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 
 class BrokerFragment : Fragment() {
 
@@ -37,8 +43,61 @@ class BrokerFragment : Fragment() {
         }
     }
 
+    private fun showInfoPrompt(){
+        val prefManagerBroker = PreferenceManager.getDefaultSharedPreferences(this.context)
+        if (!prefManagerBroker.getBoolean("didShowBrokerPromp", false)){
+        android.os.Handler().post(Runnable{
+            MaterialTapTargetPrompt.Builder(this).setClipToView(null)
+                .setTarget(info)
+                .setPrimaryText("Здесь указаны все ваши данные")
+                .setSecondaryText("Фото, имя, деньги, стоимость всех ваших акций, текущий расход")
+                .setPromptFocal(RectanglePromptFocal())
+                .setBackButtonDismissEnabled(false)
+                .setPromptBackground(RectanglePromptBackground())
+                .setPromptStateChangeListener { prompt, state ->
+                    if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                        state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED){
+                        val prefEditor = prefManagerBroker.edit()
+                        prefEditor.putBoolean("didShowBrokerPrompt", true)
+                        prefEditor.apply()
+                        showMinusInfo()
+                    }
+                }
+                .show()
+        })}
+    }
+    private fun showMinusInfo(){
+        MaterialTapTargetPrompt.Builder(this).setClipToView(null)
+            .setTarget(printminus)
+            .setPrimaryText("Это ваш текущий расход")
+            .setSecondaryText("Расход равен 1% от ваших общих средств (деньги + стоимость всех ваших акций)")
+            .setPromptFocal(RectanglePromptFocal())
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptStateChangeListener { prompt, state ->
+                if (state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED ||
+                        state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED){
+                        showStockPrompt()
+                }
+            }
+            .show()
+    }
+    private fun showStockPrompt(){
+        MaterialTapTargetPrompt.Builder(this)
+            .setTarget(top)
+            .setPrimaryText("Здесь будут ваши акции")
+            .setPromptFocal(RectanglePromptFocal())
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptStateChangeListener { prompt, state ->
+                if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                        state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED){
+
+                }
+            }
+            .show()
+    }
+
     var recStocks: MutableList<Stock> =  mutableListOf()
-    var name = String()
+    var name : String = "Введите имя"
     var wallet : Double = 0.0
     var stockPrice: Double = 0.0
     var expenditure : Double = 0.0
@@ -80,7 +139,31 @@ class BrokerFragment : Fragment() {
                     .setTitle("Конец игры")
                     .setMessage("Вы проиграли")
                 var alertDialog = builder.show()
-
+                alertDialog.show()
+                Thread.sleep(1000)
+                Broker.myStock.clear()
+                Stoks.newsarray.clear()
+                Broker.myStockCost = 0.0
+                Broker.wallet = 10000.0
+                Stoks.allStoks = mutableListOf(
+                    Stock().apply { cost = 310.13; companies = Companies.Apple },
+                    Stock().apply { cost = 59.62; companies = Companies.Intel},
+                    Stock().apply { cost = 29.83; companies = Companies.Twitter},
+                    Stock().apply { cost = 16.42; companies = Companies.Mailru},
+                    Stock().apply { cost = 212.53; companies = Companies.Facebook},
+                    Stock().apply { cost = 40.74; companies = Companies.Yandex},
+                    Stock().apply { cost = 2379.4; companies = Companies.Amazon},
+                    Stock().apply { cost = 282.7; companies = Companies.MasterCard},
+                    Stock().apply { cost = 123.2; companies = Companies.IBM},
+                    Stock().apply { cost = 203.33; companies = Companies.GazProm},
+                    Stock().apply { cost = 4.83; companies = Companies.Lukoil},
+                    Stock().apply { cost = 46.14; companies = Companies.CocaCola},
+                    Stock().apply { cost = 181.67; companies = Companies.McDonalds},
+                    Stock().apply { cost = 184.67; companies = Companies.Microsoft},
+                    Stock().apply { cost = 3.01; companies = Companies.Huawei}
+                )
+                val intent = Intent(this.context, SplashActivity::class.java)
+                startActivity(intent)
             }
         })
 
@@ -100,7 +183,7 @@ class BrokerFragment : Fragment() {
                 // Присваиваем имя Брокеру
                 name = username
                 Broker.name = username
-                nameBro.text = username
+                nameBro.text = "Имя: $username"
             }
             // Слушатель для отмены AlertDialog'а
             mDialogView.dialogCancelBtn.setOnClickListener {
@@ -114,6 +197,7 @@ class BrokerFragment : Fragment() {
         image.setOnClickListener {
             showAnimation(image)
         }
+        showInfoPrompt()
         return ret
     }
     fun showAnimation(image: ImageView){

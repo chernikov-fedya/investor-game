@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/cardinal"
+        android:id="@+id/card"
         app:cardCornerRadius="20dp">
 
         <RelativeLayout
