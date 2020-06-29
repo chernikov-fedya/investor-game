@@ -20,6 +20,7 @@ import androidx.core.content.SharedPreferencesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import com.castprogramm.investgame.EnumClasses.Error
+import com.castprogramm.investgame.HelpApp
 import com.castprogramm.investgame.MainActivity
 import com.castprogramm.investgame.R
 import com.castprogramm.investgame.broker.PreferenceBroker
@@ -47,9 +48,8 @@ class StockFragment : Fragment() {
             SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0)
         }
 
-    private fun showNamePrompt(){
+    fun showNamePrompt(){
         android.os.Handler().post(Runnable {
-            val prefManagerStock = PreferenceManager.getDefaultSharedPreferences(this.context)
             if (!prefManagerStock.getBoolean("didShowStockPrompt", false))
             MaterialTapTargetPrompt.Builder(this).setClipToView(null)
                 .setTarget(name_graph)
@@ -244,6 +244,7 @@ class StockFragment : Fragment() {
     }
 
     companion object{
+        val prefManagerStock = PreferenceManager.getDefaultSharedPreferences(HelpApp.globalContext)
         fun instfragment(temp: Stock): StockFragment {
             return StockFragment().apply {
                 stock = temp

@@ -24,6 +24,8 @@ import com.castprogramm.investgame.stock.Stoks.newsarray
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.nio.file.Files.find
+import java.time.chrono.ThaiBuddhistChronology.INSTANCE
+
 import kotlin.jvm.internal.PropertyReference
 
 
@@ -66,6 +68,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = intent
                 finish()
                 startActivity(intent)
+
             }
             R.id.reference -> {
                 // запуск подсказки
@@ -81,6 +84,20 @@ class MainActivity : AppCompatActivity() {
                 val ft = fm.beginTransaction()
                 ft.replace(R.id.frame_menu, f)
                 ft.commit()
+            }
+            R.id.teach ->{
+                val prefEditorStock = StockFragment.prefManagerStock.edit()
+                prefEditorStock.putBoolean("didShowStockPrompt", false)
+                prefEditorStock.apply()
+                val prefEditorNews = NewsFragment.prefManagerNews.edit()
+                prefEditorNews.putBoolean("didShowNewsPrompt", false)
+                prefEditorNews.apply()
+                val prefEditorAllStock = AllStockFragment.prefManagerAllStock.edit()
+                prefEditorAllStock.putBoolean("didShowAllStockPrompt", false)
+                prefEditorAllStock.apply()
+                val prefEditorBroker = BrokerFragment.prefManagerBroker.edit()
+                prefEditorBroker.putBoolean("didShowBrokerPrompt", false)
+                prefEditorBroker.apply()
             }
             }
         return super.onOptionsItemSelected(item)

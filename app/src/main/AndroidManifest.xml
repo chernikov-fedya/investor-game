@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.castprogramm.investgame">
     <application
+        android:name=".HelpApp"
         android:allowBackup="true"
         android:icon="@drawable/icon_app"
         android:label="@string/app_name"

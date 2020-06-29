@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.castprogramm.investgame.HelpApp
 import com.castprogramm.investgame.R
 import com.castprogramm.investgame.Updater
 import kotlinx.android.synthetic.main.fragment_news.*
@@ -20,6 +21,7 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFoc
 // фрагмент для отрисовки новостей
 class NewsFragment: Fragment() {
     companion object{
+        val prefManagerNews = PreferenceManager.getDefaultSharedPreferences(HelpApp.globalContext)
         fun newInstance(excer: MutableList<String>): NewsFragment {
             var temp = NewsFragment()
             temp.recMSG = excer
@@ -27,8 +29,7 @@ class NewsFragment: Fragment() {
         }
     }
     private fun showNewsPrompt(){
-        val prefManagerNews = PreferenceManager.getDefaultSharedPreferences(this.context)
-        if (!prefManagerNews.getBoolean("didShowNewsPrompT", false)){
+        if (!prefManagerNews.getBoolean("didShowNewsPrompt", false)){
         android.os.Handler().post(Runnable {
             MaterialTapTargetPrompt.Builder(this).setClipToView(null)
                 .setTarget(R.id.aleksey)
@@ -40,7 +41,7 @@ class NewsFragment: Fragment() {
                             state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED)
                     {
                         val prefEditor = prefManagerNews.edit()
-                        prefEditor.putBoolean("didShowNewsPrompT", true)
+                        prefEditor.putBoolean("didShowNewsPrompt", true)
                         prefEditor.apply()
                     }
                 }

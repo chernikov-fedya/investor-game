@@ -18,6 +18,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.castprogramm.investgame.EnumClasses.Companies
+import com.castprogramm.investgame.HelpApp
 import com.castprogramm.investgame.R
 import com.castprogramm.investgame.SplashActivity
 import com.castprogramm.investgame.stock.BrokerAdapter
@@ -32,6 +33,7 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFoc
 class BrokerFragment : Fragment() {
 
     companion object{
+        val prefManagerBroker = PreferenceManager.getDefaultSharedPreferences(HelpApp.globalContext)
         fun newInstance(excer: MutableList<Stock>, name: String, wallet : Double, stockPrice: Double, expenditure: Double): BrokerFragment {
             var temp = BrokerFragment()
             temp.recStocks = excer
@@ -44,8 +46,7 @@ class BrokerFragment : Fragment() {
     }
 
     private fun showInfoPrompt(){
-        val prefManagerBroker = PreferenceManager.getDefaultSharedPreferences(this.context)
-        if (!prefManagerBroker.getBoolean("didShowBrokerPromp", false)){
+        if (!prefManagerBroker.getBoolean("didShowBrokerPrompt", false)){
         android.os.Handler().post(Runnable{
             MaterialTapTargetPrompt.Builder(this).setClipToView(null)
                 .setTarget(info)

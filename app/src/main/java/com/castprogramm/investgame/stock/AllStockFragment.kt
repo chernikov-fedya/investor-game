@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.castprogramm.investgame.HelpApp
 import com.castprogramm.investgame.R
 import kotlinx.android.synthetic.main.stock_recycle.*
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
@@ -16,11 +17,12 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFoc
 
 // Класс фрагментов, наследующийся от встроенного класса Fragment, для вывода списка всех акций
 class AllStockFragment: Fragment() {
-
+    companion object{
+        val prefManagerAllStock = PreferenceManager.getDefaultSharedPreferences(HelpApp.globalContext)
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         android.os.Handler().post( Runnable {
             kotlin.run {
-                val prefManagerAllStock = PreferenceManager.getDefaultSharedPreferences(this.context)
                 if (!prefManagerAllStock.getBoolean("didShowAllStockPrompt", false))
                 MaterialTapTargetPrompt.Builder(this).setClipToView(null)
                     .setTarget(cardinal)

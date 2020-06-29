@@ -17,9 +17,9 @@
         android:orderInCategory="100"
         android:title="Сбросить прогресс"
         app:showAsAction="never"/>
-<!--    <item-->
-<!--        android:id="@+id/teach"-->
-<!--        android:orderInCategory="100"-->
-<!--        android:title="Обучение"-->
-<!--        app:showAsAction="never"/>-->
+    <item
+        android:id="@+id/teach"
+        android:orderInCategory="100"
+        android:title="Обучение"
+        app:showAsAction="never"/>
 </menu>
