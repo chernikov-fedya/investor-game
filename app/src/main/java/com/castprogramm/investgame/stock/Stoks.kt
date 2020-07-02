@@ -1,6 +1,7 @@
 package com.castprogramm.investgame.stock
 
 import com.castprogramm.investgame.EnumClasses.Companies
+import com.castprogramm.investgame.obligation.Obligation
 
 object Stoks {
     // список для хранения все новостей
@@ -37,5 +38,8 @@ object Stoks {
             .apply { cost = Companies.Microsoft.cent; companies = Companies.Microsoft},
         Stock()
             .apply { cost = Companies.Huawei.cent; companies = Companies.Huawei}
+    )
+    var allObligation = mutableListOf<Stock>(
+        Stock()
     )
 }

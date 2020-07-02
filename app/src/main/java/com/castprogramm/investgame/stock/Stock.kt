@@ -61,12 +61,12 @@ class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockViewHolde
             var newCost : MutableLiveData<MutableList<DataPoint>>? = null // Переменная для последующего присвоения в неё LiveData
             fun bind(stock: Stock){ // Функция для отрисовки, принимает в себя акцию
                 name.setText(stock.companies?.n) // Присвоение в поле названия акции
-                cost.setText("$" + stock.cost.toString()) // Присвоение в поле стоимости акции
+                cost.setText("$ %2.f".format(stock.cost)) // Присвоение в поле стоимости акции
                 image.setImageResource(stock.companies?.r!!) // Присвоение в поле изображения эмблемы компании, которой принадлежит акция
                 newCost = stock.costsofStock // Присвоение LiveData в переменную
                 // С помощью паттерна Observer (наблюдатель) при обновлении значения в LiveData будет выполняться идущий ниже код
                 newCost?.observe(fragment!!, androidx.lifecycle.Observer {
-                    cost.setText("$" + "%.2f".format(it.last().y)) // Присвоение в поле стоимости акции
+                    cost.setText("$ %.2f".format(it.last().y)) // Присвоение в поле стоимости акции
                 })
                 // Функция для создания фрагмента при нажатии на CardView
                 cardView.setOnClickListener {

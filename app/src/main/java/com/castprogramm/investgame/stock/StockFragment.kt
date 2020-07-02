@@ -1,26 +1,36 @@
 package com.castprogramm.investgame.stock
 
 import android.annotation.SuppressLint
-import android.content.res.AssetManager
+import android.content.SharedPreferences
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Build
 import android.os.Bundle
+import android.preference.Preference
+import android.preference.PreferenceManager
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.content.SharedPreferencesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import com.castprogramm.investgame.EnumClasses.Error
+import com.castprogramm.investgame.HelpApp
 import com.castprogramm.investgame.MainActivity
 import com.castprogramm.investgame.R
+import com.castprogramm.investgame.broker.PreferenceBroker
 import com.jjoe64.graphview.series.DataPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_stock.*
+import kotlinx.coroutines.Runnable
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
+import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
+import java.lang.Exception
 
 // Класс фрагментов, наследующийся от встроенного класса Fragment, для вывода акций и её параметров
 class StockFragment : Fragment() {
@@ -38,12 +48,113 @@ class StockFragment : Fragment() {
             SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0)
         }
 
+    private fun showNamePrompt(){
+        android.os.Handler().post(Runnable {
+            if (!prefManagerStock.getBoolean("didShowStockPrompt", false))
+            MaterialTapTargetPrompt.Builder(this).setClipToView(null)
+                .setTarget(name_graph)
+                .setPrimaryText("Это шапка графика")
+                .setSecondaryText("Здесь указаны логотип компании, название компании и цена на данный момент")
+                .setPromptFocal(RectanglePromptFocal())
+                .setPromptBackground(RectanglePromptBackground())
+                .setPromptStateChangeListener { prompt, state ->
+                    if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED
+                        || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED){
+                        val prefEditor = prefManagerStock.edit()
+                        prefEditor.putBoolean("didShowStockPrompt", true)
+                        prefEditor.apply()
+
+                        showGraphicPrompt()
+                    }
+                }
+                .show()
+        })
+    }
+    private fun showGraphicPrompt(){
+        MaterialTapTargetPrompt.Builder(this).setClipToView(null)
+            .setTarget(graphic)
+            .setPrimaryText("Это сам график")
+            .setSecondaryText("Здесь вы можете увидеть, как цена акции изменялась на протяжении всей игры")
+            .setPromptFocal(RectanglePromptFocal())
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptStateChangeListener { prompt, state ->
+                if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                        state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED){
+                    showCountPrompt()
+                }
+            }
+            .show()
+    }
+    private fun showCountPrompt(){
+        MaterialTapTargetPrompt.Builder(this).setClipToView(null)
+            .setTarget(quantity_stock)
+            .setPrimaryText("Это поле, где вы можете указать, какое количество акций вы хотите купить или продать")
+            .setSecondaryText("Если вы ничего здесь не укажите, то будет продаваться или покупаться одна акция")
+            .setPromptStateChangeListener { prompt, state ->
+                if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                        state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED){
+                    showBuyPrompt()
+                }
+            }
+            .show()
+    }
+    private fun showBuyPrompt(){
+        MaterialTapTargetPrompt.Builder(this).setClipToView(null)
+            .setTarget(buy)
+            .setPrimaryText("Это кнопка покупки")
+            .setSecondaryText("Если ты нажмешь на неё, то купишь одну акцию или количество указанных акций")
+            .setBackButtonDismissEnabled(true)
+            .setPromptFocal(RectanglePromptFocal())
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptStateChangeListener { prompt, state ->
+                if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED
+                    || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED) {
+                    showSoldPrompt()
+                }
+            }
+            .show()
+
+    }
+    private fun showSoldPrompt(){
+        MaterialTapTargetPrompt.Builder(this).setClipToView(null)
+            .setTarget(sold)
+            .setPrimaryText("Это кнопка продажи")
+            .setSecondaryText("Если ты нажмешь на неё, то продашь одну акцию или количество указанных акций")
+            .setBackButtonDismissEnabled(true)
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptFocal(RectanglePromptFocal())
+            .setPromptStateChangeListener { prompt, state ->
+                if (state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED ||
+                            state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED){
+                    showTextPrompt()
+                }
+            }
+            .show()
+    }
+    private fun showTextPrompt(){
+        MaterialTapTargetPrompt.Builder(this).setClipToView(null)
+            .setTarget(textgraphic)
+            .setPrimaryText("Здесь находится информация о компании, которой принадлежит акция")
+            .setSecondaryText("Тут можно увидеть флаг страны, где находится компания, название и описание компании")
+            .setPromptFocal(RectanglePromptFocal())
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptStateChangeListener { prompt, state ->
+                if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                    state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED){
+
+                }
+            }
+            .show()
+    }
+
+
     var stock: Stock = Stock()
     var counterSold: Int = 0 // Счётчик нажатий на кнопку продажи
     var counterBuy: Int = 0 // Счётчик нажатий на кнопку покупки
     var a = activity as MainActivity? // Наследование MainActivity
     @SuppressLint("WrongConstant")
     @RequiresApi(Build.VERSION_CODES.Q)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,6 +173,7 @@ class StockFragment : Fragment() {
         var pr :TextView = view.findViewById(R.id.prquant)
         var imageCountry : ImageView = view.findViewById(R.id.imagecountry)
         var text: TextView = view.findViewById(R.id.textView)
+        showNamePrompt()
         text.setText(stock.companies?.opisanie)
         imageCountry.setImageResource(stock.companies?.country?.n!!)
         image.setImageResource(stock.companies?.r!!)
@@ -125,13 +237,15 @@ class StockFragment : Fragment() {
         costGraphic.viewport.isScrollable = true
         costGraphic.gridLabelRenderer.horizontalAxisTitle = "Время" // Подпись оси Х у графика
         a?.testing?.objectsToUpdate?.add(costGraphic)
-        a?.handler?.post(a?.testing) // Обновление
+        a?.handler?.post(a?.testing!!) // Обновление
         costGraphic.addStock(stock, this) // Добавление нового значения на график
         var name : TextView = view.findViewById(R.id.namestock)
         name.setText(stock.companies?.n)
         return view
     }
+
     companion object{
+        val prefManagerStock = PreferenceManager.getDefaultSharedPreferences(HelpApp.globalContext)
         fun instfragment(temp: Stock): StockFragment {
             return StockFragment().apply {
                 stock = temp
