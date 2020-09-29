@@ -14,14 +14,16 @@ class StockMarket() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 if (Broker.myStock[stock]!! < k)
                     return Error.EMPTYBAG
-                else{
-                    Broker.wallet = Broker.wallet.plus(stock.cost * k)
-                    Broker.myStock.replace(stock, Broker.myStock[stock]!! - k)
-
+                else {
+                    if (Broker.myStock[stock] == k) {
+                        Broker.myStock.remove(stock)
+                        Broker.wallet = Broker.wallet.plus(stock.cost * k)
+                    } else {
+                        Broker.wallet = Broker.wallet.plus(stock.cost * k)
+                        Broker.myStock.replace(stock, Broker.myStock[stock]!! - k)
+                    }
                 }
-
             }
-
         }
         else
             return Error.EMPTYBAG

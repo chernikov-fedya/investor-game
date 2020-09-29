@@ -39,4 +39,8 @@ object Stoks {
         Stock()
             .apply { cost = Companies.Huawei.cent; companies = Companies.Huawei}
     )
+    var allObligation = mutableListOf<Stock>(
+        Stock()
+            .apply { cost = Companies.Huawei.cent; companies = Companies.Huawei}
+    )
 }

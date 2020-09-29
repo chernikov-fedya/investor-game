@@ -19,7 +19,7 @@ import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.broker.BrokerFragment
 
 // Класс для создания акции
-class Stock: Up {
+open class Stock: Up {
     var cost: Double = 0.0 // Стоимость акции
     var companies: Companies? = null // Компания, к которой принадлежит акция
     var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData() // LiveData, которая хранит в себе изменяемый список DataPoint
@@ -37,15 +37,16 @@ class Stock: Up {
             false
 }
 // Адаптер для вывода списка акиций в фрагмент активов с помощью RecyclerView
-class StockAdapter(): RecyclerView.Adapter<StockAdapter.Companion.StockViewHolder>(){
+class StockAdapter(list: MutableList<Stock>): RecyclerView.Adapter<StockAdapter.Companion.StockViewHolder>(){
+    var listStock = list
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
         var eee = LayoutInflater.from(parent.context).inflate(R.layout.stock_recycle, parent, false) // Переменная для хранения файла разметки
         return StockViewHolder(eee)
     }
     override fun getItemId(position: Int): Long = position.toLong() //Функция, которая возращает Id
-    override fun getItemCount(): Int = Stoks.allStoks.size // Функция, которая возварщает размер RecyclerView
+    override fun getItemCount(): Int = listStock.size // Функция, которая возварщает размер RecyclerView
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) { // Функция для отрисовки RecyclerView
-        holder.bind(Stoks.allStoks[position])
+        holder.bind(listStock[position])
     }
     override fun onViewDetachedFromWindow(holder: StockViewHolder) { // Функция для удаления Observer при условии, что объект находится вне пределов экрана
         holder.newCost?.removeObservers(fragment!!)

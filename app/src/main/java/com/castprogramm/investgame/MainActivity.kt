@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.broker.BrokerFragment
@@ -116,15 +117,6 @@ class MainActivity : AppCompatActivity() {
         PreferenceBroker.save(this)
     }
 
-    override fun onPause() {
-        super.onPause()
-//        val dbhelper = dbOpenSQLite(this, null)
-//        dbhelper.addStock(Broker.myStock)
-//        allStoks.forEach {
-//            dbhelper.addDataPoint(it)
-//        }
-//        dbhelper.close()
-    }
     override fun onResume(){
         super.onResume()
         testing.play = true
@@ -155,6 +147,10 @@ class MainActivity : AppCompatActivity() {
             Log.d("SIZE", it.companies?.name + " ${it.costs.size}")
         }
         dbhadler.close()
+        Broker.thisEnd.observe(this, androidx.lifecycle.Observer{
+            if (it <= 0.0)
+                endGame()
+        })
         // обовление класса брокер
         testing.objectsToUpdate.add(Broker)
         // добавление новостей к апдейтеру
@@ -171,8 +167,6 @@ class MainActivity : AppCompatActivity() {
                         for (i in Broker.myStock.toList()){
                             brokerStocks.add(i.first)
                         }
-                        val fm = supportFragmentManager
-                        val ft = fm.beginTransaction()
                         var f = BrokerFragment.newInstance(
                             brokerStocks,
                             Broker.name,
@@ -185,16 +179,13 @@ class MainActivity : AppCompatActivity() {
                     }
                     // создание и запуск фрагмента всех акций
                     R.id.butStock -> {
-                        val fm = supportFragmentManager
-                        val ft = fm.beginTransaction()
                         var f = AllStockFragment()
                         StockAdapter.fragment = f
-                        flip(f)
+                        flip(ActiveFragment())
                     }
                     // создание и запуск фрагмента новостей
                     R.id.butNews -> {
-                        val fm = supportFragmentManager
-                        val ft = fm.beginTransaction()
+
                         var f = NewsFragment.newInstance(newsarray)
                         flip(f)
                     }
@@ -223,14 +214,17 @@ class MainActivity : AppCompatActivity() {
     }
     private fun flip(fragment: Fragment){
             supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                            R.animator.card_flip_right_enter,
-                            R.animator.card_flip_right_exit,
-                            R.animator.card_flip_left_enter,
-                            R.animator.card_flip_left_exit)
+//                    .setCustomAnimations(
+//                            R.animator.card_flip_right_enter,
+//                            R.animator.card_flip_right_exit,
+//                            R.animator.card_flip_left_enter,
+//                            R.animator.card_flip_left_exit)
                     .replace(R.id.frame_menu, fragment)
                     .addToBackStack(null)
                     .commit()
         }
+    fun endGame(){
+        flip(EndFragment())
     }
+}
     
