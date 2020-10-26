@@ -6,14 +6,16 @@ import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.castprogramm.investgame.HelpApp
 import com.castprogramm.investgame.R
 import com.castprogramm.investgame.Updater
+import com.castprogramm.investgame.stock.Stoks
 import kotlinx.android.synthetic.main.fragment_news.*
-import kotlinx.android.synthetic.main.fragment_news.view.swipeRefreshLayout
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
@@ -50,36 +52,22 @@ class NewsFragment: Fragment() {
     }
 
     var recMSG: MutableList<String> =  mutableListOf()
-    private lateinit var runnable: Runnable
-    var handler = Handler()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var ret = inflater.inflate(R.layout.fragment_news, container, false)
-        ret.swipeRefreshLayout.setOnRefreshListener {
-            // инициализирует новый Runnable
-            runnable = Runnable {
-                // обновлени е информации RecyclerView
-                var recycler : RecyclerView = ret.findViewById(R.id.aleksey)
-                recycler.adapter = NewsAdapter()
-                    .apply {
-                    msgs = recMSG
-                }
-                // Для того чтобы после обновления значок пропадал
-                swipeRefreshLayout.isRefreshing = false
-            }
-            handler.postDelayed(
-                runnable, 500.toLong()
-            )
-        }
-
-        var recycler : RecyclerView = ret.findViewById(R.id.aleksey)
-        recycler.adapter = NewsAdapter().apply {
+        val ret = inflater.inflate(R.layout.fragment_news, container, false)
+        val newsAdapter = NewsAdapter().apply {
             msgs = recMSG
         }
+        val recycler : RecyclerView = ret.findViewById(R.id.aleksey)
+        recycler.adapter = newsAdapter
+        val liveData = Stoks.liveDataNews
+        liveData.observe(viewLifecycleOwner, Observer{
+            newsAdapter.update(it)
+        })
         showNewsPrompt()
-        var pi = LinearLayoutManager(ret.context)
+        val pi = LinearLayoutManager(ret.context)
         recycler.layoutManager = pi
 
         return ret

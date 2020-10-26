@@ -8,14 +8,14 @@ import android.webkit.WebView
 import androidx.fragment.app.Fragment
 
 // класс фрагмента справочника
-class ReferenceFragmemt(var urlPath :URL): Fragment(){
+class ReferenceFragment(var urlPath :URL): Fragment(){
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // отрисовка html файла в фрагменте, при получении ссылки
-        return WebView(container?.context).apply { loadUrl(urlPath.path) }
+        return WebView(requireContext()).apply { loadUrl(urlPath.path) }
     }
 }
 // перечисление ссылок на html файлы

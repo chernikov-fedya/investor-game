@@ -1,18 +1,13 @@
 package com.castprogramm.investgame
 
-import android.database.sqlite.SQLiteDatabase
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.preference.PreferenceManager
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.broker.BrokerFragment
@@ -20,17 +15,15 @@ import com.castprogramm.investgame.broker.PreferenceBroker
 import com.castprogramm.investgame.news.News
 import com.castprogramm.investgame.news.NewsFragment
 import com.castprogramm.investgame.stock.*
+import com.castprogramm.investgame.stock.Stoks.allMax
 import com.castprogramm.investgame.stock.Stoks.allStoks
 import com.castprogramm.investgame.stock.Stoks.newsarray
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import java.nio.file.Files.find
-import java.time.chrono.ThaiBuddhistChronology.INSTANCE
-
-import kotlin.jvm.internal.PropertyReference
-
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
+
+//    val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     var handler = Handler()
     var testing = Updater(handler)
@@ -40,13 +33,12 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.reset -> {
                 // функция обнуления прогресса для новой игры
                 Broker.myStock.clear()
-                newsarray.clear()
+                Stoks.updateLiveData(mutableListOf())
                 Broker.myStockCost = 0.0
                 Broker.wallet = 10000.0
                 allStoks = mutableListOf(
@@ -69,22 +61,15 @@ class MainActivity : AppCompatActivity() {
                 val intent = intent
                 finish()
                 startActivity(intent)
-
             }
             R.id.reference -> {
                 // запуск подсказки
-                val f = ReferenceFragmemt(URL.REFERENCE)
-                val fm = supportFragmentManager
-                val ft = fm.beginTransaction()
-                ft.replace(R.id.frame_menu, f)
-                ft.commit()
+                val f = ReferenceFragment(URL.REFERENCE)
+                flip(f)
             }
             R.id.manual ->{
-                val f = ReferenceFragmemt(URL.MANUAL)
-                val fm = supportFragmentManager
-                val ft = fm.beginTransaction()
-                ft.replace(R.id.frame_menu, f)
-                ft.commit()
+                val f = ReferenceFragment(URL.MANUAL)
+                flip(f)
             }
             R.id.teach ->{
                 val prefEditorStock = StockFragment.prefManagerStock.edit()
@@ -107,13 +92,8 @@ class MainActivity : AppCompatActivity() {
     override fun onStop(){
         super.onStop()
         testing.play = false
-        val dbhelper = dbOpenSQLite(this, null)
-        dbhelper.addStock(Broker.myStock)
-        allStoks.forEach {
-            dbhelper.addDataPoint(it)
-            Log.d("TEST", "Вывод: количество цен у акции" + it.costs.size.toString())
-        }
-        dbhelper.close()
+        val saveIntent = Intent(this, SaveService ::class.java)
+        startService(saveIntent)
         PreferenceBroker.save(this)
     }
 
@@ -128,25 +108,31 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         PreferenceBroker.load(this)
         testing.play = true
-        val dbhadler = dbOpenSQLite(this, null)
-        val cursor = dbhadler.getAllStock()
-        if (cursor!=null && cursor.getCount() > 0){
-        cursor.moveToFirst()
-        Broker.myStock.put(
-            allStoks.find { it.companies?.name ==  cursor.getString(cursor.getColumnIndex(dbOpenSQLite.COLOUM_COMPANY_NAME))}.apply {
-                this!!.cost = cursor.getDouble(cursor.getColumnIndex(dbOpenSQLite.COLOUM_CENT)) }!!,
-            cursor.getInt(cursor.getColumnIndex(dbOpenSQLite.COLOUM_QUANTITY)))
-        while (cursor.moveToNext()){
-            Broker.myStock.put(
-                allStoks.find { it.companies?.name ==  cursor.getString(cursor.getColumnIndex(dbOpenSQLite.COLOUM_COMPANY_NAME))}.apply {
-                    this!!.cost = cursor.getDouble(cursor.getColumnIndex(dbOpenSQLite.COLOUM_CENT)) }!!,
-                cursor.getInt(cursor.getColumnIndex(dbOpenSQLite.COLOUM_QUANTITY)))}
-            cursor.close()}
-        allStoks.forEach { it ->
-            dbhadler.readDataPoint(it)
-            Log.d("SIZE", it.companies?.name + " ${it.costs.size}")
-        }
-        dbhadler.close()
+//        val job = scope.launch {
+//            val result = async {
+//                val dbhadler = DBOpenSQLite(this@MainActivity, null)
+//                val cursor = dbhadler.getAllStock()
+//                if (cursor!=null && cursor.count > 0){
+//                    cursor.moveToFirst()
+//                    Broker.myStock.put(
+//                        allStoks.find { it.companies?.name ==  cursor.getString(cursor.getColumnIndex(DBOpenSQLite.COLOUM_COMPANY_NAME))}.apply {
+//                            this!!.cost = cursor.getDouble(cursor.getColumnIndex(DBOpenSQLite.COLOUM_CENT)) }!!,
+//                        cursor.getInt(cursor.getColumnIndex(DBOpenSQLite.COLOUM_QUANTITY)))
+//                    while (cursor.moveToNext()){
+//                        Broker.myStock.put(
+//                            allStoks.find { it.companies?.name ==  cursor.getString(cursor.getColumnIndex(DBOpenSQLite.COLOUM_COMPANY_NAME))}.apply {
+//                                this!!.cost = cursor.getDouble(cursor.getColumnIndex(DBOpenSQLite.COLOUM_CENT)) }!!,
+//                            cursor.getInt(cursor.getColumnIndex(DBOpenSQLite.COLOUM_QUANTITY)))}
+//                    cursor.close()}
+//                allStoks.forEach {
+//                    dbhadler.readDataPoint(it)
+//                    Log.d("SIZE", it.companies?.name + " ${it.costs.size}")
+//                }
+//                allMax = dbhadler.getMaxSize()
+//                dbhadler.close()
+//
+//            }.await()
+//        }
         Broker.thisEnd.observe(this, androidx.lifecycle.Observer{
             if (it <= 0.0)
                 endGame()
@@ -157,74 +143,37 @@ class MainActivity : AppCompatActivity() {
         News.fillNews(testing)
         testing.objectsToUpdate.plusAssign(allStoks)
         handler.post(testing)
-        StockAdapter.fragmentManager = supportFragmentManager
-        BrokerAdapter.fragmentManager = supportFragmentManager
             bnv.setOnNavigationItemSelectedListener { item ->
                 when (item.itemId) {
                     // создание и запуск фрагмента профиля
                     R.id.butProfile -> {
-                        var brokerStocks = mutableListOf<Stock>()
-                        for (i in Broker.myStock.toList()){
-                            brokerStocks.add(i.first)
-                        }
-                        var f = BrokerFragment.newInstance(
-                            brokerStocks,
-                            Broker.name,
-                            Broker.wallet,
-                            Broker.myStockCost,
-                            Broker.loss
-                        )
-                        BrokerAdapter.fragment = f
-                        flip(f)
+                        flip(installBrokerFragment())
                     }
                     // создание и запуск фрагмента всех акций
-                    R.id.butStock -> {
-                        var f = AllStockFragment()
-                        StockAdapter.fragment = f
-                        flip(ActiveFragment())
-                    }
+                    R.id.butStock -> flip(ActiveFragment())
                     // создание и запуск фрагмента новостей
-                    R.id.butNews -> {
-
-                        var f = NewsFragment.newInstance(newsarray)
-                        flip(f)
-                    }
+                    R.id.butNews -> flip(NewsFragment.newInstance(newsarray))
                 }
                 true
             }
         // при первом запуске создаётся и запускается фрагмент профиля
-        var brokerStocks = mutableListOf<Stock>()
-        for (i in Broker.myStock.toList()){
-            brokerStocks.add(i.first)
+        flip(installBrokerFragment())
+    }
+    private fun flip(fragment: Fragment){
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.frame_menu, fragment)
+                    .addToBackStack(null)
+                    .commit()
         }
-        val fm = supportFragmentManager
-        var f = BrokerFragment.newInstance(
-            brokerStocks,
+    private fun installBrokerFragment(): BrokerFragment = BrokerFragment.newInstance(
+            Broker.myStock.keys.toMutableList(),
             Broker.name,
             Broker.wallet,
             Broker.myStockCost,
             Broker.loss
         )
-        BrokerAdapter.fragment = f
-        val ft = fm.beginTransaction()
-            .replace(R.id.frame_menu, f)
-            .addToBackStack(null)
-            .commit()
 
-    }
-    private fun flip(fragment: Fragment){
-            supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                            R.animator.card_flip_right_enter,
-//                            R.animator.card_flip_right_exit,
-//                            R.animator.card_flip_left_enter,
-//                            R.animator.card_flip_left_exit)
-                    .replace(R.id.frame_menu, fragment)
-                    .addToBackStack(null)
-                    .commit()
-        }
     fun endGame(){
         flip(EndFragment())
     }
 }
-    

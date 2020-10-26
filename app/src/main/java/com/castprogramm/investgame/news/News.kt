@@ -15,6 +15,7 @@ import com.castprogramm.investgame.Updater
 import com.castprogramm.investgame.stock.Stoks.newsarray
 import com.castprogramm.investgame.stock.StockGroup
 import com.castprogramm.investgame.stock.Stoks
+import com.castprogramm.investgame.stock.Stoks.updateLiveData
 
 abstract class News: Up {
     companion object{
@@ -115,6 +116,7 @@ class Country: News() {  //  класс страна
         name = Countries.values()[(0..Countries.values().size-1).random()].s
         msg = "В стране $name произошло $eventType цен"
         newsarray.add(0, msg)
+        updateLiveData(newsarray)
     }
 
     override fun funnymessage() {
@@ -124,6 +126,7 @@ class Country: News() {  //  класс страна
         name = Countries.values()[(0..Countries.values().size-1).random()].s
         msg = "В стране $name произошло $eventType цен"
         newsarray.add(0, msg)
+        updateLiveData(newsarray)
     }
 }
 class Industry: News(){  //класс предпрития
@@ -141,6 +144,7 @@ class Industry: News(){  //класс предпрития
         name = Industries.values()[(0..Industries.values().size-1).random()].n
         msg = "В отрасли $name произошел $eventType"
         newsarray.add(0, msg)
+        updateLiveData(newsarray)
     }
 
     override fun funnymessage() {
@@ -150,6 +154,7 @@ class Industry: News(){  //класс предпрития
         name = Industries.values()[(0..Industries.values().size-1).random()].n
         msg = "В отрасли $name произошел $eventType"
         newsarray.add(0, msg)
+        updateLiveData(newsarray)
     }
 
 
@@ -169,6 +174,7 @@ class Enterprise: News(){ //  класс предприятие
         eventType = events[0]
         msg = "В компании $name произошел $eventType"
         newsarray.add(0, msg)
+        updateLiveData(newsarray)
     }
 
     override fun funnymessage() {
@@ -178,6 +184,7 @@ class Enterprise: News(){ //  класс предприятие
         eventType = events[1]
         msg = "В компании $name произошел $eventType"
         newsarray.add(0, msg)
+        updateLiveData(newsarray)
     }
 
 
@@ -190,6 +197,10 @@ class NewsAdapter(): RecyclerView.Adapter<NewsAdapter.Companion.NewsViewHolder>(
         return NewsViewHolder(
             eee
         )
+    }
+    fun update(mutableList: MutableList<String>){
+        msgs = mutableList
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = msgs.size

@@ -7,11 +7,10 @@ import com.castprogramm.investgame.EnumClasses.Error
 import com.castprogramm.investgame.Updater
 
 // класс биржи
-class StockMarket() {
+class StockMarket{
     // функция продажи k-числа акций
     fun sold(stock: Stock, k: Int): Error? {
         if (Broker.myStock.containsKey(stock)){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 if (Broker.myStock[stock]!! < k)
                     return Error.EMPTYBAG
                 else {
@@ -20,11 +19,10 @@ class StockMarket() {
                         Broker.wallet = Broker.wallet.plus(stock.cost * k)
                     } else {
                         Broker.wallet = Broker.wallet.plus(stock.cost * k)
-                        Broker.myStock.replace(stock, Broker.myStock[stock]!! - k)
+                        Broker.addStock(stock to - k)
                     }
                 }
             }
-        }
         else
             return Error.EMPTYBAG
         return null
@@ -37,9 +35,7 @@ class StockMarket() {
         else{
             Broker.wallet = Broker.wallet.minus(stock.cost * k)
             if (Broker.myStock.containsKey(stock)){
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    Broker.myStock.replace(stock, Broker.myStock[stock]!! + k)
-                }
+                Broker.addStock(stock to k)
             }
             else{
                 Broker.myStock.put(stock, k)

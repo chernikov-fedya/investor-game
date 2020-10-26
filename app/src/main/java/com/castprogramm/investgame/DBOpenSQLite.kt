@@ -5,21 +5,19 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.stock.Stock
 import com.castprogramm.investgame.stock.Stoks
 import com.jjoe64.graphview.series.DataPoint
 
-class dbOpenSQLite(context: Context,
+class DBOpenSQLite(context: Context,
                    factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME,
         factory, DATABASE_VERSION) {
     fun createStockTable(stock: Stock): String = ("CREATE TABLE ${stock.companies?.name} (KEY_ID INTEGER PRIMARY KEY," +
             "X REAL," +
             "Y REAL );")
-//    fun createBrokerTable(): String = ("CREATE TABLE BROKER (KEY_ID INTEGER PRIMARY KEY," +
-//            "NAME STRING,"+
-//            "MONEY DOUBLE );")
     override fun onCreate(db: SQLiteDatabase) {
         val CREATE_PRODUCTS_TABLE = ("CREATE TABLE $TABLE_NAME (KEY_ID INTEGER PRIMARY KEY," +
                 "$COLOUM_COMPANY_NAME TEXT," +
@@ -29,7 +27,6 @@ class dbOpenSQLite(context: Context,
         Stoks.allStoks.forEach {
             db.execSQL(createStockTable(it))
         }
-//        db.execSQL(createBrokerTable())
     }
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
@@ -50,14 +47,26 @@ class dbOpenSQLite(context: Context,
             val db = this.readableDatabase
             return db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         }
-        fun addDataPoint(stock: Stock){
+        fun addDataPoint(stocks: MutableList<Stock>){
             val db = this.writableDatabase
-            db.execSQL("DELETE FROM ${stock.companies?.name};")
-            for (i in stock.costs){
-                val values = ContentValues()
-                values.put("X", i.x)
-                values.put("Y", i.y)
-                db.insert(stock.companies?.name, null, values)
+            for (stock in stocks){
+//            db.execSQL("DELETE FROM ${stock.companies?.name};")
+            for (i in 0 until stock.costs.size) {
+                if (Stoks.allMax.isNotEmpty()){
+                    if (Stoks.allMax[stock]!! < i) {
+                        val values = ContentValues()
+                        values.put("X", stock.costs[i].x)
+                        values.put("Y", stock.costs[i].y)
+                        db.insert(stock.companies?.name, null, values)
+                    }
+                }
+                else{
+                    val values = ContentValues()
+                    values.put("X", stock.costs[i].x)
+                    values.put("Y", stock.costs[i].y)
+                    db.insert(stock.companies?.name, null, values)
+                    }
+                }
             }
         }
         fun readDataPoint(stock: Stock):Stock{
@@ -73,24 +82,20 @@ class dbOpenSQLite(context: Context,
             cursor.close()
                 return stock
         }
-//        fun saveBroker(){
-//            val db = this.writableDatabase
-//            db.execSQL("DELETE FROM BROKER")
-//            val values = ContentValues()
-//            values.put("NAME", Broker.name)
-//            values.put("MONEY", Broker.wallet)
-//            db.insert("BROKER", null, values)
-//        }
-//        fun readBroker(){
-//            val db = this.readableDatabase
-//            val cursor = db.rawQuery("SELECT * FROM BROKER", null)
-//            if (cursor != null && cursor.count > 0) {
-//                cursor.moveToFirst()
-//                Broker.name = cursor.getString(1)
-//                Broker.wallet = cursor.getDouble(2)
-//            }
-//            cursor.close()
-//        }
+        fun getMaxSize(): MutableMap<Stock, Int> {
+            val db = this.readableDatabase
+            val maxSizeArray = mutableMapOf<Stock, Int>()
+            Stoks.allStoks.forEach {
+                val cursor = db.rawQuery("SELECT * FROM ${it.companies?.name}", null)
+                if (cursor != null && cursor.count > 0){
+                    cursor.moveToLast()
+                    maxSizeArray.put(it, cursor.getInt(0))
+                    Log.d("SIZE", "${maxSizeArray.toList().last()}")
+                }
+                cursor.close()
+            }
+            return maxSizeArray
+        }
         companion object {
             private val DATABASE_NAME = "stockStocksf.db"
             private val DATABASE_VERSION = 1

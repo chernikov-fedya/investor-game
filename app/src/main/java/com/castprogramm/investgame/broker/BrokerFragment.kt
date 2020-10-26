@@ -108,17 +108,18 @@ class BrokerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var ret = inflater.inflate(R.layout.fragment_broker, container, false)
-        var recycler : RecyclerView = ret.findViewById(R.id.rec)
-        recycler.adapter = BrokerAdapter()
-        var nameBro : TextView = ret.findViewById(R.id.name)
-        var walletBro : TextView = ret.findViewById(R.id.wallet)
-        var stockPriceBro: TextView = ret.findViewById(R.id.stockPrice)
-        var minus : TextView = ret.findViewById(R.id.printminus)
-        var newwallet: MutableLiveData<Double> = Broker.thisWallet
-        var newles : MutableLiveData<Double> = Broker.thisLess
-        var newSum : MutableLiveData<Double> = Broker.thisMyStock
-        var end : MutableLiveData<Double> = Broker.thisEnd
+        val ret = inflater.inflate(R.layout.fragment_broker, container, false)
+        val recycler : RecyclerView = ret.findViewById(R.id.rec)
+        var brokerAdapter = BrokerAdapter(this)
+        recycler.adapter = brokerAdapter
+        val nameBro : TextView = ret.findViewById(R.id.name)
+        val walletBro : TextView = ret.findViewById(R.id.wallet)
+        val stockPriceBro: TextView = ret.findViewById(R.id.stockPrice)
+        val minus : TextView = ret.findViewById(R.id.printminus)
+        val newwallet: MutableLiveData<Double> = Broker.thisWallet
+        val newles : MutableLiveData<Double> = Broker.thisLess
+        val newSum : MutableLiveData<Double> = Broker.thisMyStock
+        val end : MutableLiveData<Double> = Broker.thisEnd
         walletBro.setText("Наличные:  $" + "%.2f".format(wallet))
         minus.setText("Текущий расход: " + expenditure.toString())
         stockPriceBro.setText("Стоимость моих акций:  $" + "%.2f".format(stockPrice))
@@ -132,8 +133,7 @@ class BrokerFragment : Fragment() {
             stockPriceBro.setText("Стоимость моих акций:  $" + "%.2f".format(it))
         })
         nameBro.setText("Имя: " + name)
-        var pi = LinearLayoutManager(ret.context)
-        recycler.layoutManager = pi
+        recycler.layoutManager = LinearLayoutManager(requireContext())
         end.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it <= 0.0){
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -143,7 +143,7 @@ class BrokerFragment : Fragment() {
         })
 
         // Находим поле отображения имени брокера по id и устанавливаем слушатель
-        var namevalue = ret.findViewById<TextView>(R.id.name)
+        val namevalue = ret.findViewById<TextView>(R.id.name)
         namevalue.setOnClickListener{
             // Вызываем AlertDialog для заполнения имени
             val mDialogView = LayoutInflater.from(ret.context).inflate(R.layout.login_dialog, null)
@@ -166,7 +166,7 @@ class BrokerFragment : Fragment() {
             }
         }
 
-        var image : ImageView = ret.findViewById(R.id.photo)
+        val image : ImageView = ret.findViewById(R.id.photo)
         showAnimation(image)
         image.setBackgroundResource(R.drawable.rofl_anim)
         image.setOnClickListener {
@@ -190,7 +190,7 @@ class PreferenceBroker {
         val NAME: String = "key_NAME"
         val WALLET: String = "key_WALLET"
         fun save(context: Context){
-            var editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
+            val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
             editor.putString(NAME, Broker.name)
             editor.putFloat(WALLET, Broker.wallet.toFloat())
             editor.apply()

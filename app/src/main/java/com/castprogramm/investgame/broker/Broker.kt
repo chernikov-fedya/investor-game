@@ -22,6 +22,15 @@ object Broker: Up {
     var loss : Double = 0.0
     var allMoney: Double = 1.0
 
+    fun addStock(pair: Pair<Stock, Int>){
+        if (myStock.containsKey(pair.first)){
+            myStock.plusAssign(pair.first to (pair.second + myStock[pair.first]!!))
+        }
+        else{
+            myStock.plusAssign(pair)
+        }
+    }
+
     override fun update() {
         for (i in myObligation){ // проверка на окончание времени нахождения у пользователя и возврат денег брокеру при окончании его
             if (i.key.checkSold()){

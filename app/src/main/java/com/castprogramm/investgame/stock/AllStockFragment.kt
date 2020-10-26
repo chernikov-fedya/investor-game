@@ -53,7 +53,7 @@ class AllStockFragment: Fragment() {
 
         var recycler : RecyclerView = ret.findViewById(R.id.newaleksey) // Переменная для хранения RecyclerView
 
-        recycler.adapter = StockAdapter(listStock) // Загрузка адаптера в RecyclerView
+        recycler.adapter = StockAdapter(listStock, this) // Загрузка адаптера в RecyclerView
 
         var pi = LinearLayoutManager(ret.context) // Переменная для хранения менеджера макета
         recycler.layoutManager = pi  // Установка менеджера макета

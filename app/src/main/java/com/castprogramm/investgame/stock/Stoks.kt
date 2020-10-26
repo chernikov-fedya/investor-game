@@ -1,11 +1,18 @@
 package com.castprogramm.investgame.stock
 
+import androidx.lifecycle.MutableLiveData
 import com.castprogramm.investgame.EnumClasses.Companies
 
 object Stoks {
 
     // список для хранения все новостей
     var newsarray: MutableList<String> = mutableListOf()
+    var liveDataNews = MutableLiveData<MutableList<String>>().apply { value = newsarray }
+    fun updateLiveData(list: MutableList<String>){
+        newsarray = list
+        liveDataNews.value = newsarray
+    }
+    var allMax = mutableMapOf<Stock, Int>()
     // список для хранения всех акций
     var allStoks: MutableList<Stock> = mutableListOf(
         Stock()

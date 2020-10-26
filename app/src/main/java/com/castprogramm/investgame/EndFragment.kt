@@ -17,7 +17,7 @@ import kotlin.system.exitProcess
 class EndFragment: Fragment(){
     fun clearStock(){
         Broker.myStock.clear()
-        Stoks.newsarray.clear()
+        Stoks.updateLiveData(mutableListOf())
         Broker.myStockCost = 0.0
         Broker.wallet = 10000.0
         Stoks.allStoks = mutableListOf(
