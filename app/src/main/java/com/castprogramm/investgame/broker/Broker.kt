@@ -1,12 +1,10 @@
 package com.castprogramm.investgame.broker
 
-import android.preference.PreferenceManager
 import androidx.lifecycle.MutableLiveData
 import com.castprogramm.investgame.LossEvent
 import com.castprogramm.investgame.Up
 import com.castprogramm.investgame.stock.Obligation
 import com.castprogramm.investgame.stock.Stock
-import kotlin.math.round
 
 object Broker: Up {
     var name = "Нажмите, чтобы ввести"

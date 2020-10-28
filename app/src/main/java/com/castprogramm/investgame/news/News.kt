@@ -189,7 +189,7 @@ class Enterprise: News(){ //  класс предприятие
 
 
 }
-class NewsAdapter(): RecyclerView.Adapter<NewsAdapter.Companion.NewsViewHolder>(){
+class NewsAdapter: RecyclerView.Adapter<NewsAdapter.Companion.NewsViewHolder>(){
     var msgs : MutableList<String> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {

@@ -116,13 +116,16 @@ class BrokerFragment : Fragment() {
         val walletBro : TextView = ret.findViewById(R.id.wallet)
         val stockPriceBro: TextView = ret.findViewById(R.id.stockPrice)
         val minus : TextView = ret.findViewById(R.id.printminus)
+
         val newwallet: MutableLiveData<Double> = Broker.thisWallet
         val newles : MutableLiveData<Double> = Broker.thisLess
         val newSum : MutableLiveData<Double> = Broker.thisMyStock
         val end : MutableLiveData<Double> = Broker.thisEnd
+
         walletBro.setText("Наличные:  $" + "%.2f".format(wallet))
         minus.setText("Текущий расход: " + expenditure.toString())
         stockPriceBro.setText("Стоимость моих акций:  $" + "%.2f".format(stockPrice))
+
         newwallet.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             walletBro.setText("Наличные:  $" + "%.2f".format(it))
         })
