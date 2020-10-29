@@ -22,4 +22,9 @@
         android:orderInCategory="100"
         android:title="Обучение"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/top_menu_item"
+        android:orderInCategory="100"
+        android:title="Рейтинг"
+        app:showAsAction="never"/>
 </menu>

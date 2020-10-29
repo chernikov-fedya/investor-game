@@ -120,7 +120,6 @@ class BrokerFragment : Fragment() {
         val newwallet: MutableLiveData<Double> = Broker.thisWallet
         val newles : MutableLiveData<Double> = Broker.thisLess
         val newSum : MutableLiveData<Double> = Broker.thisMyStock
-        val end : MutableLiveData<Double> = Broker.thisEnd
 
         walletBro.setText("Наличные:  $" + "%.2f".format(wallet))
         minus.setText("Текущий расход: " + expenditure.toString())
@@ -128,6 +127,11 @@ class BrokerFragment : Fragment() {
 
         newwallet.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             walletBro.setText("Наличные:  $" + "%.2f".format(it))
+            if (it <= 0.0){
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.frame_menu, EndFragment())
+                    .commit()
+            }
         })
         newles.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             minus.setText("Текущий расход: $" + it.toString())
@@ -137,13 +141,6 @@ class BrokerFragment : Fragment() {
         })
         nameBro.setText("Имя: " + name)
         recycler.layoutManager = LinearLayoutManager(requireContext())
-        end.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            if (it <= 0.0){
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.frame_menu, EndFragment())
-                    .commit()
-            }
-        })
 
         // Находим поле отображения имени брокера по id и устанавливаем слушатель
         val namevalue = ret.findViewById<TextView>(R.id.name)
@@ -199,7 +196,7 @@ class PreferenceBroker {
             editor.apply()
         }
         fun load(context: Context){
-            Broker.name = PreferenceManager.getDefaultSharedPreferences(context).getString(NAME, "")!!
+            Broker.name = PreferenceManager.getDefaultSharedPreferences(context).getString(NAME, "Нажмите, чтобы ввести")!!
             Broker.wallet = PreferenceManager.getDefaultSharedPreferences(context).getFloat(WALLET, 10000f).toDouble()
 
         }

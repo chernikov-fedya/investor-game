@@ -7,6 +7,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.broker.Broker
@@ -18,6 +19,9 @@ import com.castprogramm.investgame.stock.*
 import com.castprogramm.investgame.stock.Stoks.allMax
 import com.castprogramm.investgame.stock.Stoks.allStoks
 import com.castprogramm.investgame.stock.Stoks.newsarray
+import com.castprogramm.investgame.top.DATA_NAME
+import com.castprogramm.investgame.top.DATA_SCOPE
+import com.castprogramm.investgame.top.TopActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 
@@ -85,6 +89,12 @@ class MainActivity : AppCompatActivity() {
                 prefEditorBroker.putBoolean("didShowBrokerPrompt", false)
                 prefEditorBroker.apply()
             }
+            R.id.top_menu_item -> {
+                var intent = Intent(this, TopActivity::class.java)
+                    intent.putExtra(DATA_NAME, Broker.name)
+                    intent.putExtra(DATA_SCOPE, Broker.wallet.toFloat())
+                startActivity(intent)
+            }
             }
         return super.onOptionsItemSelected(item)
     }
@@ -133,7 +143,7 @@ class MainActivity : AppCompatActivity() {
 //
 //            }.await()
 //        }
-        Broker.thisEnd.observe(this, androidx.lifecycle.Observer{
+        Broker.thisWallet.observe(this, androidx.lifecycle.Observer{
             if (it <= 0.0)
                 endGame()
         })

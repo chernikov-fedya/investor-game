@@ -9,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class ActiveFragment: Fragment() {
+class ActiveFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -19,8 +19,8 @@ class ActiveFragment: Fragment() {
         val viewPager2 = view.findViewById<ViewPager2>(R.id.viewpager2)
         val tabs = view.findViewById<TabLayout>(R.id.tabs)
         viewPager2.adapter = ViewPager2FragmentAdapter(this)
-        TabLayoutMediator(tabs, viewPager2){ tab: TabLayout.Tab, i: Int ->
-            when(i){
+        TabLayoutMediator(tabs, viewPager2) { tab: TabLayout.Tab, i: Int ->
+            when (i) {
                 0 -> tab.text = "Акции"
 //                1 -> tab.text = "Облигации"
             }

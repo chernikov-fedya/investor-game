@@ -16,9 +16,7 @@ object Broker: Up {
     var thisWallet : MutableLiveData<Double> = MutableLiveData()
     var thisLess : MutableLiveData<Double> = MutableLiveData()
     var thisMyStock : MutableLiveData<Double> = MutableLiveData()
-    var thisEnd : MutableLiveData<Double> = MutableLiveData()
     var loss : Double = 0.0
-    var allMoney: Double = 1.0
 
     fun addStock(pair: Pair<Stock, Int>){
         if (myStock.containsKey(pair.first)){
@@ -50,9 +48,7 @@ object Broker: Up {
         }
 
         loss = getLossMoney()
-        allMoney = wallet + myStockCost
         wallet -= loss
-        thisEnd.value = allMoney
         thisMyStock.value = myStockCost
         thisWallet.value = wallet  // передаем значения в LiveData для обновления значений
         thisLess.value = loss

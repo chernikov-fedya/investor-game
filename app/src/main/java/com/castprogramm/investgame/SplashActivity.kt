@@ -18,18 +18,38 @@ class SplashActivity : AppCompatActivity() {
             val result = async {
                 val dbhadler = DBOpenSQLite(this@SplashActivity, null)
                 val cursor = dbhadler.getAllStock()
-                if (cursor!=null && cursor.count > 0){
+                if (cursor != null && cursor.count > 0) {
                     cursor.moveToFirst()
                     Broker.myStock.put(
-                        Stoks.allStoks.find { it.companies?.name ==  cursor.getString(cursor.getColumnIndex(DBOpenSQLite.COLOUM_COMPANY_NAME))}.apply {
-                            this!!.cost = cursor.getDouble(cursor.getColumnIndex(DBOpenSQLite.COLOUM_CENT)) }!!,
-                        cursor.getInt(cursor.getColumnIndex(DBOpenSQLite.COLOUM_QUANTITY)))
-                    while (cursor.moveToNext()){
+                        Stoks.allStoks.find {
+                            it.companies?.name == cursor.getString(
+                                cursor.getColumnIndex(
+                                    DBOpenSQLite.COLOUM_COMPANY_NAME
+                                )
+                            )
+                        }.apply {
+                            this!!.cost =
+                                cursor.getDouble(cursor.getColumnIndex(DBOpenSQLite.COLOUM_CENT))
+                        }!!,
+                        cursor.getInt(cursor.getColumnIndex(DBOpenSQLite.COLOUM_QUANTITY))
+                    )
+                    while (cursor.moveToNext()) {
                         Broker.myStock.put(
-                            Stoks.allStoks.find { it.companies?.name ==  cursor.getString(cursor.getColumnIndex(DBOpenSQLite.COLOUM_COMPANY_NAME))}.apply {
-                                this!!.cost = cursor.getDouble(cursor.getColumnIndex(DBOpenSQLite.COLOUM_CENT)) }!!,
-                            cursor.getInt(cursor.getColumnIndex(DBOpenSQLite.COLOUM_QUANTITY)))}
-                    cursor.close()}
+                            Stoks.allStoks.find {
+                                it.companies?.name == cursor.getString(
+                                    cursor.getColumnIndex(
+                                        DBOpenSQLite.COLOUM_COMPANY_NAME
+                                    )
+                                )
+                            }.apply {
+                                this!!.cost =
+                                    cursor.getDouble(cursor.getColumnIndex(DBOpenSQLite.COLOUM_CENT))
+                            }!!,
+                            cursor.getInt(cursor.getColumnIndex(DBOpenSQLite.COLOUM_QUANTITY))
+                        )
+                    }
+                    cursor.close()
+                }
                 Stoks.allStoks.forEach {
                     dbhadler.readDataPoint(it)
                     Log.d("SIZE", it.companies?.name + " ${it.costs.size}")

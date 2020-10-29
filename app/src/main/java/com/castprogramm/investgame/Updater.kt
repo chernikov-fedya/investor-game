@@ -12,7 +12,7 @@ class Updater(var handler: Handler, var UPDATE_TIME : Long = 5000) : Runnable{
         timePoint = System.currentTimeMillis()
     }
     override fun run() {
-        if (play == true){
+        if (play){
             var nowTime = System.currentTimeMillis()
             if (nowTime - timePoint > UPDATE_TIME) {
                 objectsToUpdate.forEach { it.update() } // овызывает у всего массива метод update
@@ -20,10 +20,6 @@ class Updater(var handler: Handler, var UPDATE_TIME : Long = 5000) : Runnable{
             }
         if (runFlag)
             handler.postDelayed(this, UPDATE_TIME) // Зацикливание функции
-        }
-        else
-        {
-
         }
     }
 }
