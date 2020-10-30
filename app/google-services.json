@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1080014007664",
+    "firebase_url": "https://testchat-947bd.firebaseio.com",
+    "project_id": "testchat-947bd",
+    "storage_bucket": "testchat-947bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080014007664:android:89095d07c5d632b14373b5",
+        "android_client_info": {
+          "package_name": "com.castprogramm.investgame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080014007664-pg7iidrbfqsqsqrplpunr5ktqt6hh06g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3XrF9g7BM4pWDP4xY4NLI_P-OeJoOWvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080014007664-pg7iidrbfqsqsqrplpunr5ktqt6hh06g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
