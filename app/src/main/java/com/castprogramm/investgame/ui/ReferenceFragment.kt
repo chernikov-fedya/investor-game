@@ -1,4 +1,4 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +8,12 @@ import android.webkit.WebView
 import androidx.fragment.app.Fragment
 
 // класс фрагмента справочника
-class ReferenceFragment(var urlPath :URL): Fragment(){
+class ReferenceFragment(var urlPath : URL): Fragment(){
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // отрисовка html файла в фрагменте, при получении ссылки
         return WebView(requireContext()).apply { loadUrl(urlPath.path) }
     }

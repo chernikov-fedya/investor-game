@@ -10,8 +10,8 @@ import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.EnumClasses.Countries
 import com.castprogramm.investgame.EnumClasses.Industries
 import com.castprogramm.investgame.R
-import com.castprogramm.investgame.Up
-import com.castprogramm.investgame.Updater
+import com.castprogramm.investgame.tools.Up
+import com.castprogramm.investgame.tools.Updater
 import com.castprogramm.investgame.stock.Stoks.newsarray
 import com.castprogramm.investgame.stock.StockGroup
 import com.castprogramm.investgame.stock.Stoks

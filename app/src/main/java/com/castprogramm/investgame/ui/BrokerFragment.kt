@@ -1,15 +1,12 @@
 package com.castprogramm.investgame.broker
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.textclassifier.ConversationActions
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -17,14 +14,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.castprogramm.investgame.EndFragment
-import com.castprogramm.investgame.EnumClasses.Companies
+import com.castprogramm.investgame.ui.EndFragment
 import com.castprogramm.investgame.HelpApp
 import com.castprogramm.investgame.R
-import com.castprogramm.investgame.SplashActivity
 import com.castprogramm.investgame.stock.BrokerAdapter
 import com.castprogramm.investgame.stock.Stock
-import com.castprogramm.investgame.stock.Stoks
 import kotlinx.android.synthetic.main.fragment_broker.*
 import kotlinx.android.synthetic.main.login_dialog.view.*
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
@@ -110,7 +104,11 @@ class BrokerFragment : Fragment() {
     ): View? {
         val ret = inflater.inflate(R.layout.fragment_broker, container, false)
         val recycler : RecyclerView = ret.findViewById(R.id.rec)
-        var brokerAdapter = BrokerAdapter(this)
+        val brokerAdapter = BrokerAdapter(this)
+        Broker.liveDataMyStock.observe(viewLifecycleOwner, {
+            brokerAdapter.setData(it.keys.toMutableList())
+        })
+
         recycler.adapter = brokerAdapter
         val nameBro : TextView = ret.findViewById(R.id.name)
         val walletBro : TextView = ret.findViewById(R.id.wallet)

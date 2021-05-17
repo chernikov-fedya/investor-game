@@ -7,27 +7,34 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.provider.Settings
+import androidx.room.Room
+import com.castprogramm.investgame.database.SaveMyStocksDataBase
+import com.castprogramm.investgame.database.StockDataBase
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 import java.security.AccessControlContext
 
 class HelpApp: Application(){
+    val module = module {
+        single { Room.databaseBuilder(this@HelpApp.applicationContext, StockDataBase::class.java, "database").build()}
+        single { Room.databaseBuilder(this@HelpApp.applicationContext, SaveMyStocksDataBase::class.java, "my_stocks").build()}
+    }
+
     var chanel_id = "Save"
     override fun onCreate() {
         super.onCreate()
         globalContext = applicationContext
+        startKoin {
+            androidLogger()
+            androidContext(this@HelpApp)
+            modules(module)
+        }
     }
 
     companion object{
         lateinit var globalContext: Context
     }
-    fun createNotification(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            var serviceChanel = NotificationChannel(
-                chanel_id,
-                "Test",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            var manager = getSystemService(NotificationManager :: class.java)
-            manager.createNotificationChannel(serviceChanel)
-        }
-    }
+
 }

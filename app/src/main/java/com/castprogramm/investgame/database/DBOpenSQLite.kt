@@ -1,4 +1,4 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.database
 
 import android.content.ContentValues
 import android.content.Context
@@ -6,7 +6,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.stock.Stock
 import com.castprogramm.investgame.stock.Stoks
 import com.jjoe64.graphview.series.DataPoint
@@ -84,9 +83,9 @@ class DBOpenSQLite(
         val cursor = db.rawQuery("SELECT * FROM ${stock.companies?.name}", null)
         if (cursor != null && cursor.count > 0) {
             cursor.moveToFirst()
-            stock.costs.add(DataPoint(cursor.getDouble(0) - 1.0, cursor.getDouble(2)))
+            stock.costs.add(DBDataPoint(cursor.getDouble(0) - 1.0, cursor.getDouble(2), stock.name))
             while (cursor.moveToNext()) {
-                stock.costs.add(DataPoint(cursor.getDouble(0) - 1.0, cursor.getDouble(2)))
+                stock.costs.add(DBDataPoint(cursor.getDouble(0) - 1.0, cursor.getDouble(2), stock.name))
             }
         }
         cursor.close()

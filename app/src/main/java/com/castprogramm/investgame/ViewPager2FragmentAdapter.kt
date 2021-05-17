@@ -2,7 +2,7 @@ package com.castprogramm.investgame
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.castprogramm.investgame.stock.AllStockFragment
+import com.castprogramm.investgame.ui.AllStockFragment
 import com.castprogramm.investgame.stock.Stoks
 
 class ViewPager2FragmentAdapter(activity: Fragment):FragmentStateAdapter(activity) {

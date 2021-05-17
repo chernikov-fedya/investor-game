@@ -1,36 +1,34 @@
-package com.castprogramm.investgame.stock
+package com.castprogramm.investgame.ui
 
 import android.annotation.SuppressLint
-import android.content.SharedPreferences
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Build
 import android.os.Bundle
-import android.preference.Preference
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.core.content.SharedPreferencesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import com.castprogramm.investgame.EnumClasses.Error
 import com.castprogramm.investgame.HelpApp
 import com.castprogramm.investgame.MainActivity
 import com.castprogramm.investgame.R
-import com.castprogramm.investgame.broker.PreferenceBroker
+import com.castprogramm.investgame.database.DBDataPoint
+import com.castprogramm.investgame.stock.CostView
+import com.castprogramm.investgame.stock.Stock
+import com.castprogramm.investgame.stock.StockMarket
 import com.jjoe64.graphview.series.DataPoint
 import kotlinx.android.synthetic.main.fragment_stock.*
 import kotlinx.coroutines.Runnable
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
-import java.lang.Exception
 
 // Класс фрагментов, наследующийся от встроенного класса Fragment, для вывода акций и её параметров
 class StockFragment : Fragment() {
@@ -228,7 +226,7 @@ class StockFragment : Fragment() {
                 }
             }
         }
-        var newtest1 : LiveData<MutableList<DataPoint>> = stock.costsofStock
+        val newtest1 : LiveData<MutableList<DBDataPoint>> = stock.costsofStock
         newtest1.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             pr.setText("$  "+ "%.2f".format(it.last().y))
         })
@@ -238,7 +236,7 @@ class StockFragment : Fragment() {
         a?.testing?.objectsToUpdate?.add(costGraphic)
         a?.handler?.post(a?.testing!!) // Обновление
         costGraphic.addStock(stock, this) // Добавление нового значения на график
-        var name : TextView = view.findViewById(R.id.namestock)
+        val name : TextView = view.findViewById(R.id.namestock)
         name.setText(stock.companies?.n)
         return view
     }

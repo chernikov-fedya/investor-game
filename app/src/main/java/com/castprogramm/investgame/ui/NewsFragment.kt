@@ -1,24 +1,20 @@
-package com.castprogramm.investgame.news
+package com.castprogramm.investgame.ui
 
 import android.os.Bundle
-import android.os.Handler
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.castprogramm.investgame.HelpApp
 import com.castprogramm.investgame.R
-import com.castprogramm.investgame.Updater
+import com.castprogramm.investgame.news.NewsAdapter
 import com.castprogramm.investgame.stock.Stoks
-import kotlinx.android.synthetic.main.fragment_news.*
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground
-import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 
 // фрагмент для отрисовки новостей
 class NewsFragment: Fragment() {

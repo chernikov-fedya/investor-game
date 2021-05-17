@@ -2,13 +2,12 @@ package com.castprogramm.investgame.broker
 
 import androidx.lifecycle.MutableLiveData
 import com.castprogramm.investgame.LossEvent
-import com.castprogramm.investgame.Up
+import com.castprogramm.investgame.tools.Up
 import com.castprogramm.investgame.stock.Obligation
 import com.castprogramm.investgame.stock.Stock
 
 object Broker: Up {
     var name = "Нажмите, чтобы ввести"
-    var myStock = mutableMapOf<Stock, Int>()  //массив акций, которыми владеет брокер
     var myObligation = mutableMapOf<Obligation, Int>() //массив облигаций, которыми владеет брокер
     var wallet: Double = 30.0  // сколько есть денег у брокера
     var myStockCost: Double = 0.0 // стоимость акций и облигаций брокера
@@ -16,6 +15,8 @@ object Broker: Up {
     var thisWallet : MutableLiveData<Double> = MutableLiveData()
     var thisLess : MutableLiveData<Double> = MutableLiveData()
     var thisMyStock : MutableLiveData<Double> = MutableLiveData()
+    var myStock = mutableMapOf<Stock, Int>()  //массив акций, которыми владеет брокер
+    val liveDataMyStock = MutableLiveData(myStock)
     var loss : Double = 0.0
 
     fun addStock(pair: Pair<Stock, Int>){
@@ -25,6 +26,7 @@ object Broker: Up {
         else{
             myStock.plusAssign(pair)
         }
+        liveDataMyStock.postValue(myStock)
     }
 
     override fun update() {

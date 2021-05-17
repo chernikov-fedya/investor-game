@@ -1,9 +1,12 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.tools
 
 import android.app.IntentService
 import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.castprogramm.investgame.database.DBOpenSQLite
+import com.castprogramm.investgame.HelpApp
+import com.castprogramm.investgame.R
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.stock.Stoks
 import java.lang.Exception

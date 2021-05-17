@@ -1,4 +1,4 @@
-package com.castprogramm.investgame.stock
+package com.castprogramm.investgame.ui
 
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.castprogramm.investgame.HelpApp
 import com.castprogramm.investgame.R
+import com.castprogramm.investgame.stock.Stock
+import com.castprogramm.investgame.stock.StockAdapter
 import kotlinx.android.synthetic.main.stock_recycle.*
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground

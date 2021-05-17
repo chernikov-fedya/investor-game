@@ -1,4 +1,4 @@
-package com.castprogramm.investgame
+package com.castprogramm.investgame.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.castprogramm.investgame.EnumClasses.Companies
+import com.castprogramm.investgame.R
+import com.castprogramm.investgame.SplashActivity
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.stock.Stock
 import com.castprogramm.investgame.stock.Stoks

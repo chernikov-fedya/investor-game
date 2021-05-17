@@ -1,6 +1,5 @@
 package com.castprogramm.investgame.stock
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,21 +11,35 @@ import com.jjoe64.graphview.series.DataPoint
 
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.R
-import com.castprogramm.investgame.Up
+import com.castprogramm.investgame.tools.Up
 import com.castprogramm.investgame.broker.Broker
+import com.castprogramm.investgame.database.DBDataPoint
+import com.castprogramm.investgame.ui.StockFragment
 
 // Класс для создания акции
+@Entity
 open class Stock: Up {
-    var id: Long = 0
+    @PrimaryKey
+    var name = ""
     var cost: Double = 0.0 // Стоимость акции
     var companies: Companies? = null // Компания, к которой принадлежит акция
-    var costsofStock : MutableLiveData<MutableList<DataPoint>> = MutableLiveData() // LiveData, которая хранит в себе изменяемый список DataPoint
-    var costs : MutableList<DataPoint> = mutableListOf() // Изменяемый список, который присваивается в LiveData
+        set(value) {
+            if (value != null)
+                name = value.n
+            field = value
+        }
+    @Ignore
+    var costsofStock : MutableLiveData<MutableList<DBDataPoint>> = MutableLiveData() // LiveData, которая хранит в себе изменяемый список DataPoint
+    @Ignore
+    var costs : MutableList<DBDataPoint> = mutableListOf() // Изменяемый список, который присваивается в LiveData
 
     override fun update() { // Переопределение функции из интерфейса Up
-        costs.add(DataPoint(costs.size.toDouble(), cost)) // Добавление в список новой серии значений
+        costs.add(DBDataPoint(costs.size.toDouble(), cost, this.name)) // Добавление в список новой серии значений
         costsofStock.value = costs // Присвоение в хранилище списка с сериями данных
     }
 
@@ -39,6 +52,11 @@ open class Stock: Up {
 // Адаптер для вывода списка акиций в фрагмент активов с помощью RecyclerView
 open class StockAdapter(list: MutableList<Stock>, var fragment: Fragment): RecyclerView.Adapter<StockViewHolder>() {
     var listStock = list
+
+    fun setData(list: MutableList<Stock>){
+        listStock = list
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
         val eee = LayoutInflater.from(parent.context).inflate(R.layout.stock_recycle, parent, false) // Переменная для хранения файла разметки
         return StockViewHolder(eee, fragment)
@@ -69,7 +87,7 @@ open class StockViewHolder(itemView: View, var fragment: Fragment): RecyclerView
     var cost: TextView = itemView.findViewById(R.id.cost_st) // Переменная для хранения TextView для вывода стоимости из файла разметки
     var cardView : CardView = itemView.findViewById(R.id.cardinal) // Переменная для хранения CardView для отрисовки нового фрагмента при нажатии из файла разметки
     var image: ImageView = itemView.findViewById(R.id.icon_comp) // Переменная для хранения ImageView для вывода эмблемы компании, которой принадлежит акция из файла разметки
-    var newCost : MutableLiveData<MutableList<DataPoint>>? = null // Переменная для последующего присвоения в неё LiveData
+    var newCost : MutableLiveData<MutableList<DBDataPoint>>? = null // Переменная для последующего присвоения в неё LiveData
     open fun bind(stock: Stock){ // Функция для отрисовки, принимает в себя акцию
         name.text = stock.companies?.n // Присвоение в поле названия акции
         cost.text = "$" + stock.cost.toString() // Присвоение в поле стоимости акции

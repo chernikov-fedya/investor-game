@@ -1,10 +1,7 @@
 package com.castprogramm.investgame.stock
 
-import android.os.Build
-import android.os.Handler
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.EnumClasses.Error
-import com.castprogramm.investgame.Updater
 
 // класс биржи
 class StockMarket{

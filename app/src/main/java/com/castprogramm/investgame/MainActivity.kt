@@ -1,5 +1,7 @@
 package com.castprogramm.investgame
 
+import android.app.Notification
+import android.app.NotificationManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,27 +9,39 @@ import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.castprogramm.investgame.EnumClasses.Companies
 import com.castprogramm.investgame.broker.Broker
 import com.castprogramm.investgame.broker.BrokerFragment
 import com.castprogramm.investgame.broker.PreferenceBroker
+import com.castprogramm.investgame.database.DataUserStock
+import com.castprogramm.investgame.database.SaveMyStocksDataBase
+import com.castprogramm.investgame.database.StockDataBase
 import com.castprogramm.investgame.news.News
-import com.castprogramm.investgame.news.NewsFragment
+import com.castprogramm.investgame.ui.NewsFragment
 import com.castprogramm.investgame.stock.*
-import com.castprogramm.investgame.stock.Stoks.allMax
 import com.castprogramm.investgame.stock.Stoks.allStoks
 import com.castprogramm.investgame.stock.Stoks.newsarray
+import com.castprogramm.investgame.tools.SaveService
+import com.castprogramm.investgame.tools.Updater
 import com.castprogramm.investgame.top.DATA_NAME
 import com.castprogramm.investgame.top.DATA_SCOPE
 import com.castprogramm.investgame.top.TopActivity
+import com.castprogramm.investgame.ui.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
-
-//    val scope = CoroutineScope(Job() + Dispatchers.Main)
+    val database : StockDataBase by inject()
+    val userDataBase : SaveMyStocksDataBase by inject()
+    val scope = CoroutineScope(Job() + Dispatchers.IO)
 
     var handler = Handler()
     var testing = Updater(handler)
@@ -102,6 +116,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStop(){
         super.onStop()
         testing.play = false
+        saveData()
         val saveIntent = Intent(this, SaveService ::class.java)
         startService(saveIntent)
         PreferenceBroker.save(this)
@@ -111,38 +126,13 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         testing.play = true
         handler.post(testing)
-
+        loadData()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         PreferenceBroker.load(this)
         testing.play = true
-//        val job = scope.launch {
-//            val result = async {
-//                val dbhadler = DBOpenSQLite(this@MainActivity, null)
-//                val cursor = dbhadler.getAllStock()
-//                if (cursor!=null && cursor.count > 0){
-//                    cursor.moveToFirst()
-//                    Broker.myStock.put(
-//                        allStoks.find { it.companies?.name ==  cursor.getString(cursor.getColumnIndex(DBOpenSQLite.COLOUM_COMPANY_NAME))}.apply {
-//                            this!!.cost = cursor.getDouble(cursor.getColumnIndex(DBOpenSQLite.COLOUM_CENT)) }!!,
-//                        cursor.getInt(cursor.getColumnIndex(DBOpenSQLite.COLOUM_QUANTITY)))
-//                    while (cursor.moveToNext()){
-//                        Broker.myStock.put(
-//                            allStoks.find { it.companies?.name ==  cursor.getString(cursor.getColumnIndex(DBOpenSQLite.COLOUM_COMPANY_NAME))}.apply {
-//                                this!!.cost = cursor.getDouble(cursor.getColumnIndex(DBOpenSQLite.COLOUM_CENT)) }!!,
-//                            cursor.getInt(cursor.getColumnIndex(DBOpenSQLite.COLOUM_QUANTITY)))}
-//                    cursor.close()}
-//                allStoks.forEach {
-//                    dbhadler.readDataPoint(it)
-//                    Log.d("SIZE", it.companies?.name + " ${it.costs.size}")
-//                }
-//                allMax = dbhadler.getMaxSize()
-//                dbhadler.close()
-//
-//            }.await()
-//        }
         Broker.thisWallet.observe(this, androidx.lifecycle.Observer{
             if (it <= 0.0)
                 endGame()
@@ -185,5 +175,48 @@ class MainActivity : AppCompatActivity() {
 
     fun endGame(){
         flip(EndFragment())
+    }
+
+    fun saveData(){
+        val notification = NotificationCompat.Builder(this, HelpApp().chanel_id)
+            .setContentTitle("Идёт сохранение")
+            .setContentText("Пожалуйста, не выкидывайте из памяти приложение")
+            .setSmallIcon(R.drawable.save)
+            .setDefaults(Notification.DEFAULT_VIBRATE)
+            .build()
+        val notiManager = NotificationManagerCompat.from(this@MainActivity)
+        scope.launch {
+            with(notiManager){
+                notify(0, notification)
+            }
+            allStoks.forEach {stock ->
+                Log.e("SIZE", stock.name)
+                database.getStockDao().addStock(stock)
+                stock.costs.forEach {
+                    database.getStockDao().addDataPoint(it)
+                }
+            }
+            Broker.myStock.forEach {
+                userDataBase.getStockDao().addStock(DataUserStock(it.toPair()))
+            }
+        }.invokeOnCompletion {
+            notiManager.cancel(0)
+        }
+    }
+
+    fun loadData(){
+        database.getStockDao().getAllStocks().observe(this@MainActivity, Observer{ list ->
+            list.forEach{ stock ->
+                database.getStockDao().getDataPointById(stock.name).observe(this@MainActivity, Observer {
+                    stock.costs = it.toMutableList()
+                    Stoks.setStock(stock)
+                })
+            }
+        })
+        userDataBase.getStockDao().getAllMyStocks().observe(this, {
+            it.forEach { stock ->
+                Broker.addStock(allStoks.find {it.name == stock.nameStock}!! to  stock.quantity)
+            }
+        })
     }
 }

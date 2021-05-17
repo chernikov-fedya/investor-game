@@ -50,4 +50,15 @@ object Stoks {
         Stock()
             .apply { cost = Companies.Huawei.cent; companies = Companies.Huawei}
     )
+    fun setStock(stock: Stock){
+        for (it in allStoks) {
+            if (it.name == stock.name){
+                it.apply {
+                    this.cost = stock.cost
+                    this.costs = stock.costs
+                }
+                break
+            }
+        }
+    }
 }
