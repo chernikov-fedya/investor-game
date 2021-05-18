@@ -1,10 +1,7 @@
 package com.castprogramm.investgame.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface SaveMyStocksDao {
@@ -13,5 +10,15 @@ interface SaveMyStocksDao {
     fun getAllMyStocks(): LiveData<List<DataUserStock>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addStock(dataUserStock: DataUserStock)
+    fun insert(dataUserStock: DataUserStock)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun update(dataUserStock: DataUserStock): Int
+
+    @Transaction
+    fun addStock(dataUserStock: DataUserStock){
+        val size = update(dataUserStock)
+        if (size != 1)
+            insert(dataUserStock)
+    }
 }

@@ -51,7 +51,7 @@ class TopActivity : AppCompatActivity() {
                 Log.d("NETWORKTOP", "SUCCESS")
             }
             .addOnFailureListener {
-                throw Exception("NETWORKFAILTURE")
+                throw it
             }
     }
 

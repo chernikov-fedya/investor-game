@@ -9,5 +9,5 @@ class DataUserStock(val nameStock: String = "", val quantity: Int = 0) {
     constructor(pair: Pair<Stock, Int>): this(pair.first.name, pair.second)
 
     @PrimaryKey(autoGenerate = true)
-    var id = 0
+    var id = 1
 }

@@ -1,7 +1,6 @@
 package com.castprogramm.investgame
 
 import android.app.Notification
-import android.app.NotificationManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,7 +24,6 @@ import com.castprogramm.investgame.ui.NewsFragment
 import com.castprogramm.investgame.stock.*
 import com.castprogramm.investgame.stock.Stoks.allStoks
 import com.castprogramm.investgame.stock.Stoks.newsarray
-import com.castprogramm.investgame.tools.SaveService
 import com.castprogramm.investgame.tools.Updater
 import com.castprogramm.investgame.top.DATA_NAME
 import com.castprogramm.investgame.top.DATA_SCOPE
@@ -104,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                 prefEditorBroker.apply()
             }
             R.id.top_menu_item -> {
-                var intent = Intent(this, TopActivity::class.java)
+                val intent = Intent(this, TopActivity::class.java)
                     intent.putExtra(DATA_NAME, Broker.name)
                     intent.putExtra(DATA_SCOPE, Broker.wallet.toFloat())
                 startActivity(intent)
@@ -117,8 +115,6 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
         testing.play = false
         saveData()
-        val saveIntent = Intent(this, SaveService ::class.java)
-        startService(saveIntent)
         PreferenceBroker.save(this)
     }
 
@@ -197,7 +193,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             Broker.myStock.forEach {
-                userDataBase.getStockDao().addStock(DataUserStock(it.toPair()))
+                userDataBase.getStockDao().addStock(DataUserStock(it.toPair()).apply { id = getPosition(it.toPair())})
             }
         }.invokeOnCompletion {
             notiManager.cancel(0)
@@ -217,6 +213,16 @@ class MainActivity : AppCompatActivity() {
             it.forEach { stock ->
                 Broker.addStock(allStoks.find {it.name == stock.nameStock}!! to  stock.quantity)
             }
+            Log.e("Size", Broker.myStock.toString())
         })
+    }
+
+    fun getPosition(map: Pair<Stock, Int>): Int {
+        var position = 0
+        for (i in Broker.myStock.toList().indices) {
+            if (Broker.myStock.toList()[i] == map)
+                position = i
+        }
+        return position + 1
     }
 }
