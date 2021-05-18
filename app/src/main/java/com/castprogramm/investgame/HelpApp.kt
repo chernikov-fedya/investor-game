@@ -18,8 +18,8 @@ import java.security.AccessControlContext
 
 class HelpApp: Application(){
     val module = module {
-        single { Room.databaseBuilder(this@HelpApp.applicationContext, StockDataBase::class.java, "database").build()}
-        single { Room.databaseBuilder(this@HelpApp.applicationContext, SaveMyStocksDataBase::class.java, "my_stocks").build()}
+        single { Room.databaseBuilder(this@HelpApp.applicationContext, StockDataBase::class.java, "database.db").build()}
+        single { Room.databaseBuilder(this@HelpApp.applicationContext, SaveMyStocksDataBase::class.java, "my_stocks.db").build()}
     }
 
     var chanel_id = "Save"

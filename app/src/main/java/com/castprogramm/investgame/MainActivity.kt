@@ -209,10 +209,14 @@ class MainActivity : AppCompatActivity() {
                 })
             }
         })
+        Broker.myStock.clear()
         userDataBase.getStockDao().getAllMyStocks().observe(this, {
+            Broker.myStock.clear()
+            val stocks = mutableMapOf<Stock, Int>()
             it.forEach { stock ->
-                Broker.addStock(allStoks.find {it.name == stock.nameStock}!! to  stock.quantity)
+                stocks.put(allStoks.find { it.name == stock.nameStock }!!, stock.quantity)
             }
+            Broker.myStock = stocks
             Log.e("Size", Broker.myStock.toString())
         })
     }

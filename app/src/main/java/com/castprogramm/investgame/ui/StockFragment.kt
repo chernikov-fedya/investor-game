@@ -61,7 +61,6 @@ class StockFragment : Fragment() {
                         val prefEditor = prefManagerStock.edit()
                         prefEditor.putBoolean("didShowStockPrompt", true)
                         prefEditor.apply()
-
                         showGraphicPrompt()
                     }
                 }
@@ -157,39 +156,39 @@ class StockFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var sd = activity?.assets?.openFd("zvon.mp3")
+        val sd = activity?.assets?.openFd("zvon.mp3")
         val soundPool: SoundPool = buildSoundPool(10)
         val zvon = soundPool.load(sd, 1)
-        var view = inflater.inflate(R.layout.fragment_stock, container, false)
-        var costGraphic : CostView = view.findViewById(R.id.graphic)
-        var stockMarket = StockMarket()
-        var bsold : Button = view.findViewById(R.id.sold)
-        var bbuy : Button = view.findViewById(R.id.buy)
-        var k: EditText = view.findViewById(R.id.quantity_stock)
-        var image: ImageView = view.findViewById(R.id.icon_graph)
-        var pr :TextView = view.findViewById(R.id.prquant)
-        var imageCountry : ImageView = view.findViewById(R.id.imagecountry)
-        var text: TextView = view.findViewById(R.id.textView)
+        val view = inflater.inflate(R.layout.fragment_stock, container, false)
+        val costGraphic : CostView = view.findViewById(R.id.graphic)
+        val stockMarket = StockMarket()
+        val bsold : Button = view.findViewById(R.id.sold)
+        val bbuy : Button = view.findViewById(R.id.buy)
+        val k: EditText = view.findViewById(R.id.quantity_stock)
+        val image: ImageView = view.findViewById(R.id.icon_graph)
+        val pr :TextView = view.findViewById(R.id.prquant)
+        val imageCountry : ImageView = view.findViewById(R.id.imagecountry)
+        val text: TextView = view.findViewById(R.id.textView)
         showNamePrompt()
         text.setText(stock.companies?.opisanie)
         imageCountry.setImageResource(stock.companies?.country?.n!!)
         image.setImageResource(stock.companies?.r!!)
         bsold.setOnClickListener { v->
-            counterSold = counterSold + 1 // обновляем счетчик нажатий
+            counterSold += 1 // обновляем счетчик нажатий
                 var cent = 1 // Стандартное количество акций
                 if (k.text.isNotEmpty()) // Проверка поля ввода на заполненность
                     cent = k.text.toString().toInt()
                 if (stockMarket.sold(stock, cent) == Error.EMPTYBAG){ // Вывод сообщения, если у пользователя количество данных акций меньше того количества, что он хочет продать
-                    var texr = Error.EMPTYBAG.s
-                    var toast = Toast.makeText(this.activity, texr, 1000)
+                    val texr = Error.EMPTYBAG.s
+                    val toast = Toast.makeText(this.activity, texr, 1000)
                     toast.setGravity(Gravity.CENTER, 0, 0)
                     toast.show()
                 }
                 else{
                     soundPool.play(zvon, 1f, 1f, 1, 0, 1f)
                     if (counterSold < 2){ // Вывод сообщения при успехе
-                        var text = "Продано"
-                        var toast =Toast.makeText(this.activity, text, 1000)
+                        val text = "Продано"
+                        val toast =Toast.makeText(this.activity, text, 1000)
                         toast.setGravity(Gravity.CENTER, 0, 0)
                         toast.show()
                         quantity_stock.setText("")

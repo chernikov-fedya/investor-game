@@ -16,6 +16,10 @@ object Broker: Up {
     var thisLess : MutableLiveData<Double> = MutableLiveData()
     var thisMyStock : MutableLiveData<Double> = MutableLiveData()
     var myStock = mutableMapOf<Stock, Int>()  //массив акций, которыми владеет брокер
+    set(value) {
+        liveDataMyStock.postValue(value)
+        field = value
+    }
     val liveDataMyStock = MutableLiveData(myStock)
     var loss : Double = 0.0
 
